@@ -1,1 +1,57 @@
-<p>admin-home works!</p>
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/admin-home">Home</a></li>
+    <li><a routerLink="/admin-about">About</a></li>
+
+    <li class="dropdown">
+      <a>Services</a>
+
+      <ul class="dropdown-menu">
+
+        <!-- Manage Residents -->
+        <li class="dropdown-sub">
+          <a>Residents</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-resident">Add Resident</a></li>
+            <li><a routerLink="/list-residents">List Residents</a></li>
+          </ul>
+        </li>
+
+        <!-- Manage Security -->
+        <li class="dropdown-sub">
+          <a>Security</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-security">Add Security</a></li>
+            <li><a routerLink="/list-securities">List Security</a></li>
+          </ul>
+        </li>
+
+        <!-- Manage Visitors -->
+        <li class="dropdown-sub">
+          <a>Visitors</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/list-visitors">List Visitors</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-overline">Welcome to Our Society</div>
+    <h1 class="hero-title">Manage Your Residence Effortlessly</h1>
+    <p class="hero-desc">Track visitors, residents, and admin actions all in one place.</p>
+    <div class="hero-actions">
+      <a routerLink="/list-residents" class="btn btn-yellow">List Residents</a>
+      <a routerLink="/list-visitors" class="btn btn-outline">List Visitors</a>
+    </div>
+  </div>
+</section>

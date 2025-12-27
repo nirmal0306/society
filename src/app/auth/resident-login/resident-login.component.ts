@@ -4,11 +4,12 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-resident-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule,RouterModule],
   templateUrl: './resident-login.component.html',
   styleUrls: ['./resident-login.component.css']
 })

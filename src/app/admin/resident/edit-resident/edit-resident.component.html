@@ -1,0 +1,138 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/admin-home">Home</a></li>
+    <li><a routerLink="/admin-about">About</a></li>
+
+    <li class="dropdown">
+      <a role="button">Services</a>
+
+      <ul class="dropdown-menu">
+
+        <!-- Residents -->
+        <li class="dropdown-sub">
+          <a role="button">Residents</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-resident">Add Resident</a></li>
+            <li><a routerLink="/list-residents">List Residents</a></li>
+          </ul>
+        </li>
+
+        <!-- Security -->
+        <li class="dropdown-sub">
+          <a role="button">Security</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-security">Add Security</a></li>
+            <li><a routerLink="/list-securities">List Security</a></li>
+          </ul>
+        </li>
+
+        <!-- Visitors -->
+        <li class="dropdown-sub">
+          <a role="button">Visitors</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/list-visitors">List Visitors</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li><a role="button" (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- ================= FORM ================= -->
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="hero-overline">Resident Management</div>
+    <h1 class="hero-title">Edit Resident</h1>
+
+    <form class="resident-form" (ngSubmit)="updateResident()">
+
+      <div class="form-group">
+        <label>Resident Name</label>
+        <input type="text" [(ngModel)]="resident.name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="resident.email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mobile No</label>
+        <input type="tel" [(ngModel)]="resident.mobile" name="mobile" required>
+      </div>
+
+      <!-- BLOCK + FLAT -->
+      <div class="form-row">
+
+        <!-- BLOCK -->
+        <div class="form-group">
+          <label>Block</label>
+
+          <div class="custom-select" (click)="toggleBlock()">
+            <div class="selected-value">
+              {{ resident.block || 'Select Block' }}
+            </div>
+
+            <div class="options" *ngIf="showBlock">
+              <div
+                class="option"
+                *ngFor="let block of blocks"
+                (click)="selectBlock(block); $event.stopPropagation()">
+                {{ block }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FLAT -->
+        <div class="form-group">
+          <label>Flat No</label>
+
+          <div class="custom-select" (click)="toggleFlat()">
+            <div class="selected-value">
+              {{ resident.flat || 'Select Flat' }}
+            </div>
+
+            <div class="options" *ngIf="showFlat">
+              <div
+                class="option"
+                *ngFor="let flat of flats"
+                (click)="selectFlat(flat); $event.stopPropagation()">
+                {{ flat }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- IMAGE UPLOAD -->
+      <div class="image-upload" (click)="fileInput.click()">
+        <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
+        <span *ngIf="!imagePreview">Click to upload photo</span>
+        <input
+          #fileInput
+          type="file"
+          hidden
+          accept="image/*"
+          (change)="onFileSelected($event)">
+      </div>
+
+      <button type="submit" class="btn btn-yellow">
+        Update Resident
+      </button>
+
+
+    </form>
+
+  </div>
+</section>

@@ -1,0 +1,89 @@
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/admin-home">Home</a></li>
+    <li><a routerLink="/admin-about">About</a></li>
+
+    <li class="dropdown">
+      <a>Services</a>
+
+      <ul class="dropdown-menu">
+
+        <!-- Manage Residents -->
+        <li class="dropdown-sub">
+          <a>Residents</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-resident">Add Resident</a></li>
+            <li><a routerLink="/list-residents">List Residents</a></li>
+          </ul>
+        </li>
+
+        <!-- Manage Security -->
+        <li class="dropdown-sub">
+          <a>Security</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-security">Add Security</a></li>
+            <li><a routerLink="/list-securities">List Security</a></li>
+          </ul>
+        </li>
+
+        <!-- Manage Visitors -->
+        <li class="dropdown-sub">
+          <a>Visitors</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/list-visitors">List Visitors</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Security Staff List</h1>
+
+    <div *ngIf="loading">Loading security staff...</div>
+
+    <table *ngIf="!loading && securities.length" class="resident-table">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Shift</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let security of securities">
+          <td>
+            <img
+              *ngIf="security.photo"
+              [src]="'http://localhost:5000' + security.photo"
+              alt="Photo"
+              class="resident-photo">
+            <span *ngIf="!security.photo">No Photo</span>
+          </td>
+          <td>{{ security.name }}</td>
+          <td>{{ security.email }}</td>
+          <td>{{ security.mobile }}</td>
+          <td>{{ security.shift }}</td>
+          <td>
+            <button (click)="editSecurity(security._id)" class="btn btn-edit">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading && !securities.length">No security staff found.</div>
+  </div>
+</section>

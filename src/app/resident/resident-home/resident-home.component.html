@@ -1,1 +1,35 @@
-<p>resident-home works Nirmal bhai ka ghar!</p>
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">Society Management System</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/about">About</a></li>
+
+    <li class="dropdown">
+      <a>Services</a>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/complaints">Complaints</a></li>
+        <li><a routerLink="/events">Events</a></li>
+        <li><a routerLink="/parking">Parking</a></li>
+      </ul>
+    </li>
+
+    <li><a routerLink="/login">Login</a></li>
+  </ul>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-overline">Welcome to Our Society</div>
+    <h1 class="hero-title">Manage Your Residence Effortlessly</h1>
+    <p class="hero-desc">Track visitors, residents, and admin actions all in one place.</p>
+    <div class="hero-actions">
+      <a routerLink="/resident-login" class="btn btn-yellow">Resident Login</a>
+      <a routerLink="/admin-login" class="btn btn-outline">Admin Login</a>
+    </div>
+  </div>
+</section>

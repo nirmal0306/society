@@ -1,0 +1,91 @@
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/admin-home">Home</a></li>
+    <li><a routerLink="/admin-about">About</a></li>
+
+    <li class="dropdown">
+      <a>Services</a>
+
+      <ul class="dropdown-menu">
+
+        <!-- Manage Residents -->
+        <li class="dropdown-sub">
+          <a>Residents</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-resident">Add Resident</a></li>
+            <li><a routerLink="/list-residents">List Residents</a></li>
+          </ul>
+        </li>
+
+        <!-- Manage Security -->
+        <li class="dropdown-sub">
+          <a>Security</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/add-security">Add Security</a></li>
+            <li><a routerLink="/list-securities">List Security</a></li>
+          </ul>
+        </li>
+
+        <!-- Manage Visitors -->
+        <li class="dropdown-sub">
+          <a>Visitors</a>
+          <ul class="dropdown-submenu">
+            <li><a routerLink="/list-visitors">List Visitors</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Residents List</h1>
+
+    <div *ngIf="loading">Loading residents...</div>
+
+    <table *ngIf="!loading && residents.length" class="resident-table">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Block</th>
+          <th>Flat</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resident of residents">
+          <td>
+            <img
+              *ngIf="resident.photo"
+              [src]="'http://localhost:5000' + resident.photo"
+              alt="Photo"
+              class="resident-photo">
+            <span *ngIf="!resident.photo">No Photo</span>
+          </td>
+          <td>{{ resident.name }}</td>
+          <td>{{ resident.email }}</td>
+          <td>{{ resident.mobile }}</td>
+          <td>{{ resident.block }}</td>
+          <td>{{ resident.flat }}</td>
+          <td>
+            <button (click)="editResident(resident._id)" class="btn btn-edit">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading && !residents.length">No residents found.</div>
+  </div>
+</section>
