@@ -39,7 +39,7 @@ export const routes: Routes = [
 
   //----crud----resident
   { path: 'add-resident', component: AddResidentComponent },
-  { path: 'edit-resident/:id', component: EditResidentComponent },
+  { path: 'edit-resident/:id', component: EditResidentComponent, data: { renderMode: 'client' } },
   { path: 'list-residents', component: ListResidentsComponent },
 
 
@@ -51,7 +51,7 @@ export const routes: Routes = [
   //----crud----security
   { path: 'add-security', component: AddSecurityComponent },
   { path: 'list-securities', component: ListSecuritiesComponent },
-  { path: 'edit-security/:id', component: EditSecurityComponent },
+  { path: 'edit-security/:id', component: EditSecurityComponent, data: { renderMode: 'client' } },
 
 
   //----resident----
