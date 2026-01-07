@@ -12,6 +12,34 @@ import Swal from 'sweetalert2';
 export class AdminAboutComponent {
 
 constructor(private router: Router) {}
+
+
+  menuOpen = false;
+  servicesOpen = false;
+  residentsOpen = false;
+  securityOpen = false;
+  visitorsOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  toggleServices() {
+    this.servicesOpen = !this.servicesOpen;
+  }
+
+  toggleResidents() {
+    this.residentsOpen = !this.residentsOpen;
+  }
+
+  toggleSecurity() {
+    this.securityOpen = !this.securityOpen;
+  }
+
+  toggleVisitors() {
+  this.visitorsOpen = !this.visitorsOpen;
+  }
+
 logout() {
         localStorage.clear();
         Swal.fire({

@@ -143,11 +143,11 @@
   background-attachment: fixed;
 
   /* Soft gradient overlay for readability */
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
       to bottom right,
       rgba(15, 23, 35, 0.45),
       rgba(15, 23, 35, 0.25)
-    ),;
+    ),; */
 
   padding-top: 110px; /* space for navbar */
   display: flex;
@@ -520,18 +520,18 @@ select option {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom right,
     rgba(15, 23, 35, 0.95),
     rgba(15, 23, 35, 0.85)
-  );
+  ); */
 }
 
 /* ================= CARD ================= */
 .hero-content {
   width: 92%;
   max-width: 1100px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(12, 6, 6, 0.75);
   border-radius: 20px;
   padding: 2.2rem;
   border: 1px solid rgba(255,255,255,0.18);

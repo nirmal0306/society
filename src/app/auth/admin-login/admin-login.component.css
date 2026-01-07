@@ -292,3 +292,116 @@ input::placeholder {
     font-size: 1.6rem;
   }
 }
+/* ==========================================================
+   INPUT WITH ICON (EMAIL + PASSWORD) — OVERRIDES
+   ========================================================== */
+
+.input-icon-box {
+  position: relative;
+  width: 100%;
+}
+
+/* Override default input styles ONLY inside icon box */
+.input-icon-box input {
+  width: 80%;                 /* overrides 90% */
+  height: 36px;
+  padding: 0.85rem 2.8rem 0.85rem 3rem; /* space for icons */
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  transition: 0.25s ease;
+
+}
+
+/* Focus */
+.input-icon-box input:focus {
+  border-color: #ffb87a;
+  box-shadow: 0 6px 18px rgba(255, 184, 122, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Error */
+.input-icon-box input.invalid {
+  border-color: #ff6b6b;
+}
+
+/* Placeholder */
+.input-icon-box input::placeholder {
+  color: rgba(255, 220, 220, 0.85);
+}
+
+/* ==========================================================
+   LEFT ICON (GMAIL / LOCK)
+   ========================================================== */
+
+.left-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ==========================================================
+   EYE ICON — OPEN / CLOSE EFFECT
+   ========================================================== */
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 22px;
+  height: 22px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Base eye animation */
+.eye-icon::before,
+.eye-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transition: 0.3s ease;
+}
+
+/* 👁️ OPEN */
+.eye-icon.open::before {
+  border: 2px solid #ffd2a6;
+  border-radius: 50%;
+}
+
+.eye-icon.open::after {
+  width: 6px;
+  height: 6px;
+  background: #ffd2a6;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 🙈 CLOSED */
+.eye-icon.closed::before {
+  border: 2px solid transparent;
+}
+
+.eye-icon.closed::after {
+  width: 22px;
+  height: 2px;
+  background: #ffd2a6;
+  top: 50%;
+  left: 0;
+  transform: rotate(-20deg);
+  border-radius: 2px;
+}
+
+/* Hover */
+.eye-icon:hover {
+  transform: translateY(-50%) scale(1.1);
+}

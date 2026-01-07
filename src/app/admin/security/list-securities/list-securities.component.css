@@ -143,11 +143,11 @@
   background-attachment: fixed;
 
   /* Soft gradient overlay for readability */
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
       to bottom right,
       rgba(15, 23, 35, 0.45),
       rgba(15, 23, 35, 0.25)
-    ),;
+    ),; */
 
   padding-top: 110px; /* space for navbar */
   display: flex;
@@ -160,7 +160,7 @@
   max-width: 700px;
   margin-left: 8vw;
 
-  background: rgba(255, 255, 255, 0.08); /* light glass */
+  background: rgba(12, 6, 6, 0.75);
   border-radius: 20px;
   padding: 2.5vw 2.2vw;
 
@@ -520,18 +520,18 @@ select option {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom right,
     rgba(15, 23, 35, 0.95),
     rgba(15, 23, 35, 0.85)
-  );
+  ); */
 }
 
 /* ================= CARD ================= */
 .hero-content {
   width: 92%;
   max-width: 1100px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(12, 6, 6, 0.75);
   border-radius: 20px;
   padding: 2.2rem;
   border: 1px solid rgba(255,255,255,0.18);
@@ -666,4 +666,84 @@ select option {
     border: none;
     padding: 6px 0;
   }
+}
+.btn-edit {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
+  color: #1a1a1a;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn-edit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255,184,122,0.45);
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-text {
+  text-align: center;
+  color: rgba(255,255,255,0.7);
+  padding: 2rem 0;
+  font-size: 1rem;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .resident-table th,
+  .resident-table td {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 650px) {
+  .hero-content {
+    padding: 1.6rem;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  /* Stack rows like cards */
+  .resident-table,
+  .resident-table thead,
+  .resident-table tbody,
+  .resident-table th,
+  .resident-table td,
+  .resident-table tr {
+    display: block;
+  }
+
+  .resident-table thead {
+    display: none;
+  }
+
+  .resident-table tr {
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    padding: 1rem;
+  }
+
+  .resident-table td {
+    border: none;
+    padding: 6px 0;
+  }
+}
+.btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 5px;
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }

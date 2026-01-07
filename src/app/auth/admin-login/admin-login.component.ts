@@ -33,6 +33,12 @@ loginForm: FormGroup;
     return this.loginForm.controls;
   }
 
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+  
   onLogin(): void {
     if (this.loginForm.invalid) {
       this.alert.error('Please fill all fields correctly!');

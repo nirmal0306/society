@@ -1,0 +1,62 @@
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/home">Home</a></li>
+    <li><a routerLink="/about">About</a></li>
+    <li><a routerLink="/login">Login</a></li>
+  </ul>
+</nav>
+
+<!-- Sidebar for mobile -->
+<div class="sidebar" [class.active]="sidebarOpen">
+  <ul>
+    <li><a routerLink="/home" (click)="toggleSidebar()">Home</a></li>
+    <li><a routerLink="/about" (click)="toggleSidebar()">About</a></li>
+    <li><a routerLink="/login" (click)="toggleSidebar()">Login</a></li>
+  </ul>
+</div>
+
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="logo-text">Login</h2>
+
+    <form [formGroup]="loginForm">
+      <div class="form-group input-icon-box">
+        <label>Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Registered email"
+        />
+        <img src="gmail.png" class="left-icon" />
+      </div>
+    </form>
+
+    <div class="camera-wrapper">
+      <video #video autoplay muted class="camera"></video>
+      <canvas #overlay class="face-canvas"></canvas>
+      <div class="scan-ring"></div>
+      <div class="scan-line"></div>
+      <div class="face-status">Align your face</div>
+    </div>
+
+    <!-- Buttons in single row -->
+    <div class="camera-actions">
+      <button class="btn-camera" (click)="startCamera()">Start Camera</button>
+      <button class="btn-capture" (click)="faceLogin()" [disabled]="loading">
+        {{ loading ? 'Scanning...' : 'Scan Face & Login' }}
+      </button>
+    </div>
+  </div>
+</div>

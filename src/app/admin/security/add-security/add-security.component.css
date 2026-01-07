@@ -143,11 +143,11 @@
   background-attachment: fixed;
 
   /* Soft gradient overlay for readability */
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
       to bottom right,
       rgba(15, 23, 35, 0.45),
       rgba(15, 23, 35, 0.25)
-    ),;
+    ),; */
 
   padding-top: 110px; /* space for navbar */
   display: flex;
@@ -515,18 +515,18 @@ select option {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom right,
     rgba(15,23,35,0.95),
     rgba(15,23,35,0.8)
-  );
+  ); */
 }
 
 /* ================= CARD ================= */
 .hero-content {
   width: 100%;
   max-width: 480px;
-  background: rgba(255,255,255,0.07);
+  background: rgba(12, 6, 6, 0.75);
   border: 1px solid rgba(255,255,255,0.15);
   padding: 2.4rem;
   border-radius: 22px;
@@ -838,4 +838,127 @@ select {
   .form-row {
     flex-direction: column;
   }
+}
+/* ================= CAMERA BUTTONS ================= */
+
+.btn-camera:hover {
+  background: rgba(255,184,122,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,184,122,0.25);
+}
+
+/* Capture Button (Primary Action) */
+.btn-capture {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 35px;
+  border: none;
+  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
+  color: #222;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255,184,122,0.35);
+  transition: 0.3s ease;
+}
+
+.btn-capture:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255,184,122,0.45);
+}
+/* ================= CAMERA VIDEO ================= */
+
+video {
+  width: 100%;
+  max-width: 280px;
+  margin: 12px auto;
+  display: block;
+  border-radius: 18px;
+  border: 2px solid rgba(255,184,122,0.6);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  background: #000;
+}
+/* ================= FACE CAPTURE CANVAS ================= */
+
+canvas {
+  display: none; /* hidden after capture */
+}
+
+/* When previewing captured image */
+.canvas-preview {
+  display: block;
+  width: 130px;
+  height: 130px;
+  margin: 14px auto;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffb87a;
+  box-shadow: 0 8px 22px rgba(255,184,122,0.35);
+}
+/* ================= CAMERA ACTION BUTTONS ================= */
+.camera-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin: 18px 0 24px;
+}
+
+.btn-camera,
+.btn-capture {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Start Camera - Glass style */
+.btn-camera {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.btn-camera:hover {
+  background: rgba(255,184,122,0.25);
+  color: #ffb87a;
+  transform: translateY(-2px);
+}
+
+/* Capture Face - Primary */
+.btn-capture {
+  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
+  color: #222;
+  box-shadow: 0 6px 18px rgba(255,184,122,0.35);
+}
+
+.btn-capture:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(255,184,122,0.45);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 520px) {
+  .camera-actions {
+    flex-direction: column;
+  }
+}
+video {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 16px;
+  transform: scaleX(-1); /* mirror video only */
+}
+.preview-img {
+  display: block;
+  margin: 16px auto 20px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffb87a;
+  box-shadow: 0 6px 18px rgba(255,184,122,0.35);
 }

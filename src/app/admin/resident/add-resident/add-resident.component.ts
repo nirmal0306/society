@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
-import { AlertService } from '../../../services/alert.service'; // import SweetAlert service
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-add-resident',
   standalone: true,
@@ -14,109 +14,201 @@ import Swal from 'sweetalert2';
 })
 export class AddResidentComponent {
 
-  showBlock = false;
-  showFlat = false;
+  @ViewChild('video') video!: ElementRef;
+  @ViewChild('canvas') canvas!: ElementRef;
 
-  blocks: string[] = ['A','B','C','D','E','F','G','H','I','J'];
+  blocks = ['A','B','C','D','E','F','G','H','I','J'];
   flats: string[] = [];
 
   resident = {
     name: '',
     email: '',
     mobile: '',
-    block: '',
-    flat: ''
+    flats: [{ block: '', flat: '' }]
   };
 
-  selectedFile: File | null = null;
+  imageBlob!: Blob;
   imagePreview: string | null = null;
+  stream!: MediaStream;
 
-  private API_URL = 'http://localhost:5000/api/residents';
+  API_URL = 'http://localhost:5000/api/residents';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private alert: AlertService  // inject AlertService
-  ) {
+  constructor(private http: HttpClient, private router: Router) {
     this.generateFlats();
   }
 
   generateFlats() {
-    this.flats = [];
-    for (let floor = 1; floor <= 5; floor++) {
-      for (let flat = 1; flat <= 6; flat++) {
-        this.flats.push(`${floor}0${flat}`);
+    for (let f = 1; f <= 5; f++) {
+      for (let n = 1; n <= 6; n++) {
+        this.flats.push(`${f}0${n}`);
       }
     }
   }
 
-  toggleBlock() {
-    this.showBlock = !this.showBlock;
-    this.showFlat = false;
+  addFlat() {
+    this.resident.flats.push({ block: '', flat: '' });
   }
 
-  toggleFlat() {
-    this.showFlat = !this.showFlat;
-    this.showBlock = false;
+  removeFlat(index: number) {
+    this.resident.flats.splice(index, 1);
   }
 
-  selectBlock(block: string) {
-    this.resident.block = block;
-    this.showBlock = false;
-  }
-
-  selectFlat(flat: string) {
-    this.resident.flat = flat;
-    this.showFlat = false;
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    this.selectedFile = file;
-
-    const reader = new FileReader();
-    reader.onload = () => this.imagePreview = reader.result as string;
-    reader.readAsDataURL(file);
-  }
-
-  addResident() {
-    if (!this.resident.block || !this.resident.flat) {
-      this.alert.error('Please select block and flat', 'Validation Error');
+  async startCamera() {
+    // Validate required fields first
+    if (!this.resident.name || !this.resident.email || !this.resident.mobile) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Fill All Details',
+        text: 'Please enter Name, Email, and Mobile before starting the camera.'
+      });
       return;
     }
 
-    if (!this.selectedFile) {
-      this.alert.error('Please upload resident photo', 'Validation Error');
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const videoEl = this.video.nativeElement as HTMLVideoElement;
+      videoEl.srcObject = this.stream;
+      videoEl.style.transform = 'scaleX(-1)'; // mirror view
+      videoEl.play();
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Camera Error',
+        text: 'Camera access denied or not available'
+      });
+    }
+  }
+
+
+  captureImage() {
+    // Validate required fields first
+    if (!this.resident.name || !this.resident.email || !this.resident.mobile) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Fill All Details',
+        text: 'Please enter Name, Email, and Mobile before capturing face.'
+      });
+      return;
+    }
+
+    const video = this.video.nativeElement as HTMLVideoElement;
+    const canvas = this.canvas.nativeElement as HTMLCanvasElement;
+
+    if (!video || !canvas) {
+      Swal.fire('Error', 'Camera not initialized', 'error');
+      return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      Swal.fire('Error', 'Canvas not supported', 'error');
+      return;
+    }
+
+    // Draw flipped video to get correct image
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    // Update preview immediately
+    this.imagePreview = canvas.toDataURL('image/png');
+
+    // Convert to blob for upload
+    canvas.toBlob((blob: Blob | null) => {
+      if (!blob) {
+        Swal.fire('Error', 'Failed to capture image', 'error');
+        return;
+      }
+      this.imageBlob = blob;
+    }, 'image/png');
+
+    // Stop camera
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop());
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Captured',
+      text: 'Face image captured successfully',
+      timer: 1200,
+      showConfirmButton: false
+    });
+  }
+
+
+  addResident() {
+
+    if (!this.resident.name || !this.resident.email || !this.resident.mobile) {
+      Swal.fire('Validation Error', 'Please fill all details', 'warning');
+      return;
+    }
+
+    if (this.resident.flats.some(f => !f.block || !f.flat)) {
+      Swal.fire('Validation Error', 'Select block and flat properly', 'warning');
+      return;
+    }
+
+    if (!this.imageBlob) {
+      Swal.fire('Error', 'Capture face image before submitting', 'error');
       return;
     }
 
     const formData = new FormData();
-    Object.entries(this.resident).forEach(
-      ([key, value]) => formData.append(key, value)
-    );
-    formData.append('photo', this.selectedFile);
+    formData.append('name', this.resident.name);
+    formData.append('email', this.resident.email);
+    formData.append('mobile', this.resident.mobile);
+    formData.append('flats', JSON.stringify(this.resident.flats));
+    formData.append('photo', this.imageBlob, 'face.png');
+
+    Swal.fire({
+      title: 'Adding Resident...',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
 
     this.http.post(this.API_URL, formData).subscribe({
       next: () => {
-        this.alert.success('Resident added successfully!');
-        setTimeout(() => this.router.navigate(['/list-residents']), 1500);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Resident added successfully!',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['/list-residents']);
+        });
       },
-      error: () => this.alert.error('Error adding resident', 'Add Failed')
+      error: () => {
+        Swal.fire('Error', 'Failed to add resident', 'error');
+      }
     });
   }
 
-logout() {
-    localStorage.clear();
+  logout() {
     Swal.fire({
-      icon: 'success',
-      title: 'Logged Out',
-      text: 'You have been logged out successfully.',
-      timer: 1500,
-      showConfirmButton: false
-    }).then(() => {
-      this.router.navigate(['/admin-login']);
+      title: 'Logout?',
+      text: 'Do you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        Swal.fire({
+          icon: 'success',
+          title: 'Logged Out',
+          timer: 1200,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['/admin-login']);
+        });
+      }
     });
   }
 }

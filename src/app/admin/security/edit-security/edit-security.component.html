@@ -1,3 +1,4 @@
+<!-- ================= NAVBAR ================= -->
 <nav class="nav">
   <div class="logo-container">
     <img src="logo.jpg" class="logo-img" alt="Logo">
@@ -10,10 +11,7 @@
 
     <li class="dropdown">
       <a role="button">Services</a>
-
       <ul class="dropdown-menu">
-
-        <!-- Residents -->
         <li class="dropdown-sub">
           <a role="button">Residents</a>
           <ul class="dropdown-submenu">
@@ -21,8 +19,6 @@
             <li><a routerLink="/list-residents">List Residents</a></li>
           </ul>
         </li>
-
-        <!-- Security -->
         <li class="dropdown-sub">
           <a role="button">Security</a>
           <ul class="dropdown-submenu">
@@ -30,8 +26,6 @@
             <li><a routerLink="/list-securities">List Security</a></li>
           </ul>
         </li>
-
-        <!-- Visitors -->
         <li class="dropdown-sub">
           <a role="button">Visitors</a>
           <ul class="dropdown-submenu">
@@ -45,9 +39,9 @@
   </ul>
 </nav>
 
+<!-- ================= FORM ================= -->
 <section class="hero">
   <div class="hero-content">
-
     <div class="hero-overline">Security Management</div>
     <h1 class="hero-title">Edit Security Staff</h1>
 
@@ -76,23 +70,33 @@
         </select>
       </div>
 
-      <!-- IMAGE UPLOAD -->
-      <div class="image-upload" (click)="fileInput.click()">
-        <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
-        <span *ngIf="!imagePreview">Click to upload photo</span>
-        <input
-          #fileInput
-          type="file"
-          hidden
-          accept="image/*"
-          (change)="onFileSelected($event)">
+      <!-- CAMERA CAPTURE -->
+      <h3>Capture Photo</h3>
+      <div class="camera-box">
+        <video #video autoplay playsinline></video>
+        <canvas #canvas hidden></canvas>
+
+        <div class="camera-actions">
+          <button type="button" class="btn btn-camera" (click)="startCamera()">
+            Start Camera
+          </button>
+          <button type="button" class="btn btn-capture" (click)="captureImage()">
+            Capture Face
+          </button>
+        </div>
       </div>
 
+      <!-- IMAGE PREVIEW -->
+      <div *ngIf="imagePreview" class="image-preview">
+        <img [src]="imagePreview" alt="Security Photo" class="preview-img">
+      </div>
+      
+
+      <!-- UPDATE BUTTON -->
       <button type="submit" class="btn btn-yellow">
         Update Security
       </button>
 
     </form>
-
   </div>
 </section>

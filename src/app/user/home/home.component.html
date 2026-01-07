@@ -4,32 +4,31 @@
     <span class="logo-text">My Gate</span>
   </div>
 
+
   <ul class="nav-links">
-    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/home">Home</a></li>
     <li><a routerLink="/about">About</a></li>
-
-    <li class="dropdown">
-      <a>Login</a>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/resident-login">Resident</a></li>
-        <li><a routerLink="/visitor-login">Visitor</a></li>
-        <li><a routerLink="/security-login">Security</a></li>
-        <li><a routerLink="/admin-login">Admin</a></li>
-
-      </ul>
-    </li>
+    <li><a routerLink="/login">Login</a></li>
   </ul>
 </nav>
 
-
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-overline">Welcome to Our Society</div>
-    <h1 class="hero-title">Manage Your Residence Effortlessly</h1>
-    <p class="hero-desc">Track visitors, residents, and admin actions all in one place.</p>
+    <div class="hero-overline">Welcome to My Gate</div>
+
+    <h1 class="hero-title">
+      Making Society Living <br /> Simple & Secure
+    </h1>
+
+    <p class="hero-desc">
+      From visitor management to resident records and security monitoring,
+      My Gate keeps your society organized, safe, and connected — all from
+      one easy-to-use platform.
+    </p>
+
     <div class="hero-actions">
-      <a routerLink="/resident-login" class="btn btn-yellow">Resident Login</a>
-      <a routerLink="/admin-login" class="btn btn-outline">Admin Login</a>
+      <a routerLink="/login" class="btn btn-yellow">Get Started</a>
+      <a routerLink="/about" class="btn btn-outline">Learn More</a>
     </div>
   </div>
 </section>

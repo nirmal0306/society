@@ -1,3 +1,4 @@
+<!-- ================= NAVBAR ================= -->
 <nav class="nav">
   <div class="logo-container">
     <img src="logo.jpg" class="logo-img" alt="Logo">
@@ -38,6 +39,7 @@
             <li><a routerLink="/list-visitors">List Visitors</a></li>
           </ul>
         </li>
+
       </ul>
     </li>
     <li><a (click)="logout()">Logout</a></li>
@@ -57,8 +59,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>Mobile</th>
-          <th>Block</th>
-          <th>Flat</th>
+          <th>Flats</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -75,13 +76,23 @@
           <td>{{ resident.name }}</td>
           <td>{{ resident.email }}</td>
           <td>{{ resident.mobile }}</td>
-          <td>{{ resident.block }}</td>
-          <td>{{ resident.flat }}</td>
           <td>
-            <button (click)="editResident(resident._id)" class="btn btn-edit">
-              Edit
+            <div *ngFor="let f of resident.flats">
+              {{ f.block }} - {{ f.flat }}
+            </div>
+          </td>
+          <td>
+            <!-- Edit Button with Icon -->
+            <button (click)="editResident(resident._id)" class="btn-icon">
+              <img src="document.png" alt="Edit" class="icon-img">
+            </button>
+
+            <!-- Delete Button with Icon -->
+            <button (click)="deleteResident(resident._id)" class="btn-icon">
+              <img src="user.png" alt="Delete" class="icon-img">
             </button>
           </td>
+
         </tr>
       </tbody>
     </table>

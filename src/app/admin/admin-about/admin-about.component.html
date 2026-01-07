@@ -1,57 +1,150 @@
+<!-- ================= NAVBAR ================= -->
 <nav class="nav">
   <div class="logo-container">
     <img src="logo.jpg" class="logo-img" alt="Logo">
     <span class="logo-text">My Gate</span>
   </div>
 
-  <ul class="nav-links">
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
     <li><a routerLink="/admin-home">Home</a></li>
     <li><a routerLink="/admin-about">About</a></li>
 
     <li class="dropdown">
-      <a>Services</a>
+      <a (click)="toggleServices()">Services</a>
 
-      <ul class="dropdown-menu">
-
-        <!-- Manage Residents -->
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
         <li class="dropdown-sub">
-          <a>Residents</a>
-          <ul class="dropdown-submenu">
+          <a (click)="toggleResidents()">Residents</a>
+          <ul class="dropdown-submenu" [class.open]="residentsOpen">
             <li><a routerLink="/add-resident">Add Resident</a></li>
             <li><a routerLink="/list-residents">List Residents</a></li>
           </ul>
         </li>
 
-        <!-- Manage Security -->
         <li class="dropdown-sub">
-          <a>Security</a>
-          <ul class="dropdown-submenu">
+          <a (click)="toggleSecurity()">Security</a>
+          <ul class="dropdown-submenu" [class.open]="securityOpen">
             <li><a routerLink="/add-security">Add Security</a></li>
             <li><a routerLink="/list-securities">List Security</a></li>
           </ul>
         </li>
 
-        <!-- Manage Visitors -->
         <li class="dropdown-sub">
-          <a>Visitors</a>
-          <ul class="dropdown-submenu">
+          <a (click)="toggleVisitors()">Visitors</a>
+          <ul class="dropdown-submenu" [class.open]="visitorsOpen">
             <li><a routerLink="/list-visitors">List Visitors</a></li>
           </ul>
         </li>
+
       </ul>
     </li>
+
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
 
+<!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-overline">About Our Society</div>
-    <h1 class="hero-title">Manage Your Residence Effortlessly</h1>
-    <p class="hero-desc">Track visitors, residents, and admin actions all in one place.</p>
+    <h1 class="hero-title">Smart Management. Safer Living.</h1>
+    <p class="hero-desc">
+      Our platform empowers administrators to manage residents, security, and visitors efficiently.
+      Transparency, safety, and convenience are at the heart of our system.
+    </p>
     <div class="hero-actions">
-      <a routerLink="/list-residents" class="btn btn-yellow">List Residents</a>
-      <a routerLink="/list-visitors" class="btn btn-outline">List Visitors</a>
+      <a routerLink="/list-residents" class="btn btn-yellow">Resident Dashboard</a>
+      <a routerLink="/list-visitors" class="btn btn-outline">Visitor Overview</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="admin-focus">
+  <h2>Our Core Features</h2>
+
+  <div class="focus-grid">
+    <div class="focus-item">
+      <h3>Resident Management</h3>
+      <p>Easily add, update, and track residents. Keep profiles, contact info, and flat allocations organized.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Visitor Tracking</h3>
+      <p>Monitor all visitors in real time, maintain logs, and ensure authorized access to the society.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Security Oversight</h3>
+      <p>Assign shifts, track guard activity, and ensure strict adherence to access rules.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Smart Analytics</h3>
+      <p>Get insights into visitor trends, resident activity, and society performance for better decision-making.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Notifications & Alerts</h3>
+      <p>Receive instant alerts for new visitors, security breaches, or resident updates to stay informed.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Audit Trails</h3>
+      <p>Maintain full records of all admin actions, providing transparency and accountability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PHILOSOPHY ================= -->
+<section class="admin-philosophy">
+  <h2>Our Philosophy</h2>
+  <p>
+    We believe that technology should simplify administration while enhancing security.
+    By providing a centralized dashboard, we reduce manual work and empower admins to make informed decisions.
+    Every action, every visitor, every resident is tracked with safety and efficiency in mind.
+  </p>
+</section>
+
+<!-- ================= ADMIN ROLE ================= -->
+<section class="admin-role">
+  <h2>Administrator Empowerment</h2>
+  <p>
+    As an administrator, you have complete visibility and control over your society.
+    Manage residents, oversee security, track visitors, and make data-driven decisions confidently.
+  </p>
+</section>
+
+<!-- ================= EXTRA INFO ================= -->
+<section class="admin-focus" style="margin-top:50px;">
+  <h2>Why Choose Our System</h2>
+
+  <div class="focus-grid">
+    <div class="focus-item">
+      <h3>Efficiency</h3>
+      <p>Save time with automated processes for resident onboarding, visitor logging, and security assignments.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Transparency</h3>
+      <p>All actions are logged, ensuring clarity and accountability across society operations.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>Safety First</h3>
+      <p>Monitor access, assign guards effectively, and maintain a secure environment for all residents.</p>
+    </div>
+
+    <div class="focus-item">
+      <h3>User-Friendly</h3>
+      <p>Intuitive dashboards and reports allow admins to manage the society without technical barriers.</p>
     </div>
   </div>
 </section>

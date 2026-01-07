@@ -55,8 +55,9 @@
 
     <form class="resident-form" (ngSubmit)="updateResident()">
 
+      <!-- BASIC INFO -->
       <div class="form-group">
-        <label>Resident Name</label>
+        <label>Name</label>
         <input type="text" [(ngModel)]="resident.name" name="name" required>
       </div>
 
@@ -66,73 +67,50 @@
       </div>
 
       <div class="form-group">
-        <label>Mobile No</label>
+        <label>Mobile</label>
         <input type="tel" [(ngModel)]="resident.mobile" name="mobile" required>
       </div>
 
-      <!-- BLOCK + FLAT -->
-      <div class="form-row">
-
-        <!-- BLOCK -->
+      <!-- MULTI FLATS -->
+      <h3>Flat Ownership</h3>
+      <div class="form-row" *ngFor="let f of resident.flats; let i = index">
         <div class="form-group">
           <label>Block</label>
-
-          <div class="custom-select" (click)="toggleBlock()">
-            <div class="selected-value">
-              {{ resident.block || 'Select Block' }}
-            </div>
-
-            <div class="options" *ngIf="showBlock">
-              <div
-                class="option"
-                *ngFor="let block of blocks"
-                (click)="selectBlock(block); $event.stopPropagation()">
-                {{ block }}
-              </div>
-            </div>
-          </div>
+          <select [(ngModel)]="f.block" name="block{{i}}" required>
+            <option value="">Select Block</option>
+            <option *ngFor="let b of blocks" [value]="b">{{ b }}</option>
+          </select>
         </div>
 
-        <!-- FLAT -->
         <div class="form-group">
-          <label>Flat No</label>
-
-          <div class="custom-select" (click)="toggleFlat()">
-            <div class="selected-value">
-              {{ resident.flat || 'Select Flat' }}
-            </div>
-
-            <div class="options" *ngIf="showFlat">
-              <div
-                class="option"
-                *ngFor="let flat of flats"
-                (click)="selectFlat(flat); $event.stopPropagation()">
-                {{ flat }}
-              </div>
-            </div>
-          </div>
+          <label>Flat</label>
+          <select [(ngModel)]="f.flat" name="flat{{i}}" required>
+            <option value="">Select Flat</option>
+            <option *ngFor="let fl of flats" [value]="fl">{{ fl }}</option>
+          </select>
         </div>
 
+        <div class="form-group action-btns">
+          <button type="button" *ngIf="i === resident.flats.length - 1" (click)="addFlat()">➕</button>
+          <button type="button" *ngIf="resident.flats.length > 1" (click)="removeFlat(i)">➖</button>
+        </div>
       </div>
 
-      <!-- IMAGE UPLOAD -->
-      <div class="image-upload" (click)="fileInput.click()">
-        <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
-        <span *ngIf="!imagePreview">Click to upload photo</span>
-        <input
-          #fileInput
-          type="file"
-          hidden
-          accept="image/*"
-          (change)="onFileSelected($event)">
+      <!-- CAMERA -->
+      <h3>Capture Face</h3>
+      <div class="camera-box">
+        <video #video autoplay playsinline></video>
+        <canvas #canvas hidden></canvas>
+
+        <div class="camera-actions">
+          <button class="btn-camera" type="button" (click)="startCamera()">Start Camera</button>
+          <button class="btn-capture" type="button" (click)="captureImage()">Capture Face</button>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-yellow">
-        Update Resident
-      </button>
+      <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
 
-
+      <button type="submit" class="btn btn-yellow">Update Resident</button>
     </form>
-
   </div>
 </section>

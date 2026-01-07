@@ -8,15 +8,12 @@ import { AdminLoginComponent } from './auth/admin-login/admin-login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminAboutComponent } from './admin/admin-about/admin-about.component';
 
-import { ResidentLoginComponent } from './auth/resident-login/resident-login.component';
 import { ResidentHomeComponent } from './resident/resident-home/resident-home.component';
 import { ResidentAboutComponent } from './resident/resident-about/resident-about.component';
 
-import { VisitorLoginComponent } from './auth/visitor-login/visitor-login.component';
 import { VisitorHomeComponent } from './visitor/visitor-home/visitor-home.component';
 import { VisitorAboutComponent } from './visitor/visitor-about/visitor-about.component';
 
-import { SecurityLoginComponent } from './auth/security-login/security-login.component';
 import { SecurityHomeComponent } from './security/security-home/security-home.component';
 import { SecurityAboutComponent } from './security/security-about/security-about.component';
 
@@ -32,6 +29,9 @@ import { ListVisitorsComponent } from './admin/visitor/list-visitors/list-visito
 import { AddSecurityComponent } from './admin/security/add-security/add-security.component';
 import { EditSecurityComponent } from './admin/security/edit-security/edit-security.component';
 import { ListSecuritiesComponent } from './admin/security/list-securities/list-securities.component';
+import { LoginComponent } from './auth/login/login.component';
+import { AHomeComponent } from './user/a-home/a-home.component';
+import { AAboutComponent } from './user/a-about/a-about.component';
 
 export const routes: Routes = [
 
@@ -41,6 +41,10 @@ export const routes: Routes = [
   // ---- Public ----
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'a-home', component: AHomeComponent },
+  { path: 'a-about', component: AAboutComponent },
+
 
   // ---- Admin Auth ----
   { path: 'admin-register', component: AdminRegisterComponent },
@@ -66,17 +70,14 @@ export const routes: Routes = [
   { path: 'list-securities', component: ListSecuritiesComponent },
 
   // ---- Resident ----
-  { path: 'resident-login', component: ResidentLoginComponent },
   { path: 'resident-home', component: ResidentHomeComponent },
   { path: 'resident-about', component: ResidentAboutComponent },
 
   // ---- Visitor ----
-  { path: 'visitor-login', component: VisitorLoginComponent },
   { path: 'visitor-home', component: VisitorHomeComponent },
   { path: 'visitor-about', component: VisitorAboutComponent },
 
   // ---- Security ----
-  { path: 'security-login', component: SecurityLoginComponent },
   { path: 'security-home', component: SecurityHomeComponent },
   { path: 'security-about', component: SecurityAboutComponent },
 

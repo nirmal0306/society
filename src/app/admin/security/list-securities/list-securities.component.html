@@ -75,10 +75,10 @@
           <td>{{ security.email }}</td>
           <td>{{ security.mobile }}</td>
           <td>{{ security.shift }}</td>
-          <td>
-            <button (click)="editSecurity(security._id)" class="btn btn-edit">
-              Edit
-            </button>
+
+          <td class="action-icons">
+            <img src="document.png" alt="Edit" class="icon-img" (click)="editSecurity(security._id)">
+            <img src="user.png" alt="Delete" class="icon-img" (click)="deleteSecurity(security._id)">
           </td>
         </tr>
       </tbody>

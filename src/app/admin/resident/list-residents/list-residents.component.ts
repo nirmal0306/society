@@ -9,8 +9,7 @@ interface Resident {
   name: string;
   email: string;
   mobile: string;
-  block: string;
-  flat: string;
+  flats: { block: string; flat: string }[];
   photo: string;
 }
 
@@ -41,10 +40,9 @@ export class ListResidentsComponent implements OnInit {
         this.residents = res;
         this.loading = false;
       },
-      error: (err) => {
-        console.error(err);
+      error: () => {
         this.loading = false;
-        alert('Error fetching residents');
+        Swal.fire('Error', 'Failed to fetch residents', 'error');
       }
     });
   }
@@ -52,16 +50,46 @@ export class ListResidentsComponent implements OnInit {
   editResident(id: string) {
     this.router.navigate(['/edit-resident', id]);
   }
+
+  deleteResident(id: string) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will permanently delete the resident!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.http.delete(`${this.API_URL}/${id}`).subscribe({
+          next: () => {
+            Swal.fire('Deleted!', 'Resident has been deleted.', 'success');
+            this.residents = this.residents.filter(r => r._id !== id);
+          },
+          error: () => Swal.fire('Error', 'Failed to delete resident', 'error')
+        });
+      }
+    });
+  }
+
   logout() {
-      localStorage.clear();
-      Swal.fire({
-        icon: 'success',
-        title: 'Logged Out',
-        text: 'You have been logged out successfully.',
-        timer: 1500,
-        showConfirmButton: false
-      }).then(() => {
-        this.router.navigate(['/admin-login']);
-      });
-    }
+    Swal.fire({
+      title: 'Logout?',
+      text: 'Do you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        Swal.fire({
+          icon: 'success',
+          title: 'Logged Out',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => this.router.navigate(['/admin-login']));
+      }
+    });
+  }
 }

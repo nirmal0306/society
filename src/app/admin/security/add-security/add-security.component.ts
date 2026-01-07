@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
-import { AlertService } from '../../../services/alert.service'; // import SweetAlert service
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-add-security',
   standalone: true,
@@ -14,73 +14,120 @@ import Swal from 'sweetalert2';
 })
 export class AddSecurityComponent {
 
+  @ViewChild('video') video!: ElementRef;
+  @ViewChild('canvas') canvas!: ElementRef;
+
   security = {
     name: '',
     email: '',
     mobile: '',
-    shift: '' // Added shift field
+    shift: ''
   };
 
-  shifts: string[] = ['Morning', 'Afternoon', 'Night']; // Example shifts
+  shifts: string[] = ['Morning', 'Afternoon', 'Night'];
 
-  selectedFile: File | null = null;
+  imageBlob!: Blob;
   imagePreview: string | null = null;
+  stream!: MediaStream;
 
-  private API_URL = 'http://localhost:5000/api/security';
+  API_URL = 'http://localhost:5000/api/security';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private alert: AlertService // inject SweetAlert service
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    this.selectedFile = file;
-
-    const reader = new FileReader();
-    reader.onload = () => this.imagePreview = reader.result as string;
-    reader.readAsDataURL(file);
-  }
-
-  addSecurity() {
-    if (!this.security.shift) {
-      this.alert.error('Please select shift', 'Validation Error');
+  async startCamera() {
+    if (!this.security.name || !this.security.email || !this.security.mobile || !this.security.shift) {
+      Swal.fire('Validation', 'Fill all details before starting the camera', 'warning');
       return;
     }
 
-    if (!this.selectedFile) {
-      this.alert.error('Please upload security photo', 'Validation Error');
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const videoEl = this.video.nativeElement as HTMLVideoElement;
+      videoEl.srcObject = this.stream;
+      videoEl.style.transform = 'scaleX(-1)';
+      videoEl.play();
+    } catch (err) {
+      Swal.fire('Camera Error', 'Unable to access camera', 'error');
+    }
+  }
+
+  captureImage() {
+    if (!this.security.name || !this.security.email || !this.security.mobile || !this.security.shift) {
+      Swal.fire('Validation', 'Fill all details before capturing', 'warning');
+      return;
+    }
+
+    const video = this.video.nativeElement as HTMLVideoElement;
+    const canvas = this.canvas.nativeElement as HTMLCanvasElement;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.save();
+    ctx.scale(-1, 1); // mirror
+    ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    this.imagePreview = canvas.toDataURL('image/png');
+
+    canvas.toBlob((blob: Blob | null) => {
+      if (!blob) {
+        Swal.fire('Error', 'Failed to capture image', 'error');
+        return;
+      }
+      this.imageBlob = blob;
+    }, 'image/png');
+
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop());
+    }
+
+    Swal.fire({ icon: 'success', title: 'Captured', timer: 1200, showConfirmButton: false });
+  }
+
+  addSecurity() {
+    if (!this.security.name || !this.security.email || !this.security.mobile || !this.security.shift) {
+      Swal.fire('Validation Error', 'Fill all details', 'warning');
+      return;
+    }
+
+    if (!this.imageBlob) {
+      Swal.fire('Error', 'Capture photo before submitting', 'error');
       return;
     }
 
     const formData = new FormData();
-    Object.entries(this.security).forEach(
-      ([key, value]) => formData.append(key, value)
-    );
-    formData.append('photo', this.selectedFile);
+    Object.entries(this.security).forEach(([key, value]) => formData.append(key, value));
+    formData.append('photo', this.imageBlob, 'face.png');
+
+    Swal.fire({ title: 'Adding Security...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
     this.http.post(this.API_URL, formData).subscribe({
       next: () => {
-        this.alert.success('Security added successfully!');
-        setTimeout(() => this.router.navigate(['/list-securities']), 1500);
+        Swal.fire({ icon: 'success', title: 'Security Added', timer: 1500, showConfirmButton: false })
+          .then(() => this.router.navigate(['/list-securities']));
       },
-      error: () => this.alert.error('Error adding security', 'Add Failed')
+      error: () => Swal.fire('Error', 'Failed to add security', 'error')
     });
   }
 
   logout() {
-      localStorage.clear();
-      Swal.fire({
-        icon: 'success',
-        title: 'Logged Out',
-        text: 'You have been logged out successfully.',
-        timer: 1500,
-        showConfirmButton: false
-      }).then(() => {
-        this.router.navigate(['/admin-login']);
-      });
-    }
+    Swal.fire({
+      title: 'Logout?',
+      text: 'Do you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        Swal.fire({ icon: 'success', title: 'Logged Out', timer: 1200, showConfirmButton: false })
+          .then(() => this.router.navigate(['/admin-login']));
+      }
+    });
+  }
 }
