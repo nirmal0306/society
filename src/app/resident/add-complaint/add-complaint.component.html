@@ -1,0 +1,139 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Complaints -->
+        <li class="dropdown-sub">
+          <a (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <!-- Visitors -->
+        <li>
+          <a routerLink="/manage-visitor">Manage Visitors</a>
+        </li>
+
+        <!-- Events -->
+        <li>
+          <a routerLink="/list-event-resident">Events</a>
+        </li>
+
+        <!-- Notices -->
+        <li>
+          <a routerLink="/list-notice-resident">Notices</a>
+        </li>
+
+        <!-- Parking -->
+        <li>
+          <a routerLink="/parking">Parking</a>
+        </li>
+
+        <!-- Maintenance -->
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+<section class="complaint-section">
+
+  <div class="complaint-card">
+
+    <h2>Raise a Complaint</h2>
+
+    <form (ngSubmit)="submitComplaint()">
+
+      <!-- Resident Info -->
+      <div class="grid">
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" [value]="name" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [value]="email" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Block</label>
+          <input type="text" [value]="flats[0]?.block" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Flat No</label>
+          <input type="text" [value]="flats[0]?.flat" readonly>
+        </div>
+
+      </div>
+
+      <!-- Complaint Details -->
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text"
+               [(ngModel)]="complaint.subject"
+               name="subject"
+               placeholder="Enter complaint subject">
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select [(ngModel)]="complaint.category" name="category">
+          <option value="">Select Category</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Water Issue">Water Issue</option>
+          <option value="Electricity">Electricity</option>
+          <option value="Security">Security</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="4"
+                  [(ngModel)]="complaint.description"
+                  name="description"
+                  placeholder="Describe your issue...">
+        </textarea>
+      </div>
+
+      <button type="submit">
+        Submit Complaint
+      </button>
+
+    </form>
+
+  </div>
+
+</section>

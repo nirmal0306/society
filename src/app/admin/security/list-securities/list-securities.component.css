@@ -160,12 +160,13 @@
   max-width: 700px;
   margin-left: 8vw;
 
-  background: rgba(12, 6, 6, 0.75);
+  background: rgba(255, 255, 255, 0.1); /* light glass */
+  backdrop-filter: blur(14px);
   border-radius: 20px;
   padding: 2.5vw 2.2vw;
 
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(14px);
+
   border: 1px solid rgba(255, 255, 255, 0.20);
 }
 
@@ -334,9 +335,7 @@ input, select {
   outline: none;
 }
 
-input::placeholder {
-  color: rgba(255,255,255,0.6);
-}
+
 
 .preview {
   margin: 15px 0;
@@ -525,13 +524,15 @@ select option {
     rgba(15, 23, 35, 0.95),
     rgba(15, 23, 35, 0.85)
   ); */
+  background: rgba(255, 255, 255, 0.08); /* light glass */
+  backdrop-filter: blur(14px);
 }
 
 /* ================= CARD ================= */
 .hero-content {
   width: 92%;
   max-width: 1100px;
-  background: rgba(12, 6, 6, 0.75);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 2.2rem;
   border: 1px solid rgba(255,255,255,0.18);
@@ -573,7 +574,7 @@ select option {
   padding: 14px;
   font-size: 0.95rem;
   text-align: left;
-  color: #ffb87a;
+  color: #bb7538;
   font-weight: 700;
 }
 
@@ -667,21 +668,6 @@ select option {
     padding: 6px 0;
   }
 }
-.btn-edit {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: none;
-  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
-  color: #1a1a1a;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-.btn-edit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255,184,122,0.45);
-}
 
 /* ================= EMPTY STATE ================= */
 .empty-text {
@@ -738,6 +724,7 @@ select option {
 .btn-icon {
   background: transparent;
   border: none;
+  color: #f1f1f1;
   cursor: pointer;
   padding: 2px 5px;
 }
@@ -746,4 +733,513 @@ select option {
   width: 24px;
   height: 24px;
   object-fit: contain;
+  color:#f1f1f1;
+}
+/* HEADER ROW */
+
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+
+/* TITLE STYLE */
+
+.hero-title{
+  font-size:28px;
+  font-weight:700;
+  /* color:#1f2937; */
+  letter-spacing:1px;
+}
+
+
+/* FILTER CONTAINER */
+
+.filter-box{
+  position:relative;
+}
+
+
+/* INPUT STYLE */
+
+.filter-box input{
+
+  width:260px;
+  padding:10px 40px 10px 15px;
+  color: #000;
+  border-radius:30px;
+  border:1px solid rgba(0,0,0,0.1);
+
+  background:rgba(255,255,255,0.4);
+  backdrop-filter:blur(8px);
+
+  font-size:14px;
+  transition:all 0.3s ease;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+/* SEARCH ICON */
+
+.search-icon{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:16px;
+  color:#666;
+  pointer-events:none;
+}
+
+
+/* FOCUS ANIMATION */
+
+.filter-box input:focus{
+
+  outline:none;
+
+  width:300px;
+
+  border-color:#4CAF50;
+
+  box-shadow:0 6px 18px rgba(76,175,80,0.25);
+
+}
+
+
+/* HOVER EFFECT */
+
+.filter-box input:hover{
+
+  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.header-row{
+  flex-direction:column;
+  align-items:flex-start;
+  gap:15px;
+}
+
+.filter-box input{
+  width:100%;
+}
+
+}
+th{
+cursor:pointer;
+user-select:none;
+}
+
+.sort-icon{
+margin-left:6px;
+font-size:12px;
+color:#faf4f4;
+transition:0.2s;
+}
+
+th:hover .sort-icon{
+color:#000;
+}
+/* PAGINATION CONTAINER */
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:25px;
+}
+
+
+/* PAGE TEXT */
+
+.page-info{
+  font-weight:600;
+  font-size:14px;
+  color:#333;
+}
+
+
+/* BUTTON STYLE */
+
+.pagination button{
+
+  padding:8px 16px;
+
+  border:none;
+  border-radius:25px;
+
+  background:linear-gradient(135deg,#4CAF50,#2ecc71);
+
+  color:white;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:all 0.3s ease;
+
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+
+}
+
+
+/* HOVER ANIMATION */
+
+.pagination button:hover{
+
+  transform:translateY(-3px) scale(1.05);
+
+  box-shadow:0 8px 18px rgba(0,0,0,0.25);
+
+}
+
+
+/* CLICK EFFECT */
+
+.pagination button:active{
+
+  transform:scale(0.95);
+
+}
+
+
+/* DISABLED BUTTON */
+
+.pagination button:disabled{
+
+  background:#ccc;
+  cursor:not-allowed;
+  box-shadow:none;
+  transform:none;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.pagination{
+  flex-direction:column;
+  gap:10px;
+}
+
+}
+
+.hero-title{
+  font-size:28px;
+  font-weight:700;
+  /* color:#1f2937; */
+  letter-spacing:1px;
+}
+
+
+
+/* FILTER CONTAINER */
+
+.filter-box{
+  position:relative;
+}
+
+
+/* INPUT STYLE */
+
+.filter-box input{
+
+  width:260px;
+  padding:10px 40px 10px 15px;
+
+  border-radius:30px;
+  border:1px solid rgba(0,0,0,0.1);
+
+  background:rgba(255,255,255,0.4);
+  backdrop-filter:blur(8px);
+
+  font-size:14px;
+  transition:all 0.3s ease;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+/* SEARCH ICON */
+
+.search-icon{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:16px;
+  color:#666;
+  pointer-events:none;
+}
+
+
+/* FOCUS ANIMATION */
+
+.filter-box input:focus{
+
+  outline:none;
+
+  width:300px;
+
+  border-color:#4CAF50;
+
+  box-shadow:0 6px 18px rgba(76,175,80,0.25);
+
+}
+
+
+/* HOVER EFFECT */
+
+.filter-box input:hover{
+
+  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.header-row{
+  flex-direction:column;
+  align-items:flex-start;
+  gap:15px;
+}
+
+.filter-box input{
+  width:100%;
+}
+
+}
+th{
+cursor:pointer;
+user-select:none;
+}
+
+.sort-icon{
+margin-left:6px;
+font-size:12px;
+color:#faf4f4;
+transition:0.2s;
+}
+
+th:hover .sort-icon{
+color:#000;
+}
+/* PAGINATION CONTAINER */
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:25px;
+}
+
+
+/* PAGE TEXT */
+
+.page-info{
+  font-weight:600;
+  font-size:14px;
+  color:#333;
+}
+
+
+/* BUTTON STYLE */
+
+.pagination button{
+
+  padding:8px 16px;
+
+  border:none;
+  border-radius:25px;
+
+  background:linear-gradient(135deg,#4CAF50,#2ecc71);
+
+  color:white;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:all 0.3s ease;
+
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+
+}
+
+
+/* HOVER ANIMATION */
+
+.pagination button:hover{
+
+  transform:translateY(-3px) scale(1.05);
+
+  box-shadow:0 8px 18px rgba(0,0,0,0.25);
+
+}
+
+
+/* CLICK EFFECT */
+
+.pagination button:active{
+
+  transform:scale(0.95);
+
+}
+
+
+/* DISABLED BUTTON */
+
+.pagination button:disabled{
+
+  background:#ccc;
+  cursor:not-allowed;
+  box-shadow:none;
+  transform:none;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.pagination{
+  flex-direction:column;
+  gap:10px;
+}
+
+}
+/* ================= GENERAL ================= */
+body {
+  font-family: 'Montserrat', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f7fa;
+  color: #333;
+}
+
+h1.hero-title {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color:#f6f6f6;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.pagination button {
+  background: #60a5fa;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:25px;
+}
+
+
+/* PAGE TEXT */
+
+.page-info{
+  font-weight:600;
+  font-size:14px;
+  color:#333;
+}
+
+
+/* BUTTON STYLE */
+
+.pagination button{
+
+  padding:8px 16px;
+
+  border:none;
+  border-radius:25px;
+
+  background:linear-gradient(135deg,#4CAF50,#2ecc71);
+
+  color:white;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:all 0.3s ease;
+
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+
+}
+
+
+/* HOVER ANIMATION */
+
+.pagination button:hover{
+
+  transform:translateY(-3px) scale(1.05);
+
+  box-shadow:0 8px 18px rgba(0,0,0,0.25);
+
+}
+
+
+/* CLICK EFFECT */
+
+.pagination button:active{
+
+  transform:scale(0.95);
+
+}
+
+
+/* DISABLED BUTTON */
+
+.pagination button:disabled{
+
+  background:#ccc;
+  cursor:not-allowed;
+  box-shadow:none;
+  transform:none;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.pagination{
+  flex-direction:column;
+  gap:10px;
+}
+
 }

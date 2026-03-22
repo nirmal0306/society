@@ -148,7 +148,6 @@
       rgba(15, 23, 35, 0.45),
       rgba(15, 23, 35, 0.25)
     ),; */
-
   padding-top: 110px; /* space for navbar */
   display: flex;
   align-items: center;
@@ -161,7 +160,7 @@
   max-width: 700px;
   margin-left: 8vw;
 
-  background: rgba(255, 255, 255, 0.08); /* light glass */
+  background: rgba(255, 255, 255, 0.8); /* light glass */
   border-radius: 20px;
   padding: 2.5vw 2.2vw;
 
@@ -172,7 +171,7 @@
 
 /* Top Label */
 .hero-overline {
-  color: #ffb87a; /* sunset gold */
+  color: #cf6a11; /* sunset gold */
   font-weight: 700;
   margin-bottom: 22px;
   text-transform: uppercase;
@@ -218,6 +217,7 @@
   background: linear-gradient(45deg, #ffb87a, #fcd4b0);
   color: #1a1a1a;
   border: none;
+  align-self: center;
   box-shadow: 0 4px 12px rgba(255, 184, 122, 0.4);
 }
 
@@ -331,7 +331,7 @@ input, select {
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.25);
   background: rgba(255,255,255,0.08);
-  color: #fff;
+  color: #060606;
   outline: none;
 }
 
@@ -351,7 +351,7 @@ select {
   width: 100%;
   padding: 0.85rem 1rem;
   background: rgba(255,255,255,0.08);
-  color: #fff;
+  color: #0a0a0a;
   border: 1px solid rgba(255,255,255,0.18);
   border-radius: 12px;
 }
@@ -404,12 +404,12 @@ label {
 }
 
 input {
-  width: 90%;
+  width: 80%;
   padding: 0.85rem 1rem;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.18);
   border-radius: 12px;
-  color: #fff;
+  color: #000;
   font-size: 1rem;
   transition: 0.2s ease;
 }
@@ -425,7 +425,7 @@ input.invalid {
 }
 
 input::placeholder {
-  color: rgb(228, 195, 195);      /* change this to any color */
+  color: rgb(10, 10, 10);      /* change this to any color */
   opacity: 1;      /* optional: makes placeholder fully visible */
 }
 
@@ -526,8 +526,9 @@ select option {
 .hero-content {
   width: 100%;
   max-width: 480px;
-  background: rgba(12, 6, 6, 0.75);
+  background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255,255,255,0.15);
+  color: #000;
   padding: 2.4rem;
   border-radius: 22px;
   backdrop-filter: blur(14px);
@@ -543,7 +544,7 @@ select option {
 /* ================= HEADINGS ================= */
 .hero-overline {
   text-align: center;
-  color: #ffb87a;
+  color: #cf6a11;;
   font-weight: 700;
   font-size: 0.95rem;
   margin-bottom: 6px;
@@ -569,20 +570,24 @@ select option {
 label {
   display: block;
   margin-bottom: 0.4rem;
-  color: rgb(253, 215, 215);;
+  /* color: rgb(253, 215, 215); */
+  color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
+}
+h3{
+  color: #fff;
 }
 
 /* ================= INPUTS ================= */
 input,
 select {
-  width: 100%;
+  width: 94.3%;
   padding: 0.85rem 1rem;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.18);
   border-radius: 14px;
-  color: #fff;
+  color: #000;
   font-size: 1rem;
   transition: 0.25s ease;
 }
@@ -600,8 +605,9 @@ select:focus {
 }
 
 select option {
-  color: white;
+  color: bisque;
   background-color: transparent;
+
 }
 
 /* ================= BLOCK + FLAT ROW ================= */
@@ -708,7 +714,8 @@ select:focus {
 
 /* Dropdown options */
 select option {
-  background: rgba(26, 40, 56, 0.95); /* dark dropdown */
+  /* background: rgba(26, 40, 56, 0.95); dark dropdown */
+  background: rgb(138, 121, 121);
   color: #fff;
 }
 
@@ -729,6 +736,7 @@ select {
     5px 5px,
     5px 5px;
   background-repeat: no-repeat;
+  color: #0a0a0a;
 }
 /* ================= BLOCK & FLAT DROPDOWN ================= */
 
@@ -842,7 +850,8 @@ select {
 /* ================= CAMERA BUTTONS ================= */
 
 .btn-camera:hover {
-  background: rgba(255,184,122,0.15);
+  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
+  color: #000;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(255,184,122,0.25);
 }
@@ -918,14 +927,16 @@ canvas {
 /* Start Camera - Glass style */
 .btn-camera {
   background: rgba(255,255,255,0.12);
-  color: #fff;
+  color: #0c0b0b;
   border: 1px solid rgba(255,255,255,0.25);
 }
 
+
 .btn-camera:hover {
-  background: rgba(255,184,122,0.25);
-  color: #ffb87a;
+  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
+  color: #ffffff;
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,184,122,0.25);
 }
 
 /* Capture Face - Primary */
@@ -961,4 +972,619 @@ video {
   object-fit: cover;
   border: 2px solid #ffb87a;
   box-shadow: 0 6px 18px rgba(255,184,122,0.35);
+}
+/* =========================================================
+   GLOBAL RESET + VARIABLES
+========================================================= */
+:host {
+  --gold: #ffb87a;
+  --gold-soft: #fcd4b0;
+
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  scroll-behavior: smooth;
+
+
+
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+
+  /* Background image */
+  background: url('/assets/bg.jpg') no-repeat center center/cover;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Glass Overlay */
+:host::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* Light transparent white */
+  background: rgba(250, 250, 250, 0);
+
+  /* Blur effect */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  z-index: 0;
+}
+
+/* Make content appear above blur */
+:host > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   NAVBAR — FLOATING GLASS + ANIMATION
+========================================================= */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 72px;
+  background: rgba(20, 32, 48, 0.65);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4vw;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  animation: slideDown 0.8s ease forwards;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(45deg, var(--gold), var(--gold-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 2.5vw;
+  list-style: none;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  color: #f6f6f6;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 6px 0;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+/* underline animation */
+.nav-links li::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--gold);
+  transition: 0.3s ease;
+}
+.nav-links li:hover::after {
+  width: 100%;
+}
+
+/* =========================================================
+   DROPDOWN — FLOAT + FADE
+========================================================= */
+.dropdown-menu {
+  position: absolute;
+  top: 130%;
+  left: -40px;
+  background: rgba(26, 40, 56, 0.95);
+  border-radius: 14px;
+  padding: 10px 0;
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: 0.35s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 10px 18px;
+  color: #f6f6f6;
+}
+
+.dropdown-menu li a:hover {
+  background: rgba(255,184,122,0.18);
+  color: var(--gold);
+}
+
+/* =========================================================
+   HERO — PARALLAX + GLOW ANIMATION
+========================================================= */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 110px;
+  /* background:
+    radial-gradient(circle at top, rgba(255,184,122,0.15), transparent 60%),
+    linear-gradient(135deg, var(--dark-1), var(--dark-2), var(--dark-3)); */
+  animation: heroFade 1.2s ease forwards;
+}
+
+@keyframes heroFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero-content {
+  max-width: 580px;
+  margin-left: 8vw;
+
+  border-radius: 26px;
+  padding: 3rem;
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  animation: floatUp 1s ease forwards;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.hero-overline {
+  color: #cf6a11;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.hero-desc {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  margin-bottom: 32px;
+}
+
+/* =========================================================
+   BUTTONS — GLOW + RIPPLE FEEL
+========================================================= */
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.85rem 2.4rem;
+  border-radius: 40px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-yellow {
+  background: linear-gradient(45deg, var(--gold), var(--gold-soft));
+  color: #222;
+  box-shadow: 0 8px 25px rgba(255,184,122,0.45);
+}
+
+.btn-yellow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(255,184,122,0.65);
+}
+
+.btn-outline {
+  border: 2px solid rgba(255,255,255,0.5);
+  color: #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   ADMIN CARDS — HOVER + DEPTH
+========================================================= */
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+.focus-item {
+  background: #fff;
+  padding: 30px;
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  transition: 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.focus-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,184,122,0.2), transparent);
+  opacity: 0;
+  transition: 0.35s ease;
+}
+
+.focus-item:hover::before {
+  opacity: 1;
+}
+
+.focus-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE FIRST
+========================================================= */
+@media (max-width: 900px) {
+  .hero-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav {
+    padding: 0 5vw;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .hero-content {
+    padding: 2rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* ================= HAMBURGER ================= */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 3px;
+  margin-right: 30px;
+  background: #fff;
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+/* ================= NAV LINKS FOR MOBILE ================= */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2.5vw;
+  transition: 0.4s ease;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 72px;
+    right: -100%;
+    flex-direction: column;
+    background: rgba(20, 32, 48, 0.95);
+    width: 250px;
+    height: 100%;
+    padding-top: 2rem;
+    gap: 0;
+    padding-left: 0;
+    transition: right 0.35s ease;
+    z-index: 150;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li {
+    width: 100%;
+    margin: 0;
+  }
+
+  .nav-links li a {
+    display: block;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+  }
+
+  .dropdown-menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: rgba(15, 23, 35, 0.9);
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .dropdown-submenu {
+    position: relative;
+    top: 0;
+    right: 0;
+    transform: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    box-shadow: none;
+  }
+}
+
+/* ================= HERO BUTTONS RESPONSIVE ================= */
+.hero-actions {
+  display: flex;
+  gap: 1.1em;
+  flex-wrap: wrap;
+}
+
+.btn {
+  width: auto;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .hero-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* ================= MOBILE DROPDOWN FIX ================= */
+@media (max-width: 900px) {
+
+  /* Disable hover logic */
+  .dropdown:hover .dropdown-menu,
+  .dropdown-sub:hover .dropdown-submenu {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Main dropdown */
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    position: static;
+    background: transparent;
+  }
+
+  .dropdown-menu.open {
+    display: block;
+  }
+
+  /* Submenu */
+  .dropdown-submenu {
+    display: none;
+    position: static;
+    margin-left: 15px;
+    background: rgba(26, 40, 56, 0.9);
+    border-radius: 8px;
+  }
+
+  .dropdown-submenu.open {
+    display: block;
+  }
+
+  /* Mobile menu spacing */
+  .dropdown-menu li a {
+    padding: 14px 25px;
+    font-size: 1rem;
+  }
+}
+/* =========================
+   MOBILE NAVBAR — PREMIUM
+========================= */
+@media (max-width: 900px) {
+
+  .nav-links {
+    right: -100%;
+    width: 78%;
+    max-width: 340px;
+    height: 100vh;
+    top: 60px;
+    background: rgba(15, 23, 35, 0.97);
+    backdrop-filter: blur(16px);
+    padding: 1.2rem 0;
+    box-shadow: -20px 0 40px rgba(0,0,0,0.5);
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li a {
+    padding: 16px 26px;
+    font-size: 1.05rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Remove hover underline on mobile */
+  .nav-links li::after {
+    display: none;
+  }
+
+  /* =====================
+     DROPDOWN ACCORDION
+  ===================== */
+  .dropdown-menu,
+  .dropdown-submenu {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .dropdown-menu.open,
+  .dropdown-submenu.open {
+    max-height: 500px;
+    opacity: 1;
+  }
+
+  .dropdown-menu li a {
+    padding-left: 88px;
+    font-size: 0.95rem;
+  }
+
+  .dropdown-submenu li a {
+    padding-left: 108px;
+    font-size: 0.9rem;
+  }
+
+  /* =====================
+     HAMBURGER ANIMATION
+  ===================== */
+  .hamburger span {
+    transition: all 0.3s ease;
+  }
+
+  .nav-links.active ~ .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .nav-links.active ~ .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-links.active ~ .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+}
+.btn-request {
+  width: 30%;
+  padding: 0.9rem;
+  border-radius: 35px;
+  border: none;
+  background: linear-gradient(45deg, #ffb87a, #fcd4b0);
+  color: #222;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255,184,122,0.35);
+  transition: 0.25s ease;
+  margin-left: 34%;
+}
+.inside{
+background:#d4edda;
+color:#155724;
+padding:4px 10px;
+border-radius:6px;
+font-weight:600;
+}
+
+.exited{
+background:#f8d7da;
+color:#721c24;
+padding:4px 10px;
+border-radius:6px;
+font-weight:600;
+}
+
+.exited-text{
+color:#28a745;
+font-weight:bold;
+}
+.pending{
+color:#ff9800;
+font-weight:600;
+}
+
+.approved{
+color:#28a745;
+font-weight:600;
+}
+
+.rejected{
+color:#dc3545;
+font-weight:600;
+}
+
+.exited-text{
+color:#17a2b8;
+font-weight:600;
 }

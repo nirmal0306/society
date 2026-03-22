@@ -5,46 +5,75 @@
     <span class="logo-text">My Gate</span>
   </div>
 
-  <ul class="nav-links">
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
     <li><a routerLink="/admin-home">Home</a></li>
     <li><a routerLink="/admin-about">About</a></li>
 
     <li class="dropdown">
-      <a role="button">Services</a>
+      <a (click)="toggleServices()">Services</a>
 
-      <ul class="dropdown-menu">
-
-        <!-- Residents -->
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
         <li class="dropdown-sub">
-          <a role="button">Residents</a>
-          <ul class="dropdown-submenu">
+          <a (click)="toggleResidents()">Residents</a>
+          <ul class="dropdown-submenu" [class.open]="residentsOpen">
             <li><a routerLink="/add-resident">Add Resident</a></li>
             <li><a routerLink="/list-residents">List Residents</a></li>
           </ul>
         </li>
 
-        <!-- Security -->
         <li class="dropdown-sub">
-          <a role="button">Security</a>
-          <ul class="dropdown-submenu">
+          <a (click)="toggleSecurity()">Security</a>
+          <ul class="dropdown-submenu" [class.open]="securityOpen">
             <li><a routerLink="/add-security">Add Security</a></li>
             <li><a routerLink="/list-securities">List Security</a></li>
           </ul>
         </li>
 
-        <!-- Visitors -->
         <li class="dropdown-sub">
-          <a role="button">Visitors</a>
-          <ul class="dropdown-submenu">
+          <a (click)="toggleVisitors()">Visitors</a>
+          <ul class="dropdown-submenu" [class.open]="visitorsOpen">
             <li><a routerLink="/list-visitors">List Visitors</a></li>
           </ul>
         </li>
+
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/list-maintenance">List Maintenance</a></li>
+            <li><a routerLink="/pending-maintenance">Pending Maintenance</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Events</a>
+          <ul class="dropdown-submenu" [class.open]="eventOpen">
+            <li><a routerLink="/add-event">Add Event</a></li>
+            <li><a routerLink="/list-events">List Events</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-sub">
+          <a (click)="toggleNotice()">Notice</a>
+          <ul class="dropdown-submenu" [class.open]="noticeOpen">
+            <li><a routerLink="/add-notice">Add Notice</a></li>
+            <li><a routerLink="/list-notices">List Notices</a></li>
+          </ul>
+        </li>
+        <li><a routerLink="/manage-complaints">Complaints</a></li>
+        <li><a routerLink="/manage-parking">Parking</a></li>
       </ul>
     </li>
-
-    <li><a role="button" (click)="logout()">Logout</a></li>
+    <li><a routerLink="/admin-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
+
 
 <!-- ================= FORM ================= -->
 <section class="hero">
@@ -74,6 +103,7 @@
       <!-- MULTI FLATS -->
       <h3>Flat Ownership</h3>
       <div class="form-row" *ngFor="let f of resident.flats; let i = index">
+
         <div class="form-group">
           <label>Block</label>
           <select [(ngModel)]="f.block" name="block{{i}}" required>
@@ -90,10 +120,21 @@
           </select>
         </div>
 
+        <!-- ✅ OWNER / RENTAL -->
+        <div class="form-group">
+          <label>Resident Type</label>
+          <select [(ngModel)]="f.type" name="type{{i}}" required>
+            <option value="">Select Type</option>
+            <option value="owner">Owner</option>
+            <option value="rental">Rental</option>
+          </select>
+        </div>
+
         <div class="form-group action-btns">
           <button type="button" *ngIf="i === resident.flats.length - 1" (click)="addFlat()">➕</button>
           <button type="button" *ngIf="resident.flats.length > 1" (click)="removeFlat(i)">➖</button>
         </div>
+
       </div>
 
       <!-- CAMERA -->
@@ -103,14 +144,15 @@
         <canvas #canvas hidden></canvas>
 
         <div class="camera-actions">
-          <button class="btn-camera" type="button" (click)="startCamera()">Start Camera</button>
-          <button class="btn-capture" type="button" (click)="captureImage()">Capture Face</button>
+          <button type="button" class="btn-camera" (click)="startCamera()">Start Camera</button>
+          <button type="button" class="btn-capture" (click)="captureImage()">Capture Face</button>
         </div>
       </div>
 
       <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
 
       <button type="submit" class="btn btn-yellow">Update Resident</button>
+
     </form>
   </div>
 </section>

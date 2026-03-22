@@ -1,1 +1,148 @@
-<p>resident-about works!</p>
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Complaints -->
+        <li class="dropdown-sub">
+          <a (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <!-- Visitors -->
+        <li>
+          <a routerLink="/manage-visitor">Manage Visitors</a>
+        </li>
+
+        <!-- Events -->
+        <li>
+          <a routerLink="/list-event-resident">Events</a>
+        </li>
+
+        <!-- Notices -->
+        <li>
+          <a routerLink="/list-notice-resident">Notices</a>
+        </li>
+
+        <!-- Parking -->
+        <li>
+          <a routerLink="/parking">Parking</a>
+        </li>
+
+        <!-- Maintenance -->
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+<!-- ================= ABOUT HERO ================= -->
+<section class="about-hero">
+  <div class="about-glass">
+    <h1>About My Gate</h1>
+    <p>
+      My Gate is a smart society management system designed to simplify
+      communication, security, and maintenance operations for modern residential communities.
+    </p>
+  </div>
+</section>
+
+<!-- ================= OUR MISSION ================= -->
+<section class="about-section">
+  <h2 class="section-title">Our Mission</h2>
+  <p class="section-text">
+    Our mission is to digitize residential society management by providing
+    a secure, transparent, and easy-to-use platform for residents, security staff,
+    and administrators.
+  </p>
+</section>
+
+<!-- ================= OUR VISION ================= -->
+<section class="about-section dark">
+  <h2 class="section-title">Our Vision</h2>
+  <p class="section-text">
+    We aim to build safer and smarter communities where residents can manage
+    complaints, visitors, maintenance payments, and society updates — all in one place.
+  </p>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="about-features">
+  <h2 class="section-title">What We Offer</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>Visitor Management</h3>
+      <p>Approve or reject visitors instantly for enhanced security.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Complaint Tracking</h3>
+      <p>Raise, track, and resolve complaints efficiently.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Online Maintenance</h3>
+      <p>Secure digital payment system for maintenance fees.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Events & Notices</h3>
+      <p>Stay updated with society announcements and activities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section class="about-section">
+  <h2 class="section-title">Why Choose My Gate?</h2>
+  <ul class="why-list">
+    <li>✔ Secure & Reliable System</li>
+    <li>✔ Easy-to-Use Interface</li>
+    <li>✔ Real-Time Notifications</li>
+    <li>✔ Transparent Operations</li>
+  </ul>
+</section>
+
+<!-- ================= CALL TO ACTION ================= -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Join the Smart Community</h2>
+    <p>Experience seamless society management today.</p>
+    <a routerLink="/resident-home" class="btn-primary">Go to Dashboard</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 My Gate. All rights reserved.</p>
+</footer>

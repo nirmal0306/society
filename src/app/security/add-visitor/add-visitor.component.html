@@ -1,0 +1,125 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/security-home">Home</a></li>
+    <li><a routerLink="/security-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Manage Visitors -->
+        <li class="dropdown-sub">
+          <a (click)="toggleVisitors()">Manage Visitors</a>
+          <ul class="dropdown-submenu" [class.open]="visitorsOpen">
+            <li><a routerLink="/add-visitor">Add Visitor</a></li>
+            <li><a routerLink="/list-visitors-security">List Visitors</a></li>
+          </ul>
+        </li>
+
+        <!-- Salary -->
+        <li>
+          <a routerLink="/security-salary">Salary</a>
+        </li>
+
+        <!-- Leave -->
+        <li>
+          <a routerLink="/leave-application">Leave Application</a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/security-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="hero-overline">Visitor Management</div>
+
+    <h1 class="hero-title">Add Visitor</h1>
+
+    <form class="visitor-form" (ngSubmit)="addVisitor()">
+
+      <div class="form-group">
+        <label>Visitor Name</label>
+        <input type="text" [(ngModel)]="visitor.name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="visitor.email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mobile</label>
+        <input type="tel" [(ngModel)]="visitor.mobile" name="mobile" required>
+      </div>
+
+      <div class="form-group">
+        <label>Visitor Type</label>
+        <select [(ngModel)]="visitor.visitorType" name="visitorType" required>
+          <option value="">Select</option>
+          <option>Guest</option>
+          <option>Delivery</option>
+          <option>Cab</option>
+          <option>Service</option>
+          <option>Food Delivery</option>
+          <option>Courier</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Block</label>
+        <select [(ngModel)]="visitor.block" name="block" required>
+          <option value="">Select</option>
+          <option *ngFor="let b of blocks" [value]="b">{{b}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Flat</label>
+        <select [(ngModel)]="visitor.flat" name="flat" required>
+          <option value="">Select</option>
+          <option *ngFor="let f of flats" [value]="f">{{f}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Purpose</label>
+        <input type="text" [(ngModel)]="visitor.purpose" name="purpose">
+      </div>
+
+      <!-- Camera -->
+      <h3>Visitor Photo</h3>
+      <div class="camera-box">
+        <video #video autoplay></video>
+        <canvas #canvas hidden></canvas>
+        <div class="camera-actions">
+          <button type="button" class="btn-camera" (click)="startCamera()">Start Camera</button>
+          <button type="button" class="btn-capture" (click)="captureImage()">Capture</button>
+        </div>
+      </div>
+
+      <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
+
+      <button type="submit" class="btn-request">Send Request</button>
+    </form>
+
+  </div>
+</section>

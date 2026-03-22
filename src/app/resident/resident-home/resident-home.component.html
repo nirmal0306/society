@@ -1,33 +1,142 @@
+<!-- ================= NAVBAR ================= -->
 <nav class="nav">
   <div class="logo-container">
     <img src="logo.jpg" class="logo-img" alt="Logo">
-    <span class="logo-text">Society Management System</span>
+    <span class="logo-text">My Gate</span>
   </div>
 
-  <ul class="nav-links">
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/about">About</a></li>
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
 
     <li class="dropdown">
-      <a>Services</a>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/complaints">Complaints</a></li>
-        <li><a routerLink="/events">Events</a></li>
-        <li><a routerLink="/parking">Parking</a></li>
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Complaints -->
+        <li class="dropdown-sub">
+          <a (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <!-- Visitors -->
+        <li>
+          <a routerLink="/manage-visitor">Manage Visitors</a>
+        </li>
+
+        <!-- Events -->
+        <li>
+          <a routerLink="/list-event-resident">Events</a>
+        </li>
+
+        <!-- Notices -->
+        <li>
+          <a routerLink="/list-notice-resident">Notices</a>
+        </li>
+
+        <!-- Parking -->
+        <li>
+          <a routerLink="/parking">Parking</a>
+        </li>
+
+        <!-- Maintenance -->
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+          </ul>
+        </li>
+
       </ul>
     </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
 
-
+<!-- ================= HERO SECTION ================= -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-overline">Welcome to Our Society</div>
-    <h1 class="hero-title">Manage Your Residence Effortlessly</h1>
-    <p class="hero-desc">Track visitors, residents, and admin actions all in one place.</p>
-    <div class="hero-actions">
-      <a routerLink="/resident-login" class="btn btn-yellow">Resident Login</a>
-      <a routerLink="/admin-login" class="btn btn-outline">Admin Login</a>
+  <div class="hero-content glass-card">
+    <div class="hero-overline">WELCOME RESIDENT</div>
+    <h1 class="hero-title">Manage Your Society Easily</h1>
+    <p class="hero-desc">
+      Raise complaints, manage visitors, pay maintenance and stay updated with notices and events.
+    </p>
+
+    <div class="hero-buttons">
+      <a routerLink="/add-complaint" class="btn btn-yellow">Raise Complaint</a>
+      <a routerLink="/pay-maintenance" class="btn btn-outline">Pay Maintenance</a>
     </div>
   </div>
 </section>
+
+<!-- ================= QUICK ACTIONS ================= -->
+<section class="quick-actions">
+  <h2 class="section-title">Quick Actions</h2>
+
+  <div class="card-container">
+    <div class="action-card" routerLink="/add-complaint">
+      <h3>Complaints</h3>
+      <p>Submit and track your complaints easily.</p>
+    </div>
+
+    <div class="action-card" routerLink="/manage-visitor">
+      <h3>Visitors</h3>
+      <p>Approve and manage your visitors.</p>
+    </div>
+
+    <div class="action-card" routerLink="/pay-maintenance">
+      <h3>Maintenance</h3>
+      <p>Pay maintenance securely online.</p>
+    </div>
+
+    <div class="action-card" routerLink="/list-notice-resident">
+      <h3>Notices</h3>
+      <p>Stay updated with society announcements.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES SECTION ================= -->
+<section class="features">
+  <h2 class="section-title">Why Use My Gate?</h2>
+
+  <div class="feature-grid">
+    <div class="feature-box">
+      <h3>Secure Access</h3>
+      <p>Visitor approvals and secure entry management.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Digital Payments</h3>
+      <p>Easy and transparent maintenance payments.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Instant Updates</h3>
+      <p>Get event and notice alerts instantly.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Easy Complaint System</h3>
+      <p>Track and resolve issues efficiently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 My Gate. All rights reserved.</p>
+</footer>

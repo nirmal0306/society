@@ -1,0 +1,125 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Complaints -->
+        <li class="dropdown-sub">
+          <a (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <!-- Visitors -->
+        <li>
+          <a routerLink="/manage-visitor">Manage Visitors</a>
+        </li>
+
+        <!-- Events -->
+        <li>
+          <a routerLink="/list-event-resident">Events</a>
+        </li>
+
+        <!-- Notices -->
+        <li>
+          <a routerLink="/list-notice-resident">Notices</a>
+        </li>
+
+        <!-- Parking -->
+        <li>
+          <a routerLink="/parking">Parking</a>
+        </li>
+
+        <!-- Maintenance -->
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+<!-- ================= PROFILE HERO ================= -->
+<div class="admin-hero profile-hero">
+  <div class="admin-hero-content">
+    <h1>Resident Profile</h1>
+    <p class="tagline">Your account details</p>
+  </div>
+</div>
+
+<!-- ================= PROFILE GLASS CARD ================= -->
+<section class="profile-section">
+  <div class="profile-glass">
+
+    <!-- PROFILE PHOTO / AVATAR -->
+    <div class="profile-avatar-container">
+
+      <!-- If Photo Exists -->
+      <img *ngIf="photo"
+           [src]="'http://localhost:5000' + photo"
+           class="profile-photo"
+           alt="Profile Photo">
+
+      <!-- If No Photo -->
+      <div *ngIf="!photo" class="profile-avatar">
+        {{ name ? (name.charAt(0) | uppercase) : 'R' }}
+      </div>
+
+    </div>
+    <!-- NAME -->
+    <div class="profile-field">
+      <label>Name</label>
+      <p>{{ name }}</p>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="profile-field">
+      <label>Email</label>
+      <p>{{ email }}</p>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="profile-field">
+      <label>Mobile</label>
+      <p>{{ mobile }}</p>
+    </div>
+
+    <!-- FLATS -->
+    <div class="profile-field">
+      <label>Flats</label>
+      <div *ngFor="let flat of flats" class="flat-box">
+        Block {{ flat.block }} - Flat {{ flat.flat }}
+        <span *ngIf="flat.type" class="flat-type">
+          ({{ flat.type }})
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,106 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Complaints -->
+        <li class="dropdown-sub">
+          <a (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <!-- Visitors -->
+        <li>
+          <a routerLink="/manage-visitor">Manage Visitors</a>
+        </li>
+
+        <!-- Events -->
+        <li>
+          <a routerLink="/list-event-resident">Events</a>
+        </li>
+
+        <!-- Notices -->
+        <li>
+          <a routerLink="/list-notice-resident">Notices</a>
+        </li>
+
+        <!-- Parking -->
+        <li>
+          <a routerLink="/parking">Parking</a>
+        </li>
+
+        <!-- Maintenance -->
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+<div class="hero">
+<div class="container">
+  <h2>Visitor Requests</h2>
+
+  <div *ngIf="loading">Loading visitors...</div>
+
+  <div *ngIf="!loading && visitors.length === 0" class="empty-text">
+    No visitor requests found
+  </div>
+
+  <!-- Horizontal Scroll Container -->
+  <div class="visitor-scroll" *ngIf="!loading && visitors.length > 0">
+    <div class="visitor-card" *ngFor="let v of pagedVisitors">
+      <img *ngIf="v.photo" [src]="'http://localhost:5000' + v.photo" class="visitor-photo">
+      <h3>{{v.name}}</h3>
+      <p><b>Mobile:</b> {{v.mobile}}</p>
+      <p><b>Purpose:</b> {{v.purpose}}</p>
+      <p><b>Flat:</b> {{v.block}} - {{v.flat}}</p>
+      <p><b>Added By:</b> {{v.addedBy}}</p>
+      <p [class]="getStatusClass(v.status)">{{v.status}}</p>
+
+      <div *ngIf="v.status == 'Pending'" class="btns">
+        <button class="approve" (click)="approveVisitor(v._id)">Accept</button>
+        <button class="reject" (click)="rejectVisitor(v._id)">Reject</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Buttons -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn"
+            *ngFor="let p of [].constructor(totalPages); let i = index"
+            [class.active]="currentPage === i+1"
+            (click)="setPage(i+1)">
+      {{i + 1}}
+    </button>
+  </div>
+</div>
+</div>

@@ -1,1 +1,132 @@
-<p>security-about works!</p>
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/security-home">Home</a></li>
+    <li><a routerLink="/security-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <!-- Manage Visitors -->
+        <li class="dropdown-sub">
+          <a (click)="toggleVisitors()">Manage Visitors</a>
+          <ul class="dropdown-submenu" [class.open]="visitorsOpen">
+            <li><a routerLink="/add-visitor">Add Visitor</a></li>
+            <li><a routerLink="/list-visitors-security">List Visitors</a></li>
+          </ul>
+        </li>
+
+        <!-- Salary -->
+        <li>
+          <a routerLink="/security-salary">Salary</a>
+        </li>
+
+        <!-- Leave -->
+        <li>
+          <a routerLink="/leave-application">Leave Application</a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/security-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- ================= ABOUT HERO ================= -->
+<section class="about-hero">
+  <div class="about-glass">
+    <h1>About Security Panel</h1>
+    <p>
+      The Security Panel in My Gate helps security staff efficiently manage
+      visitor entries, maintain security records, and ensure safe access
+      to the residential community.
+    </p>
+  </div>
+</section>
+
+<!-- ================= OUR ROLE ================= -->
+<section class="about-section">
+  <h2 class="section-title">Our Role</h2>
+  <p class="section-text">
+    Security staff play an essential role in maintaining the safety of the
+    residential society. With My Gate, guards can quickly register visitors,
+    check approvals, and keep accurate entry records.
+  </p>
+</section>
+
+<!-- ================= OUR RESPONSIBILITY ================= -->
+<section class="about-section dark">
+  <h2 class="section-title">Our Responsibility</h2>
+  <p class="section-text">
+    The security system ensures that only authorized visitors enter the
+    society premises. By using the digital platform, security staff can
+    monitor entries, communicate with residents, and improve overall safety.
+  </p>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="about-features">
+  <h2 class="section-title">Security Features</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>Visitor Registration</h3>
+      <p>Quickly register visitor details at the society gate.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Visitor Logs</h3>
+      <p>Maintain digital records of all visitor entries and exits.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Salary Management</h3>
+      <p>Security staff can view salary details and payment history.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Leave Application</h3>
+      <p>Apply for leave digitally and track approval status.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY SECURITY SYSTEM ================= -->
+<section class="about-section">
+  <h2 class="section-title">Why This System?</h2>
+  <ul class="why-list">
+    <li>✔ Faster Visitor Entry Process</li>
+    <li>✔ Improved Society Security</li>
+    <li>✔ Accurate Entry Records</li>
+    <li>✔ Easy Management for Security Staff</li>
+  </ul>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Secure Your Society</h2>
+    <p>Manage visitor entries and maintain security records easily.</p>
+    <a routerLink="/security-home" class="btn-primary">Go to Dashboard</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 My Gate. All rights reserved.</p>
+</footer>

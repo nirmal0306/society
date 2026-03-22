@@ -1,0 +1,207 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/security-home">Home</a></li>
+    <li><a routerLink="/security-about">About</a></li>
+
+    <li class="dropdown">
+      <a (click)="toggleServices()">Services</a>
+
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <li class="dropdown-sub">
+          <a (click)="toggleVisitors()">Manage Visitors</a>
+          <ul class="dropdown-submenu" [class.open]="visitorsOpen">
+            <li><a routerLink="/add-visitor">Add Visitor</a></li>
+            <li><a routerLink="/list-visitors-security">List Visitors</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a routerLink="/security-salary">Salary</a>
+        </li>
+
+        <li>
+          <a routerLink="/leave-application">Leave Application</a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/security-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+
+<!-- ================= VISITOR LIST ================= -->
+<section class="hero">
+
+  <div class="hero-content">
+    <div class="header-row">
+
+      <h1 class="hero-title">Visitors List</h1>
+
+      <div class="filter-box">
+        <input
+          type="text"
+          placeholder="Search visitor..."
+          [(ngModel)]="searchText"
+          (input)="applyFilter()"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+
+    </div>
+    <div *ngIf="loading">Loading visitors...</div>
+
+    <table *ngIf="!loading && paginatedVisitors.length" class="resident-table">
+
+      <thead>
+        <tr>
+
+        <th (click)="sortData('name')">
+          Photo
+          <span class="sort-icon">{{ getSortIcon('name') }}</span>
+        </th>
+
+        <th (click)="sortData('name')">
+          Name
+          <span class="sort-icon">{{ getSortIcon('name') }}</span>
+        </th>
+
+        <th (click)="sortData('email')">
+          Email
+          <span class="sort-icon">{{ getSortIcon('email') }}</span>
+        </th>
+
+        <th (click)="sortData('mobile')">
+          Mobile
+          <span class="sort-icon">{{ getSortIcon('mobile') }}</span>
+        </th>
+
+        <th (click)="sortData('flat')">
+          Flat
+          <span class="sort-icon">{{ getSortIcon('flat') }}</span>
+        </th>
+
+        <th (click)="sortData('purpose')">
+          Purpose
+          <span class="sort-icon">{{ getSortIcon('purpose') }}</span>
+        </th>
+
+        <th (click)="sortData('status')">
+          Status
+          <span class="sort-icon">{{ getSortIcon('status') }}</span>
+        </th>
+
+        <th (click)="sortData('entryTime')">
+          Entry
+          <span class="sort-icon">{{ getSortIcon('entryTime') }}</span>
+        </th>
+
+        <th>
+          Exit
+        </th>
+
+        </tr>
+        </thead>
+
+      <tbody>
+
+        <tr *ngFor="let v of paginatedVisitors">
+
+          <td>
+            <img *ngIf="v.photo"
+            [src]="'http://localhost:5000' + v.photo"
+            class="resident-photo">
+          </td>
+
+          <td>{{v.name}}</td>
+          <td>{{v.email}}</td>
+          <td>{{v.mobile}}</td>
+
+          <td>{{v.block}} - {{v.flat}}</td>
+
+          <td>{{v.purpose}}</td>
+
+          <td>
+            <span
+            [ngClass]="{
+              'pending': v.status==='Pending',
+              'approved': v.status==='Accepted',
+              'rejected': v.status==='Rejected'
+            }">
+            {{v.status}}
+            </span>
+          </td>
+
+          <td>{{v.entryTime | date:'short'}}</td>
+
+          <td>
+
+            <span *ngIf="v.status==='Pending'" class="pending">
+              Waiting
+            </span>
+
+            <span *ngIf="v.status==='Rejected'" class="rejected">
+              Rejected
+            </span>
+
+            <button
+            *ngIf="v.status==='Accepted' && v.exitStatus==='Inside'"
+            (click)="exitVisitor(v._id)"
+            class="btn-icon">
+              Exit
+            </button>
+
+            <span
+            *ngIf="v.status==='Accepted' && v.exitStatus==='Exited'"
+            class="exited-text">
+              Exited
+            </span>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <div *ngIf="!loading && !paginatedVisitors.length">
+      No visitors found.
+    </div>
+
+
+    <!-- PAGINATION -->
+    <div class="pagination" *ngIf="totalPages > 1">
+
+      <button (click)="prevPage()" [disabled]="currentPage===1">
+        Prev
+      </button>
+
+      <span>
+        Page {{currentPage}} / {{totalPages}}
+      </span>
+
+      <button (click)="nextPage()" [disabled]="currentPage===totalPages">
+        Next
+      </button>
+
+    </div>
+
+  </div>
+
+</section>

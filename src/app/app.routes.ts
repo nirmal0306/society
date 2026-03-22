@@ -11,9 +11,6 @@ import { AdminAboutComponent } from './admin/admin-about/admin-about.component';
 import { ResidentHomeComponent } from './resident/resident-home/resident-home.component';
 import { ResidentAboutComponent } from './resident/resident-about/resident-about.component';
 
-import { VisitorHomeComponent } from './visitor/visitor-home/visitor-home.component';
-import { VisitorAboutComponent } from './visitor/visitor-about/visitor-about.component';
-
 import { SecurityHomeComponent } from './security/security-home/security-home.component';
 import { SecurityAboutComponent } from './security/security-about/security-about.component';
 
@@ -22,8 +19,7 @@ import { AddResidentComponent } from './admin/resident/add-resident/add-resident
 import { EditResidentComponent } from './admin/resident/edit-resident/edit-resident.component';
 import { ListResidentsComponent } from './admin/resident/list-residents/list-residents.component';
 
-import { AddVisitorComponent } from './admin/visitor/add-visitor/add-visitor.component';
-import { EditVisitorComponent } from './admin/visitor/edit-visitor/edit-visitor.component';
+import { AddVisitorComponent } from './security/add-visitor/add-visitor.component';
 import { ListVisitorsComponent } from './admin/visitor/list-visitors/list-visitors.component';
 
 import { AddSecurityComponent } from './admin/security/add-security/add-security.component';
@@ -32,6 +28,27 @@ import { ListSecuritiesComponent } from './admin/security/list-securities/list-s
 import { LoginComponent } from './auth/login/login.component';
 import { AHomeComponent } from './user/a-home/a-home.component';
 import { AAboutComponent } from './user/a-about/a-about.component';
+import { AdminProfileComponent } from './admin/admin-profile/admin-profile.component';
+import { ManageComplaintsComponent } from './admin/manage-complaints/manage-complaints.component';
+import { ManageParkingComponent } from './admin/manage-parking/manage-parking.component';
+import { AddEventComponent } from './admin/events/add-event/add-event.component';
+import { EditEventComponent } from './admin/events/edit-event/edit-event.component';
+import { ListEventsComponent } from './admin/events/list-events/list-events.component';
+import { AddNoticeComponent } from './admin/notice/add-notice/add-notice.component';
+import { EditNoticeComponent } from './admin/notice/edit-notice/edit-notice.component';
+import { ListNoticesComponent } from './admin/notice/list-notices/list-notices.component';
+import { ListMaintenanceComponent } from './admin/maintenance/list-maintenance/list-maintenance.component';
+import { PendingMaintenanceComponent } from './admin/maintenance/pending-maintenance/pending-maintenance.component';
+import { ResidentProfileComponent } from './resident/resident-profile/resident-profile.component';
+import { PayMaintenanceComponent } from './resident/pay-maintenance/pay-maintenance.component';
+import { ParkingComponent } from './resident/parking/parking.component';
+import { ManageVisitorComponent } from './resident/manage-visitor/manage-visitor.component';
+import { ListNoticeResidentComponent } from './resident/list-notice-resident/list-notice-resident.component';
+import { ListEventResidentComponent } from './resident/list-event-resident/list-event-resident.component';
+import { AddComplaintComponent } from './resident/add-complaint/add-complaint.component';
+import { ListComplaintsComponent } from './resident/list-complaints/list-complaints.component';
+import { SecurityProfileComponent } from './security/security-profile/security-profile.component';
+import { ListVisitorsSecurityComponent } from './security/list-visitors-security/list-visitors-security.component';
 
 export const routes: Routes = [
 
@@ -53,15 +70,32 @@ export const routes: Routes = [
   // ---- Admin Pages ----
   { path: 'admin-home', component: AdminHomeComponent },
   { path: 'admin-about', component: AdminAboutComponent },
+  { path: 'admin-profile', component: AdminProfileComponent },
+  { path: 'manage-complaints', component: ManageComplaintsComponent },
+  { path: 'manage-parking', component: ManageParkingComponent },
+
+  // ---- Event Crud ----
+  { path: 'add-event', component: AddEventComponent },
+  { path: 'edit-event/:id', component: EditEventComponent },
+  { path: 'list-events', component: ListEventsComponent },
+
+  // ---- Notice Crud ----
+  { path: 'add-notice', component: AddNoticeComponent },
+  { path: 'edit-notice/:id', component: EditNoticeComponent },
+  { path: 'list-notices', component: ListNoticesComponent },
+
+  // ---- Maintenance ----
+  { path: 'list-maintenance', component: ListMaintenanceComponent },
+  { path: 'pending-maintenance', component: PendingMaintenanceComponent },
+
+
 
   // ---- Resident CRUD ----
   { path: 'add-resident', component: AddResidentComponent },
   { path: 'edit-resident/:id', component: EditResidentComponent },
   { path: 'list-residents', component: ListResidentsComponent },
 
-  // ---- Visitor CRUD ----
-  { path: 'add-visitor', component: AddVisitorComponent },
-  { path: 'edit-visitor', component: EditVisitorComponent },
+  // ---- Visitors ----
   { path: 'list-visitors', component: ListVisitorsComponent },
 
   // ---- Security CRUD ----
@@ -72,14 +106,24 @@ export const routes: Routes = [
   // ---- Resident ----
   { path: 'resident-home', component: ResidentHomeComponent },
   { path: 'resident-about', component: ResidentAboutComponent },
+  { path: 'resident-profile', component: ResidentProfileComponent },
+  { path: 'pay-maintenance', component: PayMaintenanceComponent },
+  { path: 'parking', component: ParkingComponent },
+  { path: 'manage-visitor', component: ManageVisitorComponent },
+  { path: 'list-notice-resident', component: ListNoticeResidentComponent },
+  { path: 'list-event-resident', component: ListEventResidentComponent },
 
-  // ---- Visitor ----
-  { path: 'visitor-home', component: VisitorHomeComponent },
-  { path: 'visitor-about', component: VisitorAboutComponent },
+  // ---- Complaints ----
+  { path: 'add-complaint', component: AddComplaintComponent },
+  { path: 'list-complaints', component: ListComplaintsComponent },
 
   // ---- Security ----
   { path: 'security-home', component: SecurityHomeComponent },
   { path: 'security-about', component: SecurityAboutComponent },
+  { path: 'security-profile', component: SecurityProfileComponent },
+  { path: 'add-visitor', component: AddVisitorComponent },
+  { path: 'list-visitors-security', component: ListVisitorsSecurityComponent },
+
 
   // ---- Fallback ----
   { path: '**', redirectTo: 'home' }

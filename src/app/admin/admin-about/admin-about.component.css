@@ -909,19 +909,40 @@
 @media (max-width: 900px) {
 
   .nav-links {
+    position: fixed;
     right: -100%;
+    top: 60px;
+
     width: 78%;
     max-width: 340px;
-    height: 100vh;
-    top: 60px;
+    height: calc(100vh - 60px); /* 👈 important */
+
     background: rgba(15, 23, 35, 0.97);
     backdrop-filter: blur(16px);
     padding: 1.2rem 0;
+
     box-shadow: -20px 0 40px rgba(0,0,0,0.5);
+
+    /* ✅ THIS FIXES SCROLL */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    transition: right 0.4s ease;
   }
 
   .nav-links.active {
     right: 0;
+  }
+
+  /* Optional: smooth scrollbar */
+  .nav-links::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .nav-links::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
   }
 
   .nav-links li a {

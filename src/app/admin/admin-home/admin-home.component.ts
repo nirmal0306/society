@@ -19,6 +19,9 @@ export class AdminHomeComponent {
   residentsOpen = false;
   securityOpen = false;
   visitorsOpen = false;
+  eventOpen = false;
+  maintenanceOpen = false;
+  noticeOpen = false;
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -40,17 +43,38 @@ export class AdminHomeComponent {
   this.visitorsOpen = !this.visitorsOpen;
   }
 
+  toggleEvent(){
+    this.eventOpen = !this.eventOpen;
+  }
 
-  logout() {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          text: 'You have been logged out successfully.',
-          timer: 1500,
-          showConfirmButton: false
-        }).then(() => {
-          this.router.navigate(['/admin-login']);
-        });
-      }
-}
+  toggleMaintenance(){
+    this.maintenanceOpen = !this.maintenanceOpen;
+  }
+
+  toggleNotice(){
+    this.noticeOpen = !this.noticeOpen;
+  }
+
+ logout() {
+     Swal.fire({
+       title: 'Logout?',
+       text: 'Are you sure you want to logout?',
+       icon: 'warning',
+       showCancelButton: true,
+       confirmButtonText: 'Yes, Logout'
+     }).then((result) => {
+       if (result.isConfirmed) {
+         localStorage.clear();
+         Swal.fire({
+           icon: 'success',
+           title: 'Logged Out',
+           timer: 1200,
+           showConfirmButton: false
+         }).then(() => {
+           this.router.navigate(['/admin-login']);
+         });
+       }
+     });
+   }
+ }
+ 

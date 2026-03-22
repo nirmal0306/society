@@ -157,6 +157,9 @@
   align-items: center;
   padding-top: 72px;
   font-family: 'Montserrat', sans-serif;
+
+  background: rgba(255, 255, 255, 0.08); /* light glass */
+  backdrop-filter: blur(14px);
 }
 
 /* --- Login Card in Center --- */

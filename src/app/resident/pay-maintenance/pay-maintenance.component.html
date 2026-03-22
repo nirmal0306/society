@@ -1,0 +1,151 @@
+<!-- ================= NAVBAR ================= -->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
+
+    <li class="dropdown">
+      <a href="javascript:void(0)" (click)="toggleServices()">Services</a>
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+        <li class="dropdown-sub">
+          <a href="javascript:void(0)" (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <li><a routerLink="/manage-visitor">Manage Visitors</a></li>
+        <li><a routerLink="/list-event-resident">Events</a></li>
+        <li><a routerLink="/list-notice-resident">Notices</a></li>
+        <li><a routerLink="/parking">Parking</a></li>
+
+        <li class="dropdown-sub">
+          <a href="javascript:void(0)" (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- ================= PAGE ================= -->
+<section class="hero">
+  <div class="hero-content">
+  <div class="form-card">
+    <div class="hero-overline">Maintenance Management</div>
+    <h1 class="hero-title">Pay Maintenance</h1>
+
+
+    <div *ngIf="name">
+      <!-- Resident Info -->
+      <div class="resident-info">
+        <label>Name:</label>
+        <input [(ngModel)]="name" readonly>
+        <label>Email:</label>
+        <input [(ngModel)]="email" readonly>
+      </div>
+
+      <!-- Flats
+      <h3>Your Flats</h3>
+      <div *ngFor="let f of selectedFlats; let i=index" class="flat-card">
+        <input [(ngModel)]="f.block" readonly placeholder="Block">
+        <input [(ngModel)]="f.flat" readonly placeholder="Flat">
+        <button *ngIf="selectedFlats.length > 1" (click)="removeFlat(i)">➖</button>
+      </div>
+      <button *ngIf="selectedFlats.length < flats.length" (click)="addFlat()">➕ Add Flat</button>-->
+<h3>Your Flats</h3>
+
+<div class="form-row" *ngFor="let f of selectedFlats; let i = index">
+
+  <!-- Block -->
+  <div class="form-group">
+    <label>Block</label>
+    <div class="custom-select">
+      <div class="selected-value">{{ f.block }}</div>
+    </div>
+  </div>
+
+  <!-- Flat -->
+  <div class="form-group">
+    <label>Flat</label>
+    <div class="custom-select">
+      <div class="selected-value">{{ f.flat }}</div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="form-group action-btns">
+    <button type="button"
+            *ngIf="i === selectedFlats.length - 1 && selectedFlats.length < flats.length"
+            (click)="addFlat()">➕</button>
+    <button type="button"
+            *ngIf="selectedFlats.length > 1"
+            (click)="removeFlat(i)">➖</button>
+  </div>
+
+</div>
+      <!-- Pay Full Year Button -->
+    <button (click)="payFullYear()" style="margin-bottom:10px; background:#4caf50; color:white; padding:5px 10px;">
+      Pay for Whole Year
+    </button>
+<!-- Months -->
+<h3>Select Months</h3>
+<div class="months-container">
+  <div *ngFor="let f of selectedFlats" class="flat-months">
+
+    <!-- Flat label -->
+    <span class="flat-label">{{ f.block }}-{{ f.flat }}</span>
+
+    <!-- Month checkboxes -->
+    <div class="checkbox-group">
+      <label *ngFor="let m of allMonths"
+             class="checkbox-wrapper"
+             [class.disabled]="isPaid(f.block,f.flat,m)">
+
+        <!-- Month name -->
+        <input type="checkbox"
+               [disabled]="isPaid(f.block,f.flat,m)"
+               [(ngModel)]="selectedFlatMonths[f.block + '-' + f.flat + '-' + m]"
+               (change)="calculateAmount()">
+
+        <span class="checkbox-custom"></span>
+        {{ m }} <span *ngIf="isPaid(f.block,f.flat,m)">(Paid)</span>
+      </label>
+    </div>
+
+  </div>
+</div>
+      <!-- Payment Method -->
+      <h3>Payment Method</h3>
+      <select [(ngModel)]="method">
+        <option value="">Select Method</option>
+        <option value="UPI">UPI</option>
+        <option value="Card">Card</option>
+        <option value="Cash">Cash</option>
+      </select>
+
+      <!-- Total Amount -->
+      <h3>Total: ₹{{ amount }}</h3>
+
+      <button (click)="payNow()">Pay Now</button>
+    </div>
+  </div>
+  </div>
+</section>

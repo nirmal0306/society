@@ -43,9 +43,33 @@
           </ul>
         </li>
 
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/list-maintenance">List Maintenance</a></li>
+            <li><a routerLink="/pending-maintenance">Pending Maintenance</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown-sub">
+          <a (click)="toggleMaintenance()">Events</a>
+          <ul class="dropdown-submenu" [class.open]="eventOpen">
+            <li><a routerLink="/add-event">Add Event</a></li>
+            <li><a routerLink="/list-events">List Events</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-sub">
+          <a (click)="toggleNotice()">Notice</a>
+          <ul class="dropdown-submenu" [class.open]="noticeOpen">
+            <li><a routerLink="/add-notice">Add Notice</a></li>
+            <li><a routerLink="/list-notices">List Notices</a></li>
+          </ul>
+        </li>
+        <li><a routerLink="/manage-complaints">Complaints</a></li>
+        <li><a routerLink="/manage-parking">Parking</a></li>
       </ul>
     </li>
-
+    <li><a routerLink="/admin-profile">Profile</a></li>
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
