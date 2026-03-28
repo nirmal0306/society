@@ -994,7 +994,7 @@ video {
   font-family: 'Montserrat', Arial, sans-serif;
 
   /* Background image */
-  background: url('/assets/bg.jpg') no-repeat center center/cover;
+  /* background: url('/assets/bg.jpg') no-repeat center center/cover; */
   min-height: 100vh;
   position: relative;
 }

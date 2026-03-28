@@ -49,6 +49,7 @@ import { AddComplaintComponent } from './resident/add-complaint/add-complaint.co
 import { ListComplaintsComponent } from './resident/list-complaints/list-complaints.component';
 import { SecurityProfileComponent } from './security/security-profile/security-profile.component';
 import { ListVisitorsSecurityComponent } from './security/list-visitors-security/list-visitors-security.component';
+import { PaymentModalComponent } from './resident/payment-modal/payment-modal.component';
 
 export const routes: Routes = [
 
@@ -112,6 +113,7 @@ export const routes: Routes = [
   { path: 'manage-visitor', component: ManageVisitorComponent },
   { path: 'list-notice-resident', component: ListNoticeResidentComponent },
   { path: 'list-event-resident', component: ListEventResidentComponent },
+  // { path: 'payment-model', component: PaymentModalComponent },
 
   // ---- Complaints ----
   { path: 'add-complaint', component: AddComplaintComponent },

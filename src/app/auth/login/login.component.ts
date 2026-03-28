@@ -167,6 +167,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         localStorage.setItem('role', res.role);
         localStorage.setItem('email', res.email);
         localStorage.setItem('name', res.name);
+        console.log(res.email);
 
         setTimeout(() => {
           if (res.role === 'resident') {
