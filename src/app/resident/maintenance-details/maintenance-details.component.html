@@ -1,0 +1,120 @@
+<!--================= NAVBAR =================-->
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/resident-home">Home</a></li>
+    <li><a routerLink="/resident-about">About</a></li>
+
+    <li class="dropdown">
+      <a href="javascript:void(0)" (click)="toggleServices()">Services</a>
+      <ul class="dropdown-menu" [class.open]="servicesOpen">
+
+        <li class="dropdown-sub">
+          <a href="javascript:void(0)" (click)="toggleComplaints()">Complaints</a>
+          <ul class="dropdown-submenu" [class.open]="complaintsOpen">
+            <li><a routerLink="/add-complaint">Add Complaint</a></li>
+            <li><a routerLink="/list-complaints">My Complaints</a></li>
+          </ul>
+        </li>
+
+        <li><a routerLink="/manage-visitor">Manage Visitors</a></li>
+        <li><a routerLink="/list-event-resident">Events</a></li>
+        <li><a routerLink="/list-notice-resident">Notices</a></li>
+        <li><a routerLink="/parking">Parking</a></li>
+
+        <li class="dropdown-sub">
+          <a href="javascript:void(0)" (click)="toggleMaintenance()">Maintenance</a>
+          <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
+            <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+            <li><a routerLink="/maintenance-details">Maintenance Details</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+
+    <li><a routerLink="/resident-profile">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+
+<!-- ================= HERO SECTION ================= -->
+<div class="hero">
+  <div class="hero-content">
+
+    <!-- HEADER -->
+    <div class="header-row">
+      <h1 class="hero-title">Maintenance Details</h1>
+
+      <!-- SEARCH FILTER -->
+      <div class="filter-box">
+        <input type="text"
+               placeholder="Search by month, block..."
+               [(ngModel)]="searchText"
+               (input)="applyFilter()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div *ngIf="filteredPayments.length === 0" class="empty-text">
+      No maintenance records found
+    </div>
+
+    <!-- TABLE -->
+    <table class="resident-table" *ngIf="filteredPayments.length > 0">
+      <thead>
+        <tr>
+          <th (click)="sort('block')">Block <span class="sort-icon">⇅</span></th>
+          <th (click)="sort('flat')">Flat <span class="sort-icon">⇅</span></th>
+          <th (click)="sort('month')">Month <span class="sort-icon">⇅</span></th>
+          <th (click)="sort('amount')">Amount <span class="sort-icon">⇅</span></th>
+          <th>Method</th>
+          <th>Status</th>
+          <th (click)="sort('date')">Date <span class="sort-icon">⇅</span></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of paginatedPayments">
+          <td>{{ p.block }}</td>
+          <td>{{ p.flat }}</td>
+          <td>{{ p.month }}</td>
+          <td>₹ {{ p.amount }}</td>
+          <td>{{ p.method }}</td>
+          <td>{{ p.status }}</td>
+          <td>{{ p.date | date:'mediumDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <div class="pagination" *ngIf="totalPages > 1">
+
+      <button (click)="prevPage()" [disabled]="currentPage === 1">
+        Prev
+      </button>
+
+      <span class="page-info">
+        Page {{currentPage}} of {{totalPages}}
+      </span>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next
+      </button>
+
+    </div>
+
+  </div>
+</div>

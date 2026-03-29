@@ -1,4 +1,4 @@
-<!-- ================= NAVBAR ================= -->
+<!--================= NAVBAR =================-->
 <nav class="nav">
   <div class="logo-container">
     <img src="logo.jpg" class="logo-img" alt="Logo">
@@ -35,6 +35,7 @@
           <a href="javascript:void(0)" (click)="toggleMaintenance()">Maintenance</a>
           <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
             <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+            <li><a routerLink="/maintenance-details">Maintenance Details</a></li>
           </ul>
         </li>
       </ul>
@@ -44,6 +45,8 @@
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
+
+
 
 <div class="container">
 

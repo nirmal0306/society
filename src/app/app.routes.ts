@@ -50,6 +50,7 @@ import { ListComplaintsComponent } from './resident/list-complaints/list-complai
 import { SecurityProfileComponent } from './security/security-profile/security-profile.component';
 import { ListVisitorsSecurityComponent } from './security/list-visitors-security/list-visitors-security.component';
 import { PaymentModalComponent } from './resident/payment-modal/payment-modal.component';
+import { MaintenanceDetailsComponent } from './resident/maintenance-details/maintenance-details.component';
 
 export const routes: Routes = [
 
@@ -109,6 +110,7 @@ export const routes: Routes = [
   { path: 'resident-about', component: ResidentAboutComponent },
   { path: 'resident-profile', component: ResidentProfileComponent },
   { path: 'pay-maintenance', component: PayMaintenanceComponent },
+  { path: 'maintenance-details', component: MaintenanceDetailsComponent },
   { path: 'parking', component: ParkingComponent },
   { path: 'manage-visitor', component: ManageVisitorComponent },
   { path: 'list-notice-resident', component: ListNoticeResidentComponent },

@@ -35,6 +35,7 @@
           <a href="javascript:void(0)" (click)="toggleMaintenance()">Maintenance</a>
           <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
             <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+            <li><a routerLink="/maintenance-details">Maintenance Details</a></li>
           </ul>
         </li>
       </ul>
@@ -44,6 +45,8 @@
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
+
+
 
 
 <section class="hero">
@@ -79,7 +82,7 @@
         </div>
 
 
-        <button (click)="payFullYear()" style="margin-bottom:10px; background:#4caf50; color:white; padding:5px 10px;">Pay for Whole Year</button>
+        <button (click)="payFullYear()" class="pay-btn">Pay for Whole Year</button>
 
 
         <h3>Select Months</h3>
@@ -100,7 +103,7 @@
         <h3>Total: ₹{{ amount }}</h3>
 
 
-        <button (click)="openPaymentModal()" style="background:#4caf50; color:white; padding:5px 10px;">Pay Now</button>
+        <button (click)="openPaymentModal()" class="pay-btn">Pay Now</button>
 
         <app-payment-modal
           [residentId]="residentId"

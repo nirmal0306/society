@@ -1,11 +1,10 @@
-<!-- ================= NAVBAR ================= -->
+<!--================= NAVBAR =================-->
 <nav class="nav">
   <div class="logo-container">
     <img src="logo.jpg" class="logo-img" alt="Logo">
     <span class="logo-text">My Gate</span>
   </div>
 
-  <!-- Hamburger for mobile -->
   <div class="hamburger" (click)="toggleMenu()">
     <span></span>
     <span></span>
@@ -17,47 +16,28 @@
     <li><a routerLink="/resident-about">About</a></li>
 
     <li class="dropdown">
-      <a (click)="toggleServices()">Services</a>
-
+      <a href="javascript:void(0)" (click)="toggleServices()">Services</a>
       <ul class="dropdown-menu" [class.open]="servicesOpen">
-
-        <!-- Complaints -->
         <li class="dropdown-sub">
-          <a (click)="toggleComplaints()">Complaints</a>
+          <a href="javascript:void(0)" (click)="toggleComplaints()">Complaints</a>
           <ul class="dropdown-submenu" [class.open]="complaintsOpen">
             <li><a routerLink="/add-complaint">Add Complaint</a></li>
             <li><a routerLink="/list-complaints">My Complaints</a></li>
           </ul>
         </li>
 
-        <!-- Visitors -->
-        <li>
-          <a routerLink="/manage-visitor">Manage Visitors</a>
-        </li>
+        <li><a routerLink="/manage-visitor">Manage Visitors</a></li>
+        <li><a routerLink="/list-event-resident">Events</a></li>
+        <li><a routerLink="/list-notice-resident">Notices</a></li>
+        <li><a routerLink="/parking">Parking</a></li>
 
-        <!-- Events -->
-        <li>
-          <a routerLink="/list-event-resident">Events</a>
-        </li>
-
-        <!-- Notices -->
-        <li>
-          <a routerLink="/list-notice-resident">Notices</a>
-        </li>
-
-        <!-- Parking -->
-        <li>
-          <a routerLink="/parking">Parking</a>
-        </li>
-
-        <!-- Maintenance -->
         <li class="dropdown-sub">
-          <a (click)="toggleMaintenance()">Maintenance</a>
+          <a href="javascript:void(0)" (click)="toggleMaintenance()">Maintenance</a>
           <ul class="dropdown-submenu" [class.open]="maintenanceOpen">
             <li><a routerLink="/pay-maintenance">Pay Maintenance</a></li>
+            <li><a routerLink="/maintenance-details">Maintenance Details</a></li>
           </ul>
         </li>
-
       </ul>
     </li>
 
@@ -65,6 +45,8 @@
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>
+
+
 
 <section class="complaints-section">
 
