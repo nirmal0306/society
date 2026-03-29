@@ -47,46 +47,70 @@
 </nav>
 
 
+<section class="hero">
+<div class="hero-content">
 
-<div class="container">
+ <h1>🚗 Parking Request</h1>
 
-  <h2>🚗 Parking Request</h2>
+<!-- ❌ SHOW MESSAGE IF LIMIT REACHED -->
+<div *ngIf="hasMaxParking()" class="limit-box">
+  <h2>🚫 Parking Limit Reached</h2>
+  <p>You already have 2 parking slots assigned.</p>
+</div>
 
-  <div class="form-box">
-    <div class="form-group">
-      <label>Vehicle Type</label>
-      <select [(ngModel)]="parking.vehicleType">
-        <option value="">Select</option>
-        <option>2 Wheeler</option>
-        <option>4 Wheeler</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Vehicle Number</label>
-      <input type="text" [(ngModel)]="parking.vehicleNumber" placeholder="GJ-01-AB-1234">
-    </div>
-
-    <button class="btn-submit" (click)="submitRequest()">Send Request</button>
+<!-- ✅ SHOW FORM ONLY IF NOT REACHED -->
+<div *ngIf="!hasMaxParking()" class="form-box">
+  <div class="form-group">
+    <label>Vehicle Type</label>
+    <select [(ngModel)]="parking.vehicleType">
+      <option value="">Select</option>
+      <option>2 Wheeler</option>
+      <option>4 Wheeler</option>
+    </select>
   </div>
 
-  <!-- ================= PARKING STATUS ================= -->
-  <div *ngIf="parkingData" class="status-box">
-    <h3>Status</h3>
-    <p class="status" [ngClass]="parkingData.status.toLowerCase()">{{ parkingData.status }}</p>
-
-    <div *ngIf="parkingData.status === 'Accepted'" class="success">
-      <h2>Parking Number: {{ parkingData.parkingNumber }}</h2>
-    </div>
-
-    <div *ngIf="parkingData.status === 'Rejected'" class="rejected">
-      <p>Rejected ({{ parkingData.requestCount }} times)</p>
-      <button class="btn-resend" (click)="submitRequest()">Request Again</button>
-    </div>
-
-    <div *ngIf="parkingData.status === 'Pending'" class="pending">
-      Waiting for admin approval...
-    </div>
+  <div class="form-group">
+    <label>Vehicle Number</label>
+    <input type="text" [(ngModel)]="parking.vehicleNumber" placeholder="GJ-01-AB-1234">
   </div>
+
+  <button class="btn-submit" (click)="submitRequest()">Send Request</button>
+</div>
+  <!-- ================= PARKING LIST ================= -->
+<div *ngIf="parkingData?.length" class="parking-list">
+
+  <h3>Your Parking Details</h3>
+
+  <div class="parking-card" *ngFor="let p of parkingData">
+
+    <!-- STATUS BADGE -->
+    <div class="status-badge" [ngClass]="p.status.toLowerCase()">
+      {{ p.status }}
+    </div>
+
+    <!-- VEHICLE DETAILS -->
+    <div class="vehicle-info">
+      <p><strong>🚘 Type:</strong> {{ p.vehicleType }}</p>
+      <p><strong>🔢 Number:</strong> {{ p.vehicleNumber }}</p>
+    </div>
+
+    <!-- PARKING NUMBER -->
+    <div *ngIf="p.status === 'Accepted'" class="parking-number">
+      🅿 Slot: {{ p.parkingNumber }}
+    </div>
+
+    <!-- PENDING -->
+    <div *ngIf="p.status === 'Pending'" class="pending-text">
+      Waiting for approval...
+    </div>
+
+    <!-- REJECTED -->
+    <div *ngIf="p.status === 'Rejected'" class="rejected-text">
+      ❌ Rejected
+    </div>
+
+  </div>
+</div>
 
 </div>
+</section>

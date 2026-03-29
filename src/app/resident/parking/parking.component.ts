@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
@@ -61,7 +62,7 @@ export class ParkingComponent implements OnInit {
   }
 
   /* ================= FETCH PARKING DATA ================= */
-  fetchParking() {
+  fetchParking1() {
     if (!this.resident?.email) return;
 
     this.http.get(`${this.API_URL}/resident/${this.resident.email}`).subscribe({
@@ -75,6 +76,21 @@ export class ParkingComponent implements OnInit {
       }
     });
   }
+
+  fetchParking() {
+  if (!this.resident?.email) return;
+
+  this.http.get(`${this.API_URL}/resident/${this.resident.email}`).subscribe({
+    next: (res: any) => {
+      this.parkingData = Array.isArray(res) ? res : [res]; // 🔥 FIX
+      this.loading = false;
+    },
+    error: () => {
+      this.parkingData = [];
+      this.loading = false;
+    }
+  });
+}
 
   /* ================= SUBMIT PARKING REQUEST ================= */
   submitRequest() {
@@ -104,6 +120,23 @@ export class ParkingComponent implements OnInit {
       }
     });
   }
+
+  /* ================= CHECK PARKING LIMIT ================= */
+hasMaxParking(): boolean {
+  if (!this.parkingData) return false;
+
+  // If backend sends array of parkings
+  if (Array.isArray(this.parkingData)) {
+    return this.parkingData.length >= 2;
+  }
+
+  // If single object but has count
+  if (this.parkingData?.totalSlots) {
+    return this.parkingData.totalSlots >= 2;
+  }
+
+  return false;
+}
 
   /* ================= NAVBAR TOGGLE ================= */
   toggleMenu() { this.menuOpen = !this.menuOpen; }

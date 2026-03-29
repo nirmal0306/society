@@ -48,9 +48,9 @@
 
 
 
-<section class="complaints-section">
+<section class="hero">
 
-  <div class="complaints-container">
+  <div class="hero-content">
 
     <h1>My Complaints</h1>
 
@@ -62,13 +62,10 @@
       No complaints found.
     </div>
 
-    <div *ngFor="let complaint of complaints" class="complaint-card">
+    <div *ngFor="let complaint of complaints" class="hero-card">
 
       <div class="card-header">
         <h3>{{ complaint.subject }}</h3>
-        <span [ngClass]="getStatusClass(complaint.status)">
-          {{ complaint.status }}
-        </span>
       </div>
 
       <p class="category">{{ complaint.category }}</p>
@@ -81,8 +78,15 @@
         <small>
           {{ complaint.createdAt | date:'medium' }}
         </small>
-      </div>
-
+        <br/>
+        <br/>
+      <span [ngClass]="getStatusClass(complaint.status)">
+          {{ complaint.status }}
+        </span>
+              <p *ngIf="complaint.responseMessage" class="response">
+                <b>Admin Response:</b> {{ complaint.responseMessage }}
+              </p>
+</div>
     </div>
 
   </div>

@@ -150,6 +150,7 @@
 //     });
 //   }
 // }
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -190,6 +191,7 @@ export class AddEventComponent {
   residentsOpen = false;
   securityOpen = false;
   visitorsOpen = false;
+  maintenanceOpen = false;
   eventOpen = false;
   noticeOpen = false;
 
@@ -199,6 +201,7 @@ export class AddEventComponent {
   toggleSecurity() { this.securityOpen = !this.securityOpen; }
   toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
   toggleEvent() { this.eventOpen = !this.eventOpen; }
+  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
   toggleNotice() { this.noticeOpen = !this.noticeOpen; }
 
   /* ================= MAP ================= */
@@ -206,20 +209,6 @@ export class AddEventComponent {
     window.open('https://www.google.com/maps', '_blank');
   }
 
-  // extractAddress() {
-  //   if (!this.event.venue.mapUrl) return;
-
-  //   try {
-  //     const decoded = decodeURIComponent(this.event.venue.mapUrl);
-  //     const match = decoded.match(/\/place\/([^/]+)/);
-
-  //     this.event.venue.address = match
-  //       ? match[1].replace(/\+/g, ' ')
-  //       : 'Selected Location';
-  //   } catch {
-  //     this.event.venue.address = 'Selected Location';
-  //   }
-  // }
 
   extractAddress() {
     if (!this.event.venue.mapUrl) return;
@@ -249,38 +238,6 @@ export class AddEventComponent {
     this.event.venue.mapUrl = '';
   }
 
-  /* ================= SUBMIT ================= */
-  // addEvent() {
-  //   const { title, description, date, time, venue } = this.event;
-
-  //   if (!title || !description || !date || !time || !venue.address) {
-  //     Swal.fire('Validation Error', 'Please fill all fields', 'warning');
-  //     return;
-  //   }
-
-  //   const events = JSON.parse(localStorage.getItem('events') || '[]');
-  //   events.push(this.event);
-  //   localStorage.setItem('events', JSON.stringify(events));
-
-  //   this.http.post('http://localhost:5000/api/events', this.event)
-  //     .subscribe({
-  //       next: () => {
-  //         Swal.fire('Success', 'Event Created', 'success')
-  //           .then(() => this.router.navigate(['/list-events']));
-  //       },
-  //       error: () => {
-  //         Swal.fire('Error', 'Failed to create event', 'error');
-  //       }
-  //     });
-  //   Swal.fire({
-  //     icon: 'success',
-  //     title: 'Event Created',
-  //     timer: 1500,
-  //     showConfirmButton: false
-  //   }).then(() => {
-  //     this.router.navigate(['/list-events']);
-  //   });
-  // }
   addEvent() {
   const { title, description, date, time, venue } = this.event;
 

@@ -60,6 +60,7 @@ export class ListEventsComponent implements OnInit {
   securityOpen = false;
   visitorsOpen = false;
   eventOpen = false;
+  maintenanceOpen = false;
   noticeOpen = false;
 
   toggleMenu() { this.menuOpen = !this.menuOpen; }
@@ -67,6 +68,7 @@ export class ListEventsComponent implements OnInit {
   toggleResidents() { this.residentsOpen = !this.residentsOpen; }
   toggleSecurity() { this.securityOpen = !this.securityOpen; }
   toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
+  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
   toggleEvent() { this.eventOpen = !this.eventOpen; }
   toggleNotice() { this.noticeOpen = !this.noticeOpen; }
 
