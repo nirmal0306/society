@@ -4,6 +4,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
 
 interface Visitor {
   _id: string;
@@ -26,7 +27,8 @@ interface Visitor {
     CommonModule,
     HttpClientModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    SecurityNavComponent
   ],
   templateUrl: './list-visitors-security.component.html',
   styleUrls: ['./list-visitors-security.component.css']
@@ -53,25 +55,13 @@ export class ListVisitorsSecurityComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
 
   ngOnInit() {
+    const email = localStorage.getItem("email");
+
+    if (!email) {
+      this.router.navigate(['/login']); // redirect if not logged in
+      return;
+    }
     this.getVisitors();
-  }
-
-  /* ================= NAVBAR ================= */
-
-  menuOpen = false;
-  servicesOpen = false;
-  visitorsOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  toggleServices() {
-    this.servicesOpen = !this.servicesOpen;
-  }
-
-  toggleVisitors() {
-    this.visitorsOpen = !this.visitorsOpen;
   }
 
   /* ================= GET VISITORS ================= */
@@ -205,38 +195,4 @@ export class ListVisitorsSecurityComponent implements OnInit {
     });
 
   }
-
-  /* ================= LOGOUT ================= */
-
-  logout() {
-
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then((result) => {
-
-      if (result.isConfirmed) {
-
-        localStorage.clear();
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => {
-
-          this.router.navigate(['/login']);
-
-        });
-
-      }
-
-    });
-
-  }
-
 }

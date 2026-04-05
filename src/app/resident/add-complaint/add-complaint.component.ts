@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 @Component({
   selector: 'app-add-complaint',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule,ResidentNavComponent],
   templateUrl: './add-complaint.component.html',
   styleUrls: ['./add-complaint.component.css']
 })
@@ -31,17 +32,18 @@ export class AddComplaintComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.loadProfile();
-  }
-
-  /* ================= LOAD RESIDENT PROFILE ================= */
-  loadProfile() {
     const email = localStorage.getItem("email");
 
     if (!email) {
       this.router.navigate(['/login']);
       return;
     }
+    this.loadProfile();
+  }
+
+  /* ================= LOAD RESIDENT PROFILE ================= */
+  loadProfile() {
+    const email = localStorage.getItem("email");
 
     this.http.get<any>(`${this.RESIDENT_API}/profile/${email}`)
       .subscribe({
@@ -111,49 +113,5 @@ export class AddComplaintComponent implements OnInit {
           Swal.fire('Error', err.error?.message || 'Failed to submit', 'error');
         }
       });
-  }
-
-
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  toggleServices() {
-    this.servicesOpen = !this.servicesOpen;
-  }
-
-  toggleComplaints() {
-    this.complaintsOpen = !this.complaintsOpen;
-  }
-
-  toggleMaintenance() {
-    this.maintenanceOpen = !this.maintenanceOpen;
-  }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => {
-          this.router.navigate(['/login']);
-        });
-      }
-    });
   }
 }

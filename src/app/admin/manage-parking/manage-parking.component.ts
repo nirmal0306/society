@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../nav/admin-nav/admin-nav.component';
 
 interface ParkingRequest {
   _id: string;
@@ -20,7 +21,7 @@ interface ParkingRequest {
 @Component({
   selector: 'app-manage-parking',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule,AdminNavComponent],
   templateUrl: './manage-parking.component.html',
   styleUrls: ['./manage-parking.component.css']
 })
@@ -37,20 +38,15 @@ export class ManageParkingComponent implements OnInit {
   currentPage = 1;
   recordsPerPage = 5;
   totalPages = 1;
-
-  // NAVBAR togglers
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  maintenanceOpen = false;
-  eventOpen = false;
-  noticeOpen = false;
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
     this.fetchParkingRequests();
   }
 
@@ -141,31 +137,6 @@ export class ManageParkingComponent implements OnInit {
           next: () => this.fetchParkingRequests(),
           error: (err) => Swal.fire('Error', err.error?.message || 'Failed to reject', 'error')
         });
-      }
-    });
-  }
-
-  /* ================= NAVBAR / LOGOUT ================= */
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        this.router.navigate(['/admin-login']);
       }
     });
   }

@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 interface Event {
   _id: string;
@@ -20,7 +21,7 @@ interface Event {
 @Component({
   selector: 'app-list-event-resident',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule,ResidentNavComponent],
   templateUrl: './list-event-resident.component.html',
   styleUrl: './list-event-resident.component.css'
 })
@@ -50,22 +51,10 @@ export class ListEventResidentComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+    const email = localStorage.getItem("email");
+    if (!email) { this.router.navigate(['/login']); return; }
     this.getEvents();
   }
-
-  /* ================= NAVBAR TOGGLERS ================= */
-
-  // NAVBAR
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
-
-  /* ================= NAVBAR TOGGLE ================= */
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleComplaints() { this.complaintsOpen = !this.complaintsOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
 
   /* ================= API ================= */
   getEvents() {
@@ -189,17 +178,5 @@ export class ListEventResidentComponent implements OnInit {
       this.updatePagination();
     }
   }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    localStorage.clear();
-    Swal.fire({
-      icon: 'success',
-      title: 'Logged Out',
-      timer: 1200,
-      showConfirmButton: false
-    }).then(() => this.router.navigate(['/admin-login']));
-  }
-
 }
 

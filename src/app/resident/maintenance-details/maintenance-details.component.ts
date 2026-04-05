@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 interface Payment {
   block: string;
@@ -25,7 +26,7 @@ interface FlatStatus {
 @Component({
   selector: 'app-maintenance-details',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule,ResidentNavComponent],
   templateUrl: './maintenance-details.component.html',
   styleUrls: ['./maintenance-details.component.css']
 })
@@ -52,26 +53,22 @@ export class MaintenanceDetailsComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  /* ================= NAVBAR ================= */
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    this.loadResidentAndMaintenance();
-  }
-
-  /* ================= LOAD RESIDENT & PAYMENTS ================= */
-  loadResidentAndMaintenance() {
     const email = localStorage.getItem("email");
 
     if (!email) {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.loadResidentAndMaintenance();
+  }
+
+  /* ================= LOAD RESIDENT & PAYMENTS ================= */
+  loadResidentAndMaintenance() {
+    const email = localStorage.getItem("email");
 
     // Get resident profile
     this.http.get<any>(`${this.RESIDENT_API}/profile/${email}`).subscribe({
@@ -157,26 +154,4 @@ export class MaintenanceDetailsComponent implements OnInit {
       this.calculatePagination();
     }
   }
-
-  /* ================= NAVBAR TOGGLES ================= */
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleComplaints() { this.complaintsOpen = !this.complaintsOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
-  }
-
 }

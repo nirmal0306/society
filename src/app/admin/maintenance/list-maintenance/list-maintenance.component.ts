@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 interface Payment {
   residentName: string;
@@ -19,7 +20,7 @@ interface Payment {
 @Component({
   selector: 'app-list-maintenance',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule, RouterModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, RouterModule,AdminNavComponent],
   templateUrl: './list-maintenance.component.html',
   styleUrls: ['./list-maintenance.component.css']
 })
@@ -42,6 +43,12 @@ export class ListMaintenanceComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
     this.loadAll();
   }
 
@@ -125,44 +132,5 @@ export class ListMaintenanceComponent implements OnInit {
       this.currentPage--;
       this.updatePagination();
     }
-  }
-
-  /* NAVIGATION & MENU */
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  maintenanceOpen = false;
-  noticeOpen = false;
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => this.router.navigate(['/admin-login']));
-      }
-    });
   }
 }

@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // <-- ADD THIS
+import { NavComponent } from '../../nav/nav/nav.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule,NavComponent],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent {
-bgImage = '/assets/images/bg.png';
 }

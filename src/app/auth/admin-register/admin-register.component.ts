@@ -4,11 +4,12 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
+import { ANavComponent } from '../../nav/a-nav/a-nav.component';
 
 @Component({
   selector: 'app-admin-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule,ANavComponent],
   templateUrl: './admin-register.component.html',
   styleUrls: ['./admin-register.component.css']
 })

@@ -1,31 +1,4 @@
-<nav class="nav">
-  <div class="logo-container">
-    <img src="logo.jpg" class="logo-img" alt="Logo">
-    <span class="logo-text">My Gate</span>
-  </div>
-
-  <!-- Hamburger for mobile -->
-  <div class="hamburger" (click)="toggleSidebar()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-
-  <ul class="nav-links">
-    <li><a routerLink="/home">Home</a></li>
-    <li><a routerLink="/about">About</a></li>
-    <li><a routerLink="/login">Login</a></li>
-  </ul>
-</nav>
-
-<!-- Sidebar for mobile -->
-<div class="sidebar" [class.active]="sidebarOpen">
-  <ul>
-    <li><a routerLink="/home" (click)="toggleSidebar()">Home</a></li>
-    <li><a routerLink="/about" (click)="toggleSidebar()">About</a></li>
-    <li><a routerLink="/login" (click)="toggleSidebar()">Login</a></li>
-  </ul>
-</div>
+<app-nav></app-nav>
 
 <div class="login-wrapper">
   <div class="login-card">

@@ -1,0 +1,46 @@
+<app-admin-nav></app-admin-nav>
+<section class="hero">
+
+  <div *ngFor="let l of leaves" class="hero-content">
+
+      <div class="header">
+        <h3>{{ l.name }}</h3>
+        <span class="status" [ngClass]="l.status.toLowerCase()">
+          {{ l.status }}
+        </span>
+      </div>
+
+    <p><b>Email:</b> {{ l.email }}</p>
+    <p><b>From:</b> {{ l.fromDate | date }}</p>
+    <p><b>To:</b> {{ l.toDate | date }}</p>
+    <p><b>Reason:</b> {{ l.reason }}</p>
+
+    <!-- ✅ SHOW ADMIN RESPONSE AFTER ACTION -->
+    <p *ngIf="l.responseMessage" class="response">
+      <b>Response:</b> {{ l.responseMessage }}
+    </p>
+
+    <!-- ✅ INPUT + BUTTONS ONLY IF PENDING -->
+    <div *ngIf="l.status === 'Pending'" class="actions">
+
+      <textarea
+        [(ngModel)]="l.adminMessage"
+        placeholder="Write response..."
+        rows="3">
+      </textarea>
+
+      <div class="btn-group">
+        <button (click)="updateStatus(l, 'Accepted')" class="accept">
+          Accept
+        </button>
+
+        <button (click)="updateStatus(l, 'Rejected')" class="reject">
+          Reject
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

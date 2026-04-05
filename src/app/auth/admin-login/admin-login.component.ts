@@ -5,11 +5,11 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { RouterModule } from '@angular/router';
-
+import { ANavComponent } from '../../nav/a-nav/a-nav.component';
 @Component({
   selector: 'app-admin-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule,ANavComponent],
   templateUrl: './admin-login.component.html',
   styleUrl: './admin-login.component.css'
 })
@@ -38,7 +38,7 @@ loginForm: FormGroup;
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
-  
+
   onLogin(): void {
     if (this.loginForm.invalid) {
       this.alert.error('Please fill all fields correctly!');

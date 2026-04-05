@@ -17,11 +17,12 @@ import { Router, RouterModule } from '@angular/router';
 
 import * as faceapi from 'face-api.js';
 import Swal from 'sweetalert2';
+import { NavComponent } from '../../nav/nav/nav.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule,NavComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

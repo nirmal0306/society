@@ -5,11 +5,12 @@ import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 @Component({
   selector: 'app-parking',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule,ResidentNavComponent],
   templateUrl: './parking.component.html',
   styleUrls: ['./parking.component.css']
 })
@@ -28,26 +29,23 @@ export class ParkingComponent implements OnInit {
 
   loading = true;
 
-  // NAVBAR
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    this.fetchResident();
-  }
-
-  /* ================= FETCH RESIDENT PROFILE ================= */
-  fetchResident() {
     const email = localStorage.getItem("email");
 
     if (!email) {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.fetchResident();
+  }
+
+  /* ================= FETCH RESIDENT PROFILE ================= */
+  fetchResident() {
+    const email = localStorage.getItem("email");
 
     this.http.get<any>(`${this.PROFILE_API}/${email}`).subscribe({
       next: (res) => {
@@ -137,27 +135,4 @@ hasMaxParking(): boolean {
 
   return false;
 }
-
-  /* ================= NAVBAR TOGGLE ================= */
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleComplaints() { this.complaintsOpen = !this.complaintsOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes'
-    }).then(res => {
-      if (res.isConfirmed) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
-  }
-
 }

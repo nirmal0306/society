@@ -1,0 +1,298 @@
+<div class="modal-overlay">
+  <div class="modal-container">
+
+    <!-- Tabs -->
+    <div class="payment-tabs">
+      <button [class.active]="selectedType==='UPI'" (click)="switchType('UPI')">
+        <span class="tab-icon">💱</span> UPI
+      </button>
+      <button [class.active]="selectedType==='Card'" (click)="switchType('Card')">
+        <span class="tab-icon">💳</span> Card
+      </button>
+    </div>
+
+    <!-- ================= UPI ENTRY ================= -->
+    <div *ngIf="selectedType==='UPI' && !showUpiPinScreen" class="upi-entry-screen">
+
+      <div class="modal-header">
+        <div class="header-icon">💱</div>
+        <h2>Pay Salary via UPI</h2>
+        <p>Enter UPI ID</p>
+      </div>
+
+      <!-- Providers -->
+      <div class="upi-providers">
+        <div class="provider-grid">
+          <div class="provider-card" (click)="selectUpiProvider('phonepe')" [class.selected]="selectedUpiProvider === 'phonepe'">
+            <img src="phonepe-icon.png" class="provider-logo">
+            <span>PhonePe</span>
+          </div>
+
+          <div class="provider-card" (click)="selectUpiProvider('gpay')" [class.selected]="selectedUpiProvider === 'gpay'">
+            <img src="google-pay-icon.png" class="provider-logo">
+            <span>GPay</span>
+          </div>
+
+          <div class="provider-card" (click)="selectUpiProvider('paytm')" [class.selected]="selectedUpiProvider === 'paytm'">
+            <img src="paytm-icon.png" class="provider-logo">
+            <span>Paytm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPI Input -->
+      <div class="form-group">
+        <label>UPI ID <span class="required">*</span></label>
+
+        <div class="upi-input-wrapper">
+          <input
+            [(ngModel)]="upiId"
+            [placeholder]="getUpiPlaceholder()"
+            maxlength="50"
+            class="upi-input"
+            (focus)="onFocusUpi()"
+            (blur)="validateUpiId()"
+            (keyup)="validateUpiId()"
+            [class.error]="upiErrors.length > 0 || (upiId.trim() === '' && isUpiTouched)"
+          />
+
+          <div class="upi-suffix" *ngIf="selectedUpiProvider">
+            {{ '@' + selectedUpiProvider }}
+          </div>
+        </div>
+
+        <div class="error-messages" *ngIf="upiErrors.length > 0">
+          <span *ngFor="let error of upiErrors" class="error-text">
+            {{ error }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="order-summary">
+        <div class="summary-item">
+          <span>{{security.name}}</span>
+          <span>₹{{ amount }}</span>
+        </div>
+
+        <div class="summary-item">
+          <span>Months</span>
+          <span>{{ selectedMonths.join(', ') }}</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>₹{{ amount }}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="modal-actions">
+        <button class="cancel-btn" (click)="cancel()">Cancel</button>
+        <button class="pay-btn" (click)="proceedToUpiPin()" [disabled]="!isUpiValid() || isProcessing">
+          <span *ngIf="isProcessing">⏳</span>
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= UPI PIN ================= -->
+    <div *ngIf="selectedType==='UPI' && showUpiPinScreen" class="upi-pin-screen">
+
+      <div class="upi-pin-header">
+        <div class="bank-section">
+          <span>🏦</span> {{ currentBank }}
+        </div>
+
+        <div class="payment-details">
+          <div class="vpa">{{ upiId }}</div>
+          <div class="amount-display">₹{{ amount }}</div>
+        </div>
+      </div>
+
+      <div class="pin-section">
+  <div class="label">ENTER UPI PIN</div>
+
+  <!-- PIN DISPLAY + SHOW BUTTON ROW -->
+  <div class="pin-input-row">
+  <!-- PIN DISPLAY WITH EYE ICON INSIDE -->
+  <div class="pin-display" (click)="togglePinVisibility()">
+      {{ getVisiblePin() }}
+
+
+    <!-- EYE ICON (Open/Closed) -->
+    <div class="eye-icon" [class.eye-open]="!showPin" [class.eye-closed]="showPin">
+      <!-- Open Eye (when PIN hidden) -->
+      <svg *ngIf="!showPin" viewBox="0 0 24 24" class="eye-svg" fill="currentColor">
+        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+      </svg>
+
+      <!-- Closed Eye (Eye Slash) -->
+      <svg *ngIf="showPin" viewBox="0 0 24 24" class="eye-svg" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- Eye shape -->
+        <path d="M1 12s4-6 11-6 11 6 11 6-4 6-11 6-11-6-11-6z"/>
+
+        <!-- Pupil -->
+        <circle cx="12" cy="12" r="3"/>
+
+        <!-- Slash line -->
+        <line x1="3" y1="3" x2="21" y2="21"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+  <!-- HIDDEN INPUT -->
+  <input #pinInput
+         type="password"
+         [(ngModel)]="enteredPin"
+         maxlength="6"
+         class="screen-reader-only"
+         (input)="onPinInput($event)"
+         autocomplete="one-time-code">
+</div>
+
+      <div class="numpad">
+        <button class="num-btn" (click)="addPinDigit('1')">1</button>
+        <button class="num-btn" (click)="addPinDigit('2')">2</button>
+        <button class="num-btn" (click)="addPinDigit('3')">3</button>
+
+        <button class="num-btn" (click)="addPinDigit('4')">4</button>
+        <button class="num-btn" (click)="addPinDigit('5')">5</button>
+        <button class="num-btn" (click)="addPinDigit('6')">6</button>
+
+        <button class="num-btn" (click)="addPinDigit('7')">7</button>
+        <button class="num-btn" (click)="addPinDigit('8')">8</button>
+        <button class="num-btn" (click)="addPinDigit('9')">9</button>
+
+        <button class="num-btn delete-btn" (click)="deletePin()">
+          <span></span>
+        </button>
+        <button class="num-btn zero-btn" (click)="addPinDigit('0')">0</button>
+        <button class="num-btn submit-btn" (click)="submitUpiPin()" [disabled]="enteredPin.length < 6">
+        <span>✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- NEW CARD SECTION -->
+    <div *ngIf="selectedType==='Card'" class="card-entry-screen">
+      <div class="modal-header">
+        <div class="header-icon">💳</div>
+        <h2>Pay with Card</h2>
+        <p>Enter your card details</p>
+      </div>
+
+      <!-- Card Brand Selection -->
+      <div class="card-providers">
+        <div class="provider-grid">
+          <div class="provider-card" (click)="selectCardBrand('visa')" [class.selected]="cardBrand === 'visa'">
+            <img src="visa-icon.png" alt="Visa" class="provider-logo">
+            <span>VISA</span>
+          </div>
+          <div class="provider-card" (click)="selectCardBrand('mastercard')" [class.selected]="cardBrand === 'mastercard'">
+            <img src="master-card-icon.png" alt="Mastercard" class="provider-logo">
+            <span>MASTERCARD</span>
+          </div>
+          <div class="provider-card" (click)="selectCardBrand('rupay')" [class.selected]="cardBrand === 'rupay'">
+            <img src="rupay-logo-icon.png" alt="RuPay" class="provider-logo">
+            <span>RUPAY</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Number Input -->
+      <div class="form-group">
+          <label>Card Number <span class="required">*</span></label>
+          <div class="card-input-wrapper" [class.visa]="cardBrand === 'visa'" [class.mastercard]="cardBrand === 'mastercard'" [class.rupay]="cardBrand === 'rupay'">
+            <input
+              [(ngModel)]="card.number"
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              (focus)="onFocusCard()"
+              (input)="formatCardNumber($event)"
+              (blur)="validateCardNumber()"
+              (keyup)="validateCardNumber()"
+              class="card-number-input"
+              [class.error]="cardErrors.number || (card.number.trim() === '' && isCardTouched)"
+            />
+            <div class="card-type-icon" *ngIf="cardBrand">{{ cardBrand.toUpperCase() }}</div>
+          </div>
+          <div class="error-text" *ngIf="cardErrors.number">{{ cardErrors.number }}</div>
+        </div>
+
+      <!-- Expiry & CVV Row -->
+      <div class="expiry-cvv-row">
+        <div class="form-group-half">
+          <label>Expiry (MM/YY) <span class="required">*</span></label>
+          <input
+            [(ngModel)]="card.expiry"
+            placeholder="MM/YY"
+            maxlength="5"
+            class="card-input"
+            (focus)="onFocusExpiry()"
+            (input)="formatExpiry($event)"
+            (blur)="validateExpiry()"
+            (keyup)="validateExpiry()"
+            [class.error]="cardErrors.expiry"
+          />
+          <div class="error-text" *ngIf="cardErrors.expiry">{{ cardErrors.expiry }}</div>
+        </div>
+
+        <div class="form-group-half1">
+          <label>CVV <span class="required">*</span></label>
+          <input
+            [(ngModel)]="card.cvv"
+            placeholder="123"
+            maxlength="4"
+            type="password"
+            class="card-input"
+            (focus)="onFocusCvv()"
+            (blur)="validateCvv()"
+            (keyup)="validateCvv()"
+            [class.error]="cardErrors.cvv"
+          />
+          <div class="error-text1" *ngIf="cardErrors.cvv">{{ cardErrors.cvv }}</div>
+        </div>
+      </div>
+
+      <!-- Card Preview -->
+      <div class="card-preview" *ngIf="isCardPreviewValid()">
+        <div class="preview-card">
+          <div class="card-top">
+            <div class="card-number">{{ getFormattedCardNumber() }}</div>
+            <div class="card-expiry">{{ getFormattedExpiry() }}</div>
+          </div>
+          <div class="card-brand">{{ cardBrand?.toUpperCase() || 'CARD' }}</div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="order-summary">
+        <div class="summary-item">
+          <span>{{security.name}}</span>
+          <span>₹{{ amount }}</span>
+        </div>
+
+
+        <div class="summary-item">
+          <span>Months</span>
+          <span>{{ selectedMonths.join(', ') }}</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>₹{{ amount }}</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel-btn" (click)="cancel()">Cancel</button>
+        <button class="pay-btn" (click)="processCardPayment()" [disabled]="!isCardFormValid() || isProcessing">
+          Pay ₹{{ amount }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

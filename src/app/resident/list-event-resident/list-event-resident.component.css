@@ -754,7 +754,7 @@ select option {
   gap: 6px;
   margin-top: 4px;
   font-size: 13px;
-  color: #1a73e8;
+  color: #036cf6;
   text-decoration: none;
 }
 
@@ -1087,4 +1087,7 @@ h1.hero-title {
   gap:10px;
 }
 
+}
+td{
+  color: #000;
 }

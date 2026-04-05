@@ -1,0 +1,20 @@
+<nav class="nav">
+  <div class="logo-container">
+    <img src="logo.jpg" class="logo-img" alt="Logo">
+    <span class="logo-text">My Gate</span>
+  </div>
+
+  <!-- ✅ Hamburger -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- ✅ Nav Links -->
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/home" (click)="closeMenu()">Home</a></li>
+    <li><a routerLink="/about" (click)="closeMenu()">About</a></li>
+    <li><a routerLink="/login" (click)="closeMenu()">Login</a></li>
+  </ul>
+</nav>

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 interface ResidentFlat {
   block: string;
@@ -23,7 +24,7 @@ interface FlatStatus {
 @Component({
   selector: 'app-pay-maintenance',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule, PaymentModalComponent],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule, PaymentModalComponent, ResidentNavComponent],
   templateUrl: './pay-maintenance.component.html',
   styleUrls: ['./pay-maintenance.component.css']
 })
@@ -50,12 +51,18 @@ export class PayMaintenanceComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
+    const email = localStorage.getItem("email");
+
+    if (!email) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.fetchResident();
   }
 
   fetchResident() {
     const email = localStorage.getItem("email");
-    if (!email) { this.router.navigate(['/login']); return; }
 
     this.http.get<any>(`${this.RESIDENT_API}/profile/${email}`).subscribe({
       next: (res) => {
@@ -167,19 +174,5 @@ export class PayMaintenanceComponent implements OnInit {
     this.loadFlatStatus();
 
     Swal.fire('Success', 'Payment completed successfully!', 'success');
-  }
-
-  // Navbar & Logout
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleComplaints() { this.complaintsOpen = !this.complaintsOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  logout() {
-    Swal.fire({ title: 'Logout?', text: 'Are you sure?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes' })
-      .then(r => { if(r.isConfirmed){ localStorage.clear(); this.router.navigate(['/login']); }});
   }
 }

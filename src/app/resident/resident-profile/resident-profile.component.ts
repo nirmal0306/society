@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 @Component({
   selector: 'app-resident-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule,ResidentNavComponent],
   templateUrl: './resident-profile.component.html',
   styleUrls: ['./resident-profile.component.css']
 })
@@ -25,16 +26,18 @@ export class ResidentProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    this.loadProfile();
-  }
-
-  loadProfile() {
     const email = localStorage.getItem("email");
 
     if (!email) {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.loadProfile();
+  }
+
+  loadProfile() {
+    const email = localStorage.getItem("email");
 
     this.http.get<any>(`${this.BASE_URL}/profile/${email}`)
       .subscribe({
@@ -49,41 +52,5 @@ export class ResidentProfileComponent implements OnInit {
           Swal.fire("Error", "Failed to load profile", "error");
         }
       });
-  }
-
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  toggleServices() {
-    this.servicesOpen = !this.servicesOpen;
-  }
-
-  toggleComplaints() {
-    this.complaintsOpen = !this.complaintsOpen;
-  }
-
-  toggleMaintenance() {
-    this.maintenanceOpen = !this.maintenanceOpen;
-  }
-
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
   }
 }

@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
 
 @Component({
   selector: 'app-security-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule,SecurityNavComponent],
   templateUrl: './security-profile.component.html',
   styleUrls: ['./security-profile.component.css']
 })
@@ -24,6 +25,12 @@ export class SecurityProfileComponent implements OnInit {
   photo = "";
 
   ngOnInit() {
+    const email = localStorage.getItem("email");
+
+    if (!email) {
+      this.router.navigate(['/login']); // redirect if not logged in
+      return;
+    }
     this.loadProfile();
   }
 
@@ -31,10 +38,6 @@ export class SecurityProfileComponent implements OnInit {
 
     const email = localStorage.getItem("email");
 
-    if (!email) {
-      this.router.navigate(['/security-login']);
-      return;
-    }
 
     this.http.get<any>(`${this.BASE_URL}/profile/${email}`)
       .subscribe({
@@ -50,35 +53,5 @@ export class SecurityProfileComponent implements OnInit {
         }
       });
 
-  }
-
-  menuOpen = false;
-  servicesOpen = false;
-  visitorsOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  toggleServices() {
-    this.servicesOpen = !this.servicesOpen;
-  }
-
-  toggleVisitors() {
-    this.visitorsOpen = !this.visitorsOpen;
-  }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
   }
 }

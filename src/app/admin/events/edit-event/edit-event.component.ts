@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 @Component({
   selector: 'app-edit-event',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule, AdminNavComponent],
   templateUrl: './edit-event.component.html',
   styleUrls: ['./edit-event.component.css']
 })
@@ -19,6 +20,7 @@ export class EditEventComponent implements OnInit {
     private router: Router,
     private http: HttpClient
   ) {}
+
 
   API_URL = 'http://localhost:5000/api/events';
 
@@ -37,8 +39,13 @@ export class EditEventComponent implements OnInit {
   venueMode: 'manual' | 'map' = 'manual';
 
   /* ================= LOAD EVENT ================= */
-
   ngOnInit() {
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
 
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -70,25 +77,6 @@ export class EditEventComponent implements OnInit {
 
   }
 
-  /* ================= MENU STATES ================= */
-
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  maintenanceOpen = false;
-  noticeOpen = false;
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
 
   /* ================= MAP FUNCTIONS ================= */
 
@@ -167,36 +155,4 @@ export class EditEventComponent implements OnInit {
 
   }
 
-  /* ================= LOGOUT ================= */
-
-  logout() {
-
-    Swal.fire({
-      title:'Logout?',
-      icon:'warning',
-      showCancelButton:true,
-      confirmButtonText:'Yes, Logout'
-    }).then(result => {
-
-      if (result.isConfirmed) {
-
-        localStorage.clear();
-
-        Swal.fire({
-          icon:'success',
-          title:'Logged Out',
-          timer:1200,
-          showConfirmButton:false
-        }).then(() => {
-
-          this.router.navigate(['/admin-login']);
-
-        });
-
-      }
-
-    });
-
   }
-
-}

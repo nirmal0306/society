@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 
 @Component({
   selector: 'app-list-complaints',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule,ResidentNavComponent],
   templateUrl: './list-complaints.component.html',
   styleUrls: ['./list-complaints.component.css']
 })
@@ -21,16 +22,18 @@ export class ListComplaintsComponent implements OnInit {
   loading = true;
 
   ngOnInit() {
-    this.loadComplaints();
-  }
-
-  loadComplaints() {
     const email = localStorage.getItem("email");
 
     if (!email) {
       this.router.navigate(['/login']);
       return;
     }
+    this.loadComplaints();
+  }
+
+  loadComplaints() {
+    const email = localStorage.getItem("email");
+
 
     this.http.get<any[]>(`${this.API_URL}/email/${email}`)
       .subscribe({
@@ -52,48 +55,5 @@ export class ListComplaintsComponent implements OnInit {
       case 'Resolved': return 'status resolved';
       default: return 'status';
     }
-  }
-
-  menuOpen = false;
-  servicesOpen = false;
-  complaintsOpen = false;
-  maintenanceOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  toggleServices() {
-    this.servicesOpen = !this.servicesOpen;
-  }
-
-  toggleComplaints() {
-    this.complaintsOpen = !this.complaintsOpen;
-  }
-
-  toggleMaintenance() {
-    this.maintenanceOpen = !this.maintenanceOpen;
-  }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => {
-          this.router.navigate(['/login']);
-        });
-      }
-    });
   }
 }

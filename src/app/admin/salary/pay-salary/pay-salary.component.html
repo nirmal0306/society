@@ -1,0 +1,63 @@
+<!-- ================= HERO CONTENT ================= -->
+<div class="hero">
+  <app-admin-nav></app-admin-nav>
+  <div class="hero-content">
+    <h1>Pay Salary</h1>
+
+    <!-- ================= SECURITY TABLE ================= -->
+    <table class="security-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Select Months</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of securityList">
+          <td>{{ s.name }}</td>
+          <td>{{ s.email }}</td>
+          <td>
+            <div class="month-grid">
+              <label *ngFor="let m of allMonths"
+                     class="month-label"
+                     [class.paid]="isMonthPaid(s._id, m)"
+                     [class.selected]="selectedMonths[s._id + '-' + m]">
+                <input
+                  type="checkbox"
+                  [disabled]="isMonthPaid(s._id, m)"
+                  [(ngModel)]="selectedMonths[s._id + '-' + m]"
+                  (change)="calculateAmount()"
+                />
+                {{ m.slice(0, 3) }}
+                <span *ngIf="isMonthPaid(s._id, m)" class="paid-tag">✓</span>
+              </label>
+            </div>
+          </td>
+          <td class="amount-cell">₹{{ getSecurityAmount(s._id) }}</td>
+          <td>
+            <button class="pay-btn"
+                    [disabled]="getSecurityAmount(s._id) === 0"
+                    (click)="openPaymentModal(s)">
+              Pay Now
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="grand-total">Grand Total: ₹{{ amount }}</h3>
+
+    <!-- ================= PAYMENT MODAL ================= -->
+    <app-admin-payment-modal
+      *ngIf="showPaymentModal && selectedSecurity"
+      [amount]="getSecurityAmount(selectedSecurity._id)"
+      [security]="selectedSecurity"
+      [selectedMonths]="getSelectedMonthsArray()"
+      (paymentSuccess)="handlePaymentSuccess($event)"
+      (closeModal)="handleCloseModal()">
+    </app-admin-payment-modal>
+  </div>
+</div>

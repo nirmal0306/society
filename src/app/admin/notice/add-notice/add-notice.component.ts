@@ -1,20 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 @Component({
   selector: 'app-add-notice',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule,AdminNavComponent],
   templateUrl: './add-notice.component.html',
   styleUrls: ['./add-notice.component.css']
 })
 export class AddNoticeComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit(){
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
+  }
 
   NOTICE_API = "http://localhost:5000/api/notices";
 
@@ -25,25 +35,6 @@ export class AddNoticeComponent {
     date: '',
     type: 'General'
   };
-
-  /* ================= NAVBAR STATES ================= */
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  noticeOpen = false;
-  maintenanceOpen = false;
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
 
   /* ================= ADD NOTICE ================= */
   addNotice() {
@@ -71,25 +62,5 @@ export class AddNoticeComponent {
           Swal.fire('Error', 'Failed to create notice', 'error');
         }
       });
-  }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => this.router.navigate(['/admin-login']));
-      }
-    });
   }
 }

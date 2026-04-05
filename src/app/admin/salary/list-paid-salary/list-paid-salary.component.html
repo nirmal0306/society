@@ -1,0 +1,64 @@
+<!-- ================= HERO ================= -->
+<div class="hero">
+<app-admin-nav></app-admin-nav>
+  <div class="hero-content">
+
+    <!-- HEADER -->
+    <div class="header-row">
+      <h1 class="hero-title">Paid Salary Records</h1>
+
+      <!-- SEARCH -->
+      <div class="filter-box">
+        <input type="text"
+               placeholder="Search by name, month..."
+               [(ngModel)]="searchText"
+               (input)="applyFilter()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+
+    <!-- EMPTY -->
+    <div *ngIf="filtered.length === 0" class="empty-text">
+      No salary records found
+    </div>
+
+    <!-- TABLE -->
+    <table class="resident-table" *ngIf="filtered.length > 0">
+      <thead>
+        <tr>
+          <th (click)="sort('name')">Name ⇅</th>
+          <th (click)="sort('email')">Email ⇅</th>
+          <th (click)="sort('month')">Month ⇅</th>
+          <th (click)="sort('amount')">Amount ⇅</th>
+          <th>Method</th>
+          <th>Status</th>
+          <th (click)="sort('date')">Date ⇅</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let s of paginated">
+          <td>{{ s.name }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.months.join(', ') }}</td>
+          <td>₹ {{ s.amount }}</td>
+          <td>{{ s.method }}</td>
+
+          <td>
+            <span class="status paid">Paid</span>
+          </td>
+
+          <td>{{ s.date | date:'mediumDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+      <span>Page {{currentPage}} of {{totalPages}}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+
+  </div>
+</div>

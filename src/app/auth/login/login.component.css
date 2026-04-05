@@ -853,7 +853,7 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 72px;
+  padding-top: 152px;
   font-family: 'Montserrat', sans-serif;
 
   background: rgba(255, 255, 255, 0.08); /* light glass */
@@ -1087,6 +1087,7 @@ label {
   -webkit-backdrop-filter: blur(14px);
 }
 .login-card {
+  margin-top: 100px;
   width: 100%;
   max-width: 380px;
   /* background: #ffffff; */

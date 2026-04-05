@@ -1849,3 +1849,11 @@ section.container {
     transform: rotate(-45deg) translate(6px, -6px);
   }
 }
+h1.hero-title {
+  margin-bottom: 20px;
+  font-size: 3rem;
+  color:white;
+}
+td{
+  color: #000;
+}

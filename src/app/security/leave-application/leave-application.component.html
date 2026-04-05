@@ -1,0 +1,42 @@
+<section style="margin-top:-105px;" class="hero">
+<app-security-nav></app-security-nav>
+  <div class="hero-content">
+  <h1>Apply Leave</h1>
+
+  <form (ngSubmit)="applyLeave()">
+
+    <input type="text" [value]="name" readonly>
+    <input type="email" [value]="email" readonly>
+
+    <input type="date" [(ngModel)]="leave.fromDate" name="fromDate">
+    <input type="date" [(ngModel)]="leave.toDate" name="toDate">
+
+    <textarea [(ngModel)]="leave.reason" name="reason" placeholder="Reason"></textarea>
+
+    <button type="submit" class="btn">Apply</button>
+
+  </form>
+  </div>
+
+  <div class="hero-content">
+
+<h1>My Leave Requests</h1>
+
+<div *ngFor="let l of leaves" class="leave-card">
+
+  <p><b>From:</b> {{ l.fromDate | date }}</p>
+  <p><b>To:</b> {{ l.toDate | date }}</p>
+
+  <p><b>Status:</b>
+    <span [ngClass]="l.status.toLowerCase()">
+      {{ l.status }}
+    </span>
+  </p>
+
+  <!-- ✅ SHOW ADMIN RESPONSE -->
+  <p *ngIf="l.responseMessage" class="response">
+    <b>Admin Response:</b> {{ l.responseMessage }}
+  </p>
+</div>
+</div>
+</section>

@@ -4,6 +4,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 interface Resident {
   _id: string;
@@ -17,7 +18,7 @@ interface Resident {
 @Component({
   selector: 'app-list-residents',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule,AdminNavComponent],
   templateUrl: './list-residents.component.html',
   styleUrls: ['./list-residents.component.css']
 })
@@ -41,6 +42,13 @@ export class ListResidentsComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
     this.getResidents();
   }
 
@@ -163,45 +171,4 @@ export class ListResidentsComponent implements OnInit {
       }
     });
   }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Do you want to logout?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1500,
-          showConfirmButton: false
-        }).then(() => this.router.navigate(['/admin-login']));
-      }
-    });
-  }
-
-  /* ================= NAVBAR TOGGLERS ================= */
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  maintenanceOpen = false;
-  noticeOpen = false;
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
 }

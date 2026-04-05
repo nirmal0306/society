@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../nav/admin-nav/admin-nav.component';
 
 @Component({
   selector: 'app-admin-profile',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, AdminNavComponent],
   templateUrl: './admin-profile.component.html',
   styleUrl: './admin-profile.component.css'
 })
@@ -17,43 +18,12 @@ export class AdminProfileComponent {
   name = localStorage.getItem('name') || 'Admin';
   email = localStorage.getItem('email') || '';
 
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  maintenanceOpen = false;
-  noticeOpen = false;
+  ngOnInit() {
+    const email = localStorage.getItem('email');
 
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => {
-          this.router.navigate(['/admin-login']);
-        });
-      }
-    });
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
   }
 }

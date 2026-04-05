@@ -1,1 +1,57 @@
-<p>list-notice-resident works!</p>
+<app-resident-nav></app-resident-nav>
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="header-row">
+      <h1 class="hero-title">Notice List</h1>
+
+      <!-- SEARCH -->
+      <div class="filter-box">
+        <input
+          type="text"
+          placeholder="Search notices..."
+          [(ngModel)]="searchText"
+          (input)="applyFilter()"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div *ngIf="loading">Loading notices...</div>
+
+    <!-- TABLE -->
+    <table *ngIf="!loading && paginatedNotices.length" class="resident-table">
+      <thead>
+        <tr>
+          <th (click)="sortData('title')">Title {{ getSortIcon('title') }}</th>
+          <th (click)="sortData('type')">Type {{ getSortIcon('type') }}</th>
+          <th (click)="sortData('date')">Date {{ getSortIcon('date') }}</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let notice of paginatedNotices">
+          <td>{{ notice.title }}</td>
+          <td>{{ notice.type }}</td>
+          <td>{{ notice.date }}</td>
+          <td>{{ notice.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- NO DATA -->
+    <div *ngIf="!loading && !paginatedNotices.length">
+      No notices found.
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+
+  </div>
+</section>

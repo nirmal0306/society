@@ -1,3 +1,4 @@
+import { ManageSalaryComponent } from './security/manage-salary/manage-salary.component';
 import { Routes } from '@angular/router';
 
 import { HomeComponent } from './user/home/home.component';
@@ -51,6 +52,10 @@ import { SecurityProfileComponent } from './security/security-profile/security-p
 import { ListVisitorsSecurityComponent } from './security/list-visitors-security/list-visitors-security.component';
 import { PaymentModalComponent } from './resident/payment-modal/payment-modal.component';
 import { MaintenanceDetailsComponent } from './resident/maintenance-details/maintenance-details.component';
+import { LeaveApplicationComponent } from './security/leave-application/leave-application.component';
+import { ManageLeaveApplicationComponent } from './admin/manage-leave-application/manage-leave-application.component';
+import { PaySalaryComponent } from './admin/salary/pay-salary/pay-salary.component';
+import { ListPaidSalaryComponent } from './admin/salary/list-paid-salary/list-paid-salary.component';
 
 export const routes: Routes = [
 
@@ -75,6 +80,9 @@ export const routes: Routes = [
   { path: 'admin-profile', component: AdminProfileComponent },
   { path: 'manage-complaints', component: ManageComplaintsComponent },
   { path: 'manage-parking', component: ManageParkingComponent },
+  { path: 'pay-salary', component: PaySalaryComponent },
+  { path: 'list-paid-salary', component: ListPaidSalaryComponent },
+  { path: 'manage-leave-application', component: ManageLeaveApplicationComponent },
 
   // ---- Event Crud ----
   { path: 'add-event', component: AddEventComponent },
@@ -127,6 +135,8 @@ export const routes: Routes = [
   { path: 'security-profile', component: SecurityProfileComponent },
   { path: 'add-visitor', component: AddVisitorComponent },
   { path: 'list-visitors-security', component: ListVisitorsSecurityComponent },
+  { path: 'manage-salary', component: ManageSalaryComponent },
+  { path: 'leave-application', component: LeaveApplicationComponent },
 
 
   // ---- Fallback ----

@@ -1,0 +1,57 @@
+<app-security-nav></app-security-nav>
+
+<div class="hero">
+  <div class="hero-content">
+
+    <!-- HEADER -->
+    <div class="header-row">
+      <h1 class="hero-title">My Salary Records</h1>
+
+      <!-- SEARCH -->
+      <div class="filter-box">
+        <input type="text"
+               placeholder="Search by month, amount..."
+               [(ngModel)]="searchText"
+               (input)="applyFilter()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div *ngIf="filtered.length === 0" class="empty-text">
+      No salary records found
+    </div>
+
+    <!-- TABLE -->
+    <table class="resident-table" *ngIf="filtered.length > 0">
+      <thead>
+        <tr>
+          <th (click)="sort('months')">Month ⇅</th>
+          <th (click)="sort('amount')">Amount ⇅</th>
+          <th (click)="sort('method')">Method ⇅</th>
+          <th>Status</th>
+          <th (click)="sort('date')">Date ⇅</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of paginated">
+          <td>{{ s.months.join(', ') }}</td>
+          <td>₹ {{ s.amount }}</td>
+          <td>{{ s.method }}</td>
+          <td>
+            <span class="status paid">{{ s.status }}</span>
+          </td>
+          <td>{{ s.date | date:'mediumDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+      <span class="page-info">Page {{currentPage}} of {{totalPages}}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 interface Notice {
   _id: string;
@@ -16,7 +17,7 @@ interface Notice {
 @Component({
   selector: 'app-list-notices',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule, AdminNavComponent],
   templateUrl: './list-notices.component.html',
   styleUrls: ['./list-notices.component.css']
 })
@@ -45,27 +46,16 @@ export class ListNoticesComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
     this.getNotices();
   }
 
-  /* ================= NAVBAR ================= */
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  noticeOpen = false;
-  maintenanceOpen = false;
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
 
   /* ================= GET ================= */
   getNotices() {
@@ -179,16 +169,5 @@ export class ListNoticesComponent implements OnInit {
       this.currentPage--;
       this.updatePagination();
     }
-  }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    localStorage.clear();
-    Swal.fire({
-      icon: 'success',
-      title: 'Logged Out',
-      timer: 1200,
-      showConfirmButton: false
-    }).then(() => this.router.navigate(['/admin-login']));
   }
 }

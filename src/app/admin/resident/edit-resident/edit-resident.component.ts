@@ -5,11 +5,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as faceapi from 'face-api.js';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 @Component({
   selector: 'app-edit-resident',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, AdminNavComponent, FormsModule, HttpClientModule, RouterModule],
   templateUrl: './edit-resident.component.html',
   styleUrls: ['./edit-resident.component.css']
 })
@@ -51,53 +52,17 @@ export class EditResidentComponent implements OnInit {
   /* ================= INIT ================= */
 
   async ngOnInit() {
+
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
     await this.loadModels();
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) this.loadResident(id);
-  }
-
-  /* ================= FACE MODELS ================= */
-
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  maintenanceOpen = false;
-  noticeOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  toggleServices() {
-    this.servicesOpen = !this.servicesOpen;
-  }
-
-  toggleResidents() {
-    this.residentsOpen = !this.residentsOpen;
-  }
-
-  toggleSecurity() {
-    this.securityOpen = !this.securityOpen;
-  }
-
-  toggleVisitors() {
-  this.visitorsOpen = !this.visitorsOpen;
-  }
-
-  toggleEvent(){
-    this.eventOpen = !this.eventOpen;
-  }
-
-  toggleMaintenance(){
-    this.maintenanceOpen = !this.maintenanceOpen;
-  }
-
-  toggleNotice(){
-    this.noticeOpen = !this.noticeOpen;
   }
 
 
@@ -251,19 +216,6 @@ export class EditResidentComponent implements OnInit {
           .then(() => this.router.navigate(['/list-residents']));
       },
       error: () => Swal.fire('Error', 'Update failed', 'error')
-    });
-  }
-
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'question',
-      showCancelButton: true
-    }).then(res => {
-      if (res.isConfirmed) {
-        localStorage.clear();
-        this.router.navigate(['/admin-login']);
-      }
     });
   }
 }

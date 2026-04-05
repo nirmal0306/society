@@ -327,12 +327,13 @@ label {
 .eye-icon {
   position: absolute;
   top: 50%;
-  right: 0px;
+  right: 12px;
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
   opacity: 0.85;
-  pointer-events: none;
+  font-size: 18px;
+  pointer-events: auto;
 }
 
 /* Base eye animation */
@@ -433,3 +434,4 @@ label {
     font-size: 1.2rem;
   }
 }
+

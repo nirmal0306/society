@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 
 @Component({
   selector: 'app-edit-notice',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule, AdminNavComponent],
   templateUrl: './edit-notice.component.html',
   styleUrls: ['./edit-notice.component.css']
 })
@@ -33,6 +34,13 @@ export class EditNoticeComponent implements OnInit {
   /* ================= LOAD NOTICE ================= */
   ngOnInit() {
 
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      this.router.navigate(['/admin-login']);
+      return;
+    }
+
     const id = this.route.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -52,25 +60,6 @@ export class EditNoticeComponent implements OnInit {
         }
       });
   }
-
-  /* ================= NAVBAR ================= */
-  menuOpen = false;
-  servicesOpen = false;
-  residentsOpen = false;
-  securityOpen = false;
-  visitorsOpen = false;
-  eventOpen = false;
-  noticeOpen = false;
-  maintenanceOpen = false;
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  toggleServices() { this.servicesOpen = !this.servicesOpen; }
-  toggleResidents() { this.residentsOpen = !this.residentsOpen; }
-  toggleSecurity() { this.securityOpen = !this.securityOpen; }
-  toggleVisitors() { this.visitorsOpen = !this.visitorsOpen; }
-  toggleEvent() { this.eventOpen = !this.eventOpen; }
-  toggleMaintenance() { this.maintenanceOpen = !this.maintenanceOpen; }
-  toggleNotice() { this.noticeOpen = !this.noticeOpen; }
 
   /* ================= UPDATE ================= */
   updateNotice() {
@@ -98,25 +87,5 @@ export class EditNoticeComponent implements OnInit {
           Swal.fire('Error', 'Failed to update notice', 'error');
         }
       });
-  }
-
-  /* ================= LOGOUT ================= */
-  logout() {
-    Swal.fire({
-      title: 'Logout?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout'
-    }).then(result => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged Out',
-          timer: 1200,
-          showConfirmButton: false
-        }).then(() => this.router.navigate(['/admin-login']));
-      }
-    });
   }
 }
