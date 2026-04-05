@@ -10,7 +10,7 @@
 
       <div class="header">
         <h3>{{ c.subject }}</h3>
-        <span [ngClass]="getStatusClass(c.status)">
+        <span class="status" [ngClass]="getStatusClass(c.status)">
           {{ c.status }}
         </span>
       </div>

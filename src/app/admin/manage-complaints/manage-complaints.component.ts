@@ -81,9 +81,9 @@ export class ManageComplaintsComponent implements OnInit {
   }
 
   getStatusClass(status: string) {
-    switch (status) {
-      case 'Pending': return 'pending';
-      case 'Resolved': return 'resolved';
+    switch (status.toLowerCase().trim()) {
+      case 'pending': return 'pending';
+      case 'resolved': return 'resolved';
       default: return '';
     }
   }

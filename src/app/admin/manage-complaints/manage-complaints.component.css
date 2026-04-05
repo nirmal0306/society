@@ -1413,4 +1413,51 @@ h1.hero-title {
   font-size: 3rem;
   color:white;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+}
+.status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+/* ===== Status Variants ===== */
+.status.resolved{
+  background: rgba(46, 204, 113, 0.15);
+  color: #07fa6c;
+  border: 1px solid #2ecc71;
+}
+
+.status.pending {
+  background: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+  border: 1px solid #f1c40f;
+}
+
+.status.rejected {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+
+/* Optional hover effect */
+.status:hover {
+  transform: scale(1.05);
+}
 
