@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 interface Notice {
   _id: string;
@@ -41,8 +42,6 @@ export class ListNoticesComponent implements OnInit {
   itemsPerPage = 5;
   totalPages = 1;
 
-  private API_URL = 'http://localhost:5000/api/notices';
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
@@ -60,7 +59,7 @@ export class ListNoticesComponent implements OnInit {
   /* ================= GET ================= */
   getNotices() {
     this.loading = true;
-    this.http.get<any>(this.API_URL).subscribe({
+    this.http.get<any>(`${API_URL}/api/notices`).subscribe({
       next: (res) => {
         this.notices = res.data || res.notices || res || [];
         this.loading = false;
@@ -83,7 +82,7 @@ export class ListNoticesComponent implements OnInit {
       confirmButtonText: 'Yes, delete'
     }).then(result => {
       if (result.isConfirmed) {
-        this.http.delete(`${this.API_URL}/${id}`).subscribe({
+        this.http.delete(`${API_URL}/api/notices/${id}`).subscribe({
           next: () => {
             Swal.fire('Deleted', 'Notice deleted successfully', 'success');
             this.notices = this.notices.filter(n => n._id !== id);

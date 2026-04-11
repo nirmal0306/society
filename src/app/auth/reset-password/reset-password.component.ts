@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { ANavComponent } from '../../nav/a-nav/a-nav.component';
+import { API_URL } from '../../app.config';
 
 @Component({
   selector: 'app-reset-password',
@@ -69,7 +70,7 @@ export class ResetPasswordComponent {
       password: this.resetForm.value.password
     };
 
-    this.http.post('http://localhost:5000/admin/reset-password', body)
+    this.http.post(`${API_URL}/admin/reset-password`, body)
       .subscribe({
         next: () => {
           this.alert.success('Password updated successfully!');

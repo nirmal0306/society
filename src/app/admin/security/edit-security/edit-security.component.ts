@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 
 import * as faceapi from 'face-api.js';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-edit-security',
@@ -41,7 +42,6 @@ export class EditSecurityComponent implements OnInit {
   faceDescriptor: number[] = [];
   stream!: MediaStream;
 
-  private API_URL = 'http://localhost:5000/api/security';
 
   constructor(
     private http: HttpClient,
@@ -58,7 +58,7 @@ export class EditSecurityComponent implements OnInit {
       this.router.navigate(['/admin-login']);
       return;
     }
-    
+
     await this.loadFaceModels();
 
     const id = this.route.snapshot.paramMap.get('id');
@@ -75,7 +75,7 @@ export class EditSecurityComponent implements OnInit {
   }
 
   loadSecurity(id: string) {
-    this.http.get<any>(`${this.API_URL}/${id}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/security/${id}`).subscribe({
       next: res => {
         this.security = res;
         this.imagePreview = res.photo
@@ -182,7 +182,7 @@ export class EditSecurityComponent implements OnInit {
 
     Swal.fire({ title: 'Updating...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
-    this.http.put(`${this.API_URL}/${this.security._id}`, formData).subscribe({
+    this.http.put(`${API_URL}/api/security/${this.security._id}`, formData).subscribe({
       next: () =>
         Swal.fire({ icon: 'success', title: 'Updated', timer: 1500, showConfirmButton: false })
           .then(() => this.router.navigate(['/list-securities'])),

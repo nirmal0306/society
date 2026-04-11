@@ -6,6 +6,7 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as faceapi from 'face-api.js';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-edit-resident',
@@ -19,7 +20,6 @@ export class EditResidentComponent implements OnInit {
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
 
-  API_URL = 'http://localhost:5000/api/residents';
 
   blocks = ['A','B','C','D','E','F','G','H','I','J'];
   flats: string[] = [];
@@ -95,7 +95,7 @@ export class EditResidentComponent implements OnInit {
   }
 
   loadResident(id: string) {
-    this.http.get<any>(`${this.API_URL}/${id}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/residents/${id}`).subscribe({
       next: res => {
         this.resident = res;
         this.imagePreview = res.photo ? `http://localhost:5000${res.photo}` : null;
@@ -210,7 +210,7 @@ export class EditResidentComponent implements OnInit {
 
     Swal.fire({ title:'Updating...', allowOutsideClick:false, didOpen:()=>Swal.showLoading() });
 
-    this.http.put(`${this.API_URL}/${this.resident._id}`, formData).subscribe({
+    this.http.put(`${API_URL}/api/residents/${this.resident._id}`, formData).subscribe({
       next: () => {
         Swal.fire({ icon:'success', title:'Updated', timer:1500, showConfirmButton:false })
           .then(() => this.router.navigate(['/list-residents']));

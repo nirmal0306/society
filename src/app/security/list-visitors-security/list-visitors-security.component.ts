@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
-
+import { API_URL } from '../../app.config';
 interface Visitor {
   _id: string;
   name: string;
@@ -47,8 +47,6 @@ export class ListVisitorsSecurityComponent implements OnInit {
   recordsPerPage = 5;
   totalPages = 1;
 
-  API_URL = "http://localhost:5000/api/visitors";
-
   constructor(private http: HttpClient, private router: Router) {}
 
   sortColumn: string = '';
@@ -70,7 +68,7 @@ export class ListVisitorsSecurityComponent implements OnInit {
 
     this.loading = true;
 
-    this.http.get<Visitor[]>(this.API_URL).subscribe({
+    this.http.get<Visitor[]>(`${API_URL}/api/visitors`).subscribe({
 
       next: (res) => {
         this.visitors = res;
@@ -185,7 +183,7 @@ export class ListVisitorsSecurityComponent implements OnInit {
 
   exitVisitor(id: string) {
 
-    this.http.put(`${this.API_URL}/exit/${id}`, {}).subscribe({
+    this.http.put(`${API_URL}/api/visitors/exit/${id}`, {}).subscribe({
 
       next: () => {
         Swal.fire("Exit recorded", "", "success");

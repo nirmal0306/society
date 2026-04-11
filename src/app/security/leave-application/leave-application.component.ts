@@ -5,7 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-leave-application',
   standalone: true,
@@ -17,8 +17,6 @@ export class LeaveApplicationComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  SECURITY_API = "http://localhost:5000/api/security";
-  LEAVE_API = "http://localhost:5000/api/leaves";
 
   // ✅ REQUIRED VARIABLES (fix error)
   name: string = "";
@@ -45,7 +43,7 @@ export class LeaveApplicationComponent implements OnInit {
 
   if (!this.email) return;
 
-  this.http.get<any[]>(`${this.LEAVE_API}/email/${this.email}`)
+  this.http.get<any[]>(`${API_URL}/api/leaves/email/${this.email}`)
     .subscribe({
       next: (res) => {
         this.leaves = res;
@@ -66,7 +64,7 @@ export class LeaveApplicationComponent implements OnInit {
       return;
     }
 
-    this.http.get<any>(`${this.SECURITY_API}/profile/${email}`)
+    this.http.get<any>(`${API_URL}/api/security/profile/${email}`)
       .subscribe({
         next: (res) => {
           this.name = res.name;
@@ -102,7 +100,7 @@ export class LeaveApplicationComponent implements OnInit {
       didOpen: () => Swal.showLoading()
     });
 
-    this.http.post(this.LEAVE_API, data)
+    this.http.post(`${API_URL}/api/leaves/`, data)
       .subscribe({
         next: () => {
           Swal.fire({

@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../app.config';
 
 @Component({
   selector: 'app-manage-leave-application',
@@ -31,7 +32,7 @@ ngOnInit() {
 }
 
 loadLeaves() {
-  this.http.get<any[]>(this.LEAVE_API).subscribe(res => {
+  this.http.get<any[]>(`${API_URL}/api/leaves`).subscribe(res => {
     this.leaves = res;
   });
 }

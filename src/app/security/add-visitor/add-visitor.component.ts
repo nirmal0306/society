@@ -5,7 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-add-visitor',
   standalone: true,
@@ -43,8 +43,6 @@ export class AddVisitorComponent implements OnInit {
   imageBlob: any;
   imagePreview: any;
 
-  API_URL = "http://localhost:5000/api/visitors";
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
@@ -67,12 +65,11 @@ export class AddVisitorComponent implements OnInit {
     }
   }
 
-  /* ================= LOAD SECURITY INFO ================= */
-/* ================= LOAD SECURITY PROFILE ================= */
+  /* ================= LOAD SECURITY PROFILE ================= */
 loadSecurityData() {
   const email = localStorage.getItem("email");
 
-  this.http.get<any>(`http://localhost:5000/api/security/profile/${email}`)
+  this.http.get<any>(`${API_URL}/api/security/profile/${email}`)
     .subscribe({
       next: (res) => {
         this.securityName = res.name;
@@ -152,7 +149,7 @@ loadSecurityData() {
 
     Swal.fire({ title:"Sending request...", didOpen:()=>Swal.showLoading(), allowOutsideClick:false });
 
-    this.http.post(this.API_URL, formData).subscribe({
+    this.http.post(`${API_URL}/api/visitors`, formData).subscribe({
       next: (res:any) => {
         Swal.fire("Success", res.message || "Request sent to resident", "success");
         this.router.navigate(['/list-visitors-security']);

@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 interface Security {
   _id: string;
@@ -37,8 +38,6 @@ export class ListSecuritiesComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  private API_URL = 'http://localhost:5000/api/security';
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
@@ -54,7 +53,7 @@ export class ListSecuritiesComponent implements OnInit {
   /* ================= GET SECURITIES ================= */
   getSecurities() {
     this.loading = true;
-    this.http.get<Security[]>(this.API_URL).subscribe({
+    this.http.get<Security[]>(`${API_URL}/api/security`).subscribe({
       next: (res) => {
         this.securities = res;
         this.loading = false;
@@ -142,7 +141,7 @@ export class ListSecuritiesComponent implements OnInit {
       cancelButtonText: 'Cancel'
     }).then(result => {
       if (result.isConfirmed) {
-        this.http.delete(`${this.API_URL}/${id}`).subscribe({
+        this.http.delete(`${API_URL}/api/security/${id}`).subscribe({
           next: () => {
             Swal.fire('Deleted!', 'Security staff has been deleted.', 'success');
             this.securities = this.securities.filter(s => s._id !== id);

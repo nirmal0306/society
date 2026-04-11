@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 interface Visitor {
   _id: string;
@@ -39,7 +40,7 @@ export class ListVisitorsComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  private API_URL = 'http://localhost:5000/api/visitors';
+  // private API_URL = 'http://localhost:5000/api/visitors';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -56,7 +57,7 @@ export class ListVisitorsComponent implements OnInit {
   /* ================= GET VISITORS ================= */
   getVisitors() {
     this.loading = true;
-    this.http.get<Visitor[]>(this.API_URL).subscribe({
+    this.http.get<Visitor[]>(`${API_URL}/api/visitors`).subscribe({
       next: (res) => {
         this.visitors = res;
         this.loading = false;

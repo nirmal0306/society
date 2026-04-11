@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import html2pdf from 'html2pdf.js';
-
+import { API_URL } from '../../app.config';
 interface ResidentFlat {
   block: string;
   flat: string;
@@ -55,7 +55,6 @@ export class PaymentModalComponent implements OnInit {
   cardErrors: CardErrors = {};
 
   isProcessing = false;
-  API = 'http://localhost:5000/api/maintenance';
 
   isCardTouched = false;
   isExpiryTouched = false;
@@ -221,7 +220,7 @@ getVisiblePin(): string {
       status: 'success'
     };
 
-    this.http.post(`${this.API}/pay`, paymentData).subscribe({
+    this.http.post(`${API_URL}/api/maintenance/pay`, paymentData).subscribe({
       next: (res) => {
         Swal.fire('Success', 'Payment Successful!', 'success');
 
@@ -308,7 +307,7 @@ getVisiblePin(): string {
       status: 'success'
     };
 
-    this.http.post(`${this.API}/pay`, paymentData).subscribe({
+    this.http.post(`${API_URL}/api/maintenance/pay`, paymentData).subscribe({
       next: (res) => {
         Swal.fire('Success', 'Card Payment Successful', 'success');
 
@@ -410,8 +409,6 @@ onPinPaste(event: any) {
   cancel() {
     this.closeModal.emit();
   }
-   // Add this new method to your PaymentModalComponent class
-    BASE_URL = "http://localhost:5000/api/residents";
 
   name = "";
   email = "";
@@ -421,7 +418,7 @@ onPinPaste(event: any) {
 
     loadProfile() {
   const email = localStorage.getItem("email");
-  this.http.get<any>(`${this.BASE_URL}/profile/${email}`)
+  this.http.get<any>(`${API_URL}/api/residents/profile/${email}`)
     .subscribe({
       next: (res) => {
         this.name = res.name;
@@ -439,7 +436,7 @@ onPinPaste(event: any) {
 // ✅ ADD THIS NEW METHOD (fixes TS error)
 private loadProfileData(email: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    this.http.get<any>(`${this.BASE_URL}/profile/${email}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`).subscribe({
       next: (res) => resolve(res),
       error: () => reject(new Error('Profile load failed'))
     });

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { API_URL } from '../../app.config';
 
 interface SecurityUser {
   _id: string;
@@ -36,7 +37,6 @@ export class AdminPaymentModalComponent implements OnInit {
   // ===== COMMON STATE =====
   selectedType: 'UPI' | 'Card' = 'UPI';
   isProcessing = false;
-  API = 'http://localhost:5000/api/salary';
 
   // ===== UPI =====
   upiId = '';
@@ -162,7 +162,7 @@ export class AdminPaymentModalComponent implements OnInit {
   };
 
 
-  this.http.post(`${this.API}/pay`, paymentData).subscribe({
+  this.http.post(`${API_URL}/api/salary/pay`, paymentData).subscribe({
     next: () => {
       Swal.fire('Success', 'Salary Paid', 'success');
       Swal.fire('Success','Salary paid successfully!','success');
@@ -173,33 +173,7 @@ export class AdminPaymentModalComponent implements OnInit {
     complete: () => this.isProcessing = false
   });
 }
-  submitUpiPin1() {
-    if (this.enteredPin.length !== 6) {
-      Swal.fire('Error', 'Enter 6-digit PIN', 'error');
-      return;
-    }
 
-    this.isProcessing = true;
-    const paymentData = {
-      securityId: this.security._id,
-      name: this.security.name,
-      email: this.security.email,
-      months: this.selectedMonths,
-      amount: this.amount,
-      method: 'UPI',
-      status: 'success'
-    };
-
-    this.http.post(`${this.API}/pay`, paymentData).subscribe({
-      next: () => {
-        Swal.fire('Success', 'Salary Paid', 'success');
-        this.paymentSuccess.emit(paymentData);
-        this.closeModal.emit();
-      },
-      error: () => Swal.fire('Error', 'Payment Failed', 'error'),
-      complete: () => this.isProcessing = false
-    });
-  }
 
   // ===== CARD METHODS =====
   selectCardBrand(brand: 'visa' | 'mastercard' | 'rupay') {
@@ -263,7 +237,7 @@ export class AdminPaymentModalComponent implements OnInit {
     }
   };
 
-  this.http.post(`${this.API}/pay`, paymentData).subscribe({
+  this.http.post(`${API_URL}/api/salary/pay`, paymentData).subscribe({
     next: () => {
       Swal.fire('Success', 'Card Payment Done', 'success');
       this.paymentSuccess.emit(paymentData);
@@ -273,30 +247,6 @@ export class AdminPaymentModalComponent implements OnInit {
     complete: () => this.isProcessing = false
   });
 }
-  processCardPayment1() {
-    if (!this.isCardFormValid()) return;
-
-    this.isProcessing = true;
-    const paymentData = {
-      securityId: this.security._id,
-      name: this.security.name,
-      email: this.security.email,
-      months: this.selectedMonths,
-      amount: this.amount,
-      method: 'Card',
-      status: 'success'
-    };
-
-    this.http.post(`${this.API}/pay`, paymentData).subscribe({
-      next: () => {
-        Swal.fire('Success', 'Card Payment Done', 'success');
-        this.paymentSuccess.emit(paymentData);
-        this.closeModal.emit();
-      },
-      error: () => Swal.fire('Error', 'Payment Failed', 'error'),
-      complete: () => this.isProcessing = false
-    });
-  }
 
   isCardPreviewValid(): boolean {
     return !!this.card.number && !!this.cardBrand && !this.cardErrors.number;

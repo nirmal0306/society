@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 interface Event {
   _id: string;
   title: string;
@@ -45,8 +45,6 @@ export class ListEventResidentComponent implements OnInit {
   itemsPerPage = 5;
   totalPages = 1;
 
-  /* BACKEND URL */
-  private API_URL = 'http://localhost:5000/api/events';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -59,7 +57,7 @@ export class ListEventResidentComponent implements OnInit {
   /* ================= API ================= */
   getEvents() {
     this.loading = true;
-    this.http.get<any>(this.API_URL).subscribe({
+    this.http.get<any>(`${API_URL}/api/events`).subscribe({
       next: (res) => {
         // Support multiple backend formats
         this.events = res.data || res.events || res || [];
@@ -87,7 +85,7 @@ export class ListEventResidentComponent implements OnInit {
       confirmButtonText: 'Yes, delete'
     }).then(result => {
       if (result.isConfirmed) {
-        this.http.delete(`${this.API_URL}/${id}`).subscribe({
+        this.http.delete(`${API_URL}/api/events/${id}`).subscribe({
           next: () => {
             Swal.fire('Deleted', 'Event deleted successfully', 'success');
             this.events = this.events.filter(e => e._id !== id);

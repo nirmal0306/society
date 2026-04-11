@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-edit-notice',
@@ -21,8 +22,7 @@ export class EditNoticeComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  API_URL = 'http://localhost:5000/api/notices';
-
+  
   notice: any = {
     _id: '',
     title: '',
@@ -49,7 +49,7 @@ export class EditNoticeComponent implements OnInit {
       return;
     }
 
-    this.http.get<any>(`${this.API_URL}/${id}`)
+    this.http.get<any>(`${API_URL}/api/notices/${id}`)
       .subscribe({
         next: (res) => {
           this.notice = res.data || res; // support multiple formats
@@ -71,7 +71,7 @@ export class EditNoticeComponent implements OnInit {
       return;
     }
 
-    this.http.put(`${this.API_URL}/${this.notice._id}`, this.notice)
+    this.http.put(`${API_URL}/api/notices/${this.notice._id}`, this.notice)
       .subscribe({
         next: () => {
           Swal.fire({

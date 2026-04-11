@@ -4,7 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-security-profile',
   standalone: true,
@@ -15,8 +15,6 @@ import { SecurityNavComponent } from '../../nav/security-nav/security-nav.compon
 export class SecurityProfileComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient) {}
-
-  BASE_URL = "http://localhost:5000/api/security";
 
   name = "";
   email = "";
@@ -38,8 +36,7 @@ export class SecurityProfileComponent implements OnInit {
 
     const email = localStorage.getItem("email");
 
-
-    this.http.get<any>(`${this.BASE_URL}/profile/${email}`)
+    this.http.get<any>(`${API_URL}/api/security/profile/${email}`)
       .subscribe({
         next: (res) => {
           this.name = res.name;

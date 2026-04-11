@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as faceapi from 'face-api.js';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-add-resident',
@@ -34,7 +35,6 @@ export class AddResidentComponent implements OnInit {
   faceDescriptor: number[] | null = null;
   stream: MediaStream | null = null;
 
-  API_URL = 'http://localhost:5000/api/residents';
   modelsLoaded = false;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -42,7 +42,7 @@ export class AddResidentComponent implements OnInit {
   }
 
   async ngOnInit() {
-      
+
     const email = localStorage.getItem('email');
 
     if (!email) {
@@ -189,7 +189,7 @@ export class AddResidentComponent implements OnInit {
       didOpen: () => Swal.showLoading()
     });
 
-    this.http.post(this.API_URL, formData).subscribe({
+    this.http.post(`${API_URL}/api/residents`, formData).subscribe({
       next: () => {
         Swal.fire({
           icon: 'success',

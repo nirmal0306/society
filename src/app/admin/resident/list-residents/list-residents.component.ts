@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 interface Resident {
   _id: string;
@@ -37,8 +38,6 @@ export class ListResidentsComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  private API_URL = 'http://localhost:5000/api/residents';
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
@@ -55,7 +54,7 @@ export class ListResidentsComponent implements OnInit {
   /* ================= GET RESIDENTS ================= */
   getResidents() {
     this.loading = true;
-    this.http.get<Resident[]>(this.API_URL).subscribe({
+    this.http.get<Resident[]>(`${API_URL}/api/residents`).subscribe({
       next: (res) => {
         this.residents = res;
         this.loading = false;
@@ -160,7 +159,7 @@ export class ListResidentsComponent implements OnInit {
       cancelButtonText: 'Cancel'
     }).then(result => {
       if (result.isConfirmed) {
-        this.http.delete(`${this.API_URL}/${id}`).subscribe({
+        this.http.delete(`${API_URL}/api/residents/${id}`).subscribe({
           next: () => {
             Swal.fire('Deleted!', 'Resident has been deleted.', 'success');
             this.residents = this.residents.filter(r => r._id !== id);

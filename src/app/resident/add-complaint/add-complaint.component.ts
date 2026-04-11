@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-add-complaint',
   standalone: true,
@@ -45,7 +45,7 @@ export class AddComplaintComponent implements OnInit {
   loadProfile() {
     const email = localStorage.getItem("email");
 
-    this.http.get<any>(`${this.RESIDENT_API}/profile/${email}`)
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`)
       .subscribe({
         next: (res) => {
           this.name = res.name;
@@ -92,7 +92,7 @@ export class AddComplaintComponent implements OnInit {
       didOpen: () => Swal.showLoading()
     });
 
-    this.http.post(this.COMPLAINT_API, complaintData)
+    this.http.post(`${API_URL}/api/complaints`, complaintData)
       .subscribe({
         next: () => {
           Swal.fire({

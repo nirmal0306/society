@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 interface Notice {
   _id: string;
   title: string;
@@ -41,7 +41,7 @@ export class ListNoticeResidentComponent implements OnInit {
   itemsPerPage = 5;
   totalPages = 1;
 
-  private API_URL = 'http://localhost:5000/api/notices';
+  // private API_URL = 'http://localhost:5000/api/notices';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -55,7 +55,7 @@ export class ListNoticeResidentComponent implements OnInit {
   /* ================= GET ================= */
   getNotices() {
     this.loading = true;
-    this.http.get<any>(this.API_URL).subscribe({
+    this.http.get<any>(`${API_URL}/api/notices`).subscribe({
       next: (res) => {
         this.notices = res.data || res.notices || res || [];
         this.loading = false;
@@ -68,31 +68,6 @@ export class ListNoticeResidentComponent implements OnInit {
     });
   }
 
-  /* ================= DELETE ================= */
-  deleteNotice(id: string) {
-    Swal.fire({
-      title: 'Delete Notice?',
-      text: 'This notice will be permanently deleted!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete'
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.http.delete(`${this.API_URL}/${id}`).subscribe({
-          next: () => {
-            Swal.fire('Deleted', 'Notice deleted successfully', 'success');
-            this.notices = this.notices.filter(n => n._id !== id);
-            this.applyFilter();
-          },
-          error: () => Swal.fire('Error', 'Failed to delete notice', 'error')
-        });
-      }
-    });
-  }
-
-  editNotice(id: string) {
-    this.router.navigate(['/edit-notice', id]);
-  }
 
   /* ================= SEARCH ================= */
   applyFilter() {

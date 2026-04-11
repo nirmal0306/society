@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../app.config';
 
 interface ParkingRequest {
   _id: string;
@@ -26,8 +27,6 @@ interface ParkingRequest {
   styleUrls: ['./manage-parking.component.css']
 })
 export class ManageParkingComponent implements OnInit {
-
-  API_URL = "http://localhost:5000/api/parking";
 
   parkingRequests: ParkingRequest[] = [];
   filteredRequests: ParkingRequest[] = [];
@@ -53,7 +52,7 @@ export class ManageParkingComponent implements OnInit {
   /* ================= FETCH PARKING ================= */
   fetchParkingRequests() {
     this.loading = true;
-    this.http.get<ParkingRequest[]>(this.API_URL).subscribe({
+    this.http.get<ParkingRequest[]>(`${API_URL}/api/parking`).subscribe({
       next: (res) => {
         this.parkingRequests = res;
         this.loading = false;
@@ -117,7 +116,7 @@ export class ManageParkingComponent implements OnInit {
       showCancelButton: true
     }).then(result => {
       if (result.isConfirmed && result.value) {
-        this.http.put(`${this.API_URL}/approve/${parking._id}`, { parkingNumber: result.value }).subscribe({
+        this.http.put(`${API_URL}/api/parking/approve/${parking._id}`, { parkingNumber: result.value }).subscribe({
           next: () => this.fetchParkingRequests(),
           error: (err) => Swal.fire('Error', err.error?.message || 'Failed to approve', 'error')
         });
@@ -133,7 +132,7 @@ export class ManageParkingComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then(result => {
       if (result.isConfirmed) {
-        this.http.put(`${this.API_URL}/reject/${parking._id}`, {}).subscribe({
+        this.http.put(`${API_URL}/api/parking/reject/${parking._id}`, {}).subscribe({
           next: () => this.fetchParkingRequests(),
           error: (err) => Swal.fire('Error', err.error?.message || 'Failed to reject', 'error')
         });

@@ -1783,3 +1783,23 @@
   height: 1px;
   width: 1px;
 }
+.form-group-half label{
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+  gap: 6px;
+}
+.form-group-half1 label{
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+  gap: 6px;
+
+}

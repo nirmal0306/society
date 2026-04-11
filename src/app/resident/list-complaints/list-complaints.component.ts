@@ -4,7 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-list-complaints',
   standalone: true,
@@ -15,8 +15,6 @@ import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.compon
 export class ListComplaintsComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router) {}
-
-  API_URL = "http://localhost:5000/api/complaints";
 
   complaints: any[] = [];
   loading = true;
@@ -35,7 +33,7 @@ export class ListComplaintsComponent implements OnInit {
     const email = localStorage.getItem("email");
 
 
-    this.http.get<any[]>(`${this.API_URL}/email/${email}`)
+    this.http.get<any[]>(`${API_URL}/api/complaints/email/${email}`)
       .subscribe({
         next: (res) => {
           this.complaints = res;

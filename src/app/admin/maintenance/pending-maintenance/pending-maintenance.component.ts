@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 export interface PendingPayment {
   residentName: string;
@@ -41,8 +42,6 @@ interface FlatStatus {
 })
 export class PendingMaintenanceComponent implements OnInit {
 
-  API = "http://localhost:5000/api/maintenance";
-  RESIDENT_API = "http://localhost:5000/api/residents";
 
   pendingList: PendingPayment[] = [];
   filteredList: PendingPayment[] = [];
@@ -74,7 +73,7 @@ export class PendingMaintenanceComponent implements OnInit {
 async loadPending() {
   try {
     // 1️⃣ Get all residents
-    const residents = await this.http.get<Resident[]>(`${this.RESIDENT_API}`).toPromise() || [];
+    const residents = await this.http.get<Resident[]>(`${API_URL}/api/residents`).toPromise() || [];
 
     this.pendingList = [];
 
@@ -85,7 +84,7 @@ async loadPending() {
 
     // 2️⃣ For each resident
     for (const r of residents) {
-      const resData = await this.http.get<{ flatStatus: FlatStatus[] }>(`${this.API}/data?residentId=${r._id}`).toPromise();
+      const resData = await this.http.get<{ flatStatus: FlatStatus[] }>(`${API_URL}/api/maintenance/data?residentId=${r._id}`).toPromise();
       const flatStatus: FlatStatus[] = resData?.flatStatus || [];
 
       r.flats.forEach(f => {

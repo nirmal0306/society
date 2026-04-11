@@ -4,7 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-resident-profile',
   standalone: true,
@@ -15,8 +15,6 @@ import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.compon
 export class ResidentProfileComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient) {}
-
-  BASE_URL = "http://localhost:5000/api/residents";
 
   name = "";
   email = "";
@@ -39,7 +37,7 @@ export class ResidentProfileComponent implements OnInit {
   loadProfile() {
     const email = localStorage.getItem("email");
 
-    this.http.get<any>(`${this.BASE_URL}/profile/${email}`)
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`)
       .subscribe({
         next: (res) => {
           this.name = res.name;

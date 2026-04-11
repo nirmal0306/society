@@ -18,6 +18,7 @@ import { Router, RouterModule } from '@angular/router';
 import * as faceapi from 'face-api.js';
 import Swal from 'sweetalert2';
 import { NavComponent } from '../../nav/nav/nav.component';
+import { API_URL } from '../../app.config';
 
 @Component({
   selector: 'app-login',
@@ -152,7 +153,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const descriptor = Array.from(detection.descriptor);
 
-    this.http.post<any>('http://localhost:5000/api/auth/login', {
+    this.http.post<any>(`${API_URL}/api/auth/login`, {
       email: this.loginForm.value.email,
       descriptor
     }).subscribe({

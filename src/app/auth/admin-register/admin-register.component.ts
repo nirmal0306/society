@@ -5,7 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { ANavComponent } from '../../nav/a-nav/a-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-admin-register',
   standalone: true,
@@ -59,7 +59,7 @@ export class AdminRegisterComponent {
     };
 
     // Call backend
-    this.http.post<any>('http://localhost:5000/admin/register', payload)
+    this.http.post<any>(`${API_URL}/admin/login/register`, payload)
       .subscribe(
         (res) => {
           // SUCCESS

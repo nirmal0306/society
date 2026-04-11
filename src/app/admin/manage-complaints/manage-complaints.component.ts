@@ -4,6 +4,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { AdminNavComponent } from '../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../app.config';
+
 @Component({
   selector: 'app-manage-complaints',
   standalone: true,
@@ -15,7 +17,6 @@ export class ManageComplaintsComponent implements OnInit {
 
   constructor(private http: HttpClient,private router: Router) {}
 
-  API_URL = "http://localhost:5000/api/complaints";
 
   complaints: any[] = [];
   loading = true;
@@ -32,7 +33,7 @@ export class ManageComplaintsComponent implements OnInit {
 
   /* ================= LOAD ALL ================= */
   loadComplaints() {
-    this.http.get<any[]>(this.API_URL).subscribe({
+    this.http.get<any[]>(`${API_URL}/api/complaints`).subscribe({
       next: (res) => {
         this.complaints = res;
         this.loading = false;
@@ -57,7 +58,7 @@ export class ManageComplaintsComponent implements OnInit {
 
       if (result.isConfirmed) {
 
-        this.http.put(`${this.API_URL}/${c._id}`, {
+        this.http.put(`${API_URL}/api/complaints/${c._id}`, {
           status: "Resolved",
           category: c.category
         }).subscribe({

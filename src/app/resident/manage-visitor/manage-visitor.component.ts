@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-manage-visitor',
   standalone: true,
@@ -24,7 +24,7 @@ export class ManageVisitorComponent implements OnInit {
   pageSize = 4;
   totalPages = 1;
 
-  API_URL = "http://localhost:5000/api/visitors";
+  // API_URL = "http://localhost:5000/api/visitors";
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -39,7 +39,7 @@ export class ManageVisitorComponent implements OnInit {
 
 
     this.loading = true;
-    this.http.get<any[]>(`${this.API_URL}/resident/${email}`).subscribe({
+    this.http.get<any[]>(`${API_URL}/api/visitors/resident/${email}`).subscribe({
       next: res => {
         this.visitors = res;
         this.totalPages = Math.ceil(this.visitors.length / this.pageSize);
@@ -62,7 +62,7 @@ export class ManageVisitorComponent implements OnInit {
   }
 
   approveVisitor(id: string) {
-    this.http.put(`${this.API_URL}/approve/${id}`, {}).subscribe({
+    this.http.put(`${API_URL}/api/visitors/approve/${id}`, {}).subscribe({
       next: () => {
         Swal.fire("Approved", "Visitor entry allowed", "success");
         this.loadVisitors();
@@ -72,7 +72,7 @@ export class ManageVisitorComponent implements OnInit {
   }
 
   rejectVisitor(id: string) {
-    this.http.put(`${this.API_URL}/reject/${id}`, {}).subscribe({
+    this.http.put(`${API_URL}/api/visitors/reject/${id}`, {}).subscribe({
       next: () => {
         Swal.fire("Rejected", "Visitor rejected", "error");
         this.loadVisitors();

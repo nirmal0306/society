@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-add-event',
@@ -91,7 +92,7 @@ export class AddEventComponent {
   events.push(this.event);
   localStorage.setItem('events', JSON.stringify(events));
 
-  this.http.post('http://localhost:5000/api/events', this.event)
+  this.http.post(`${API_URL}/api/events`, this.event)
     .subscribe({
       next: () => {
         Swal.fire({

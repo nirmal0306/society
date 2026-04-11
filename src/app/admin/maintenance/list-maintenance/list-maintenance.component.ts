@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 interface Payment {
   residentName: string;
@@ -25,8 +26,6 @@ interface Payment {
   styleUrls: ['./list-maintenance.component.css']
 })
 export class ListMaintenanceComponent implements OnInit {
-
-  API = "http://localhost:5000/api/maintenance";
 
   payments: Payment[] = [];
   filtered: Payment[] = [];
@@ -54,7 +53,7 @@ export class ListMaintenanceComponent implements OnInit {
 
   /* LOAD DATA */
   loadAll() {
-    this.http.get<Payment[]>(`${this.API}/all-data`).subscribe({
+    this.http.get<Payment[]>(`${API_URL}/api/maintenance/all-data`).subscribe({
       next: (res) => {
         this.payments = res || [];
         this.applyFilter();

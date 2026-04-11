@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 
 interface Salary {
@@ -24,8 +25,6 @@ interface Salary {
   styleUrls: ['./list-paid-salary.component.css']
 })
 export class ListPaidSalaryComponent implements OnInit {
-
-  API = "http://localhost:5000/api/salary";
 
   salaries: Salary[] = [];
   filtered: Salary[] = [];
@@ -55,7 +54,7 @@ export class ListPaidSalaryComponent implements OnInit {
 
   /* LOAD DATA */
   loadAll() {
-    this.http.get<Salary[]>(`${this.API}/all`).subscribe({
+    this.http.get<Salary[]>(`${API_URL}/api/salary/all`).subscribe({
       next: (res) => {
         this.salaries = res || [];
         this.applyFilter();

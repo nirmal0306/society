@@ -1461,3 +1461,33 @@ h1.hero-title {
   transform: scale(1.05);
 }
 
+.actions span {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #28a745;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover effect */
+.actions span:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Click effect */
+.actions span:active {
+  transform: scale(0.95);
+}
+.actions span.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}

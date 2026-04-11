@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
 import Swal from 'sweetalert2';
+import { API_URL } from '../../app.config';
 
 interface Salary {
   months: string[];
@@ -29,7 +30,6 @@ interface Salary {
 })
 export class ManageSalaryComponent implements OnInit {
 
-  API = 'http://localhost:5000/api/salary';
   securityId: string = '';
   salaries: Salary[] = [];
   filtered: Salary[] = [];
@@ -75,7 +75,7 @@ export class ManageSalaryComponent implements OnInit {
 
 // Load salary after getting securityId
 loadSalary() {
-  this.http.get<Salary[]>(`${this.API}/${this.securityId}`).subscribe({
+  this.http.get<Salary[]>(`${API_URL}/api/salary/${this.securityId}`).subscribe({
     next: (res) => {
       this.salaries = res || [];
       this.applyFilter();

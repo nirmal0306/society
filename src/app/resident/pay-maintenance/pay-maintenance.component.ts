@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
 import emailjs from '@emailjs/browser';
+import { API_URL } from '../../app.config';
 interface ResidentFlat {
   block: string;
   flat: string;
@@ -61,7 +62,7 @@ toggleFlatDetails(flatKey: string) {
 }
 
   API = 'http://localhost:5000/api/maintenance';
-  RESIDENT_API = 'http://localhost:5000/api/residents';
+  // RESIDENT_API = 'http://localhost:5000/api/residents';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -79,7 +80,7 @@ toggleFlatDetails(flatKey: string) {
 loadMaintenanceData() {
   if (!this.residentId) return;
 
-  this.http.get<any>(`${this.API}/data?residentId=${this.residentId}`).subscribe({
+  this.http.get<any>(`${API_URL}/api/maintenance/data?residentId=${this.residentId}`).subscribe({
     next: (res) => {
       this.flatStatus = (res.flatStatus || []).map((f: any) => ({
         block: f.block,
@@ -111,7 +112,7 @@ loadMaintenanceData() {
 loadFlatStatus() {
   if (!this.residentId) return;
 
-  this.http.get<any>(`${this.API}/data?residentId=${this.residentId}`).subscribe({
+  this.http.get<any>(`${API_URL}/api/maintenance/data?residentId=${this.residentId}`).subscribe({
     next: (res) => {
       this.flatStatus = this.flats.map(f => {
         const matchedFlat = (res.flatStatus || []).find(
@@ -167,7 +168,7 @@ calculatePendingMonths(data: any) {
   fetchResident() {
     const email = localStorage.getItem("email");
 
-    this.http.get<any>(`${this.RESIDENT_API}/profile/${email}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`).subscribe({
       next: (res) => {
         this.name = res.name;
         this.email = res.email;
@@ -240,10 +241,10 @@ calculatePendingMonths(data: any) {
   handleCloseModal() {
     this.showPaymentModal = false;
   }
-  BASE_URL = "http://localhost:5000/api/residents";
+  
   private loadProfileData(email: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    this.http.get<any>(`${this.BASE_URL}/profile/${email}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`).subscribe({
       next: (res) => resolve(res),
       error: () => reject(new Error('Profile load failed'))
     });

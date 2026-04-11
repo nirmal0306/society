@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 interface Payment {
   block: string;
   flat: string;
@@ -34,7 +34,7 @@ export class MaintenanceDetailsComponent implements OnInit {
 
   RESIDENT_API = "http://localhost:5000/api/residents";
   MAINTENANCE_API = "http://localhost:5000/api/maintenance";
-
+// `${API_URL}/api/
   residentId: string = '';
   resident: any = {};
   payments: Payment[] = [];
@@ -71,7 +71,7 @@ export class MaintenanceDetailsComponent implements OnInit {
     const email = localStorage.getItem("email");
 
     // Get resident profile
-    this.http.get<any>(`${this.RESIDENT_API}/profile/${email}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`).subscribe({
       next: (res) => {
         this.resident = res;
         this.residentId = res._id;
@@ -86,7 +86,7 @@ export class MaintenanceDetailsComponent implements OnInit {
   }
 
   loadMaintenance() {
-    this.http.get<any>(`${this.MAINTENANCE_API}/data?residentId=${this.residentId}`)
+    this.http.get<any>(`${API_URL}/api/maintenance/data?residentId=${this.residentId}`)
       .subscribe({
         next: (res) => {
           this.payments = res.payments || [];

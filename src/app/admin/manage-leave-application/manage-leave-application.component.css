@@ -1455,3 +1455,72 @@ h3{
 .status:hover {
   transform: scale(1.05);
 }
+textarea {
+  width: 40%;
+  padding: 0.85rem 1rem;
+
+  background: rgba(255, 255, 255, 0.08); /* glass effect */
+  color: #000000;
+
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+
+  font-size: 1rem;
+  appearance: none;           /* remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* On focus */
+textarea:focus {
+  outline: none;
+  border-color: #ffb87a;
+  box-shadow: 0 6px 18px rgba(255,184,122,0.25);
+  transform: translateY(-1px);
+}
+.status{
+padding:6px 10px;
+border-radius:6px;
+display:inline-block;
+}
+
+.pending{
+background:#fff3cd;
+color:#856404;
+}
+
+.accepted{
+background:#d4edda;
+color:#155724;
+}
+
+.rejected{
+background:#f8d7da;
+color:#721c24;
+}
+
+.btns{
+margin-top:10px;
+}
+
+.accept{
+background:#28a745;
+color:white;
+border:none;
+padding:8px 15px;
+margin-right:10px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.reject{
+background:#dc3545;
+color:white;
+border:none;
+padding:8px 15px;
+cursor:pointer;
+border-radius:5px;
+}

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-edit-event',
@@ -21,8 +22,6 @@ export class EditEventComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-
-  API_URL = 'http://localhost:5000/api/events';
 
   event: any = {
     _id: '',
@@ -55,7 +54,7 @@ export class EditEventComponent implements OnInit {
       return;
     }
 
-    this.http.get<any>(`${this.API_URL}/${id}`)
+    this.http.get<any>(`${API_URL}/api/events/${id}`)
       .subscribe({
 
         next: (res) => {
@@ -127,7 +126,7 @@ export class EditEventComponent implements OnInit {
 
     }
 
-    this.http.put(`${this.API_URL}/${this.event._id}`, this.event)
+    this.http.put(`${API_URL}/api/events/${this.event._id}`, this.event)
       .subscribe({
 
         next: () => {

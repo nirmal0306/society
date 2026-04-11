@@ -7,6 +7,7 @@ import { AdminPaymentModalComponent } from '../../admin-payment-modal/admin-paym
 import { Router, RouterModule } from '@angular/router';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
 import emailjs from '@emailjs/browser';
+import { API_URL } from '../../../app.config';
 
 
 interface SecurityUser {
@@ -53,9 +54,6 @@ export class PaySalaryComponent implements OnInit {
   showSalaryPendingDetails: boolean = false;
   expandedSecurityId: string | null = null;
 
-  API = 'http://localhost:5000/api/salary';
-  SECURITY_API = 'http://localhost:5000/api/security';
-  PAID_API = 'http://localhost:5000/api/salary/paid'; // Backend endpoint to fetch paid months
    // Add these new properties
   emailjsService = 'service_cfrxlbz';
   emailjsTemplate = 'template_v6nyaek'; // Use same template or create salary-specific
@@ -90,7 +88,7 @@ isFutureMonth(month: string): boolean {
   return this.isFutureMonth(month) || this.isMonthPaid(securityId, month);
 }
   loadSecurityUsers(): void {
-  this.http.get<SecurityUser[]>(this.SECURITY_API).subscribe({
+  this.http.get<SecurityUser[]>(`${API_URL}/api/security`).subscribe({
     next: (res) => {
       this.securityList = Array.isArray(res) ? res : [];
       this.calculatePendingSalaryData(); // ← ADD THIS
@@ -100,7 +98,7 @@ isFutureMonth(month: string): boolean {
 }
 
 loadPaidMonths(): void {
-  this.http.get<PaidStatus[]>(this.PAID_API).subscribe({
+  this.http.get<PaidStatus[]>(`${API_URL}/api/salary/paid`).subscribe({
     next: (res) => {
       this.securityStatus = Array.isArray(res) ? res : [];
       this.calculatePendingSalaryData(); // ← ADD THIS
@@ -181,7 +179,7 @@ calculatePendingSalaryData(): void {
   // Load security profile data
 private async loadProfileData(email: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    this.http.get<any>(`${this.SECURITY_API}/profile/${email}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/security/profile/${email}`).subscribe({
       next: (res) => resolve(res),
       error: () => reject(new Error('Profile load failed'))
     });

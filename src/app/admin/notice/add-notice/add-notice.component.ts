@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-add-notice',
@@ -26,9 +27,7 @@ export class AddNoticeComponent {
     }
   }
 
-  NOTICE_API = "http://localhost:5000/api/notices";
-
-  /* ================= NOTICE MODEL ================= */
+    /* ================= NOTICE MODEL ================= */
   notice = {
     title: '',
     description: '',
@@ -46,7 +45,7 @@ export class AddNoticeComponent {
       return;
     }
 
-    this.http.post(this.NOTICE_API, this.notice)
+    this.http.post(`${API_URL}/api/notices`, this.notice)
       .subscribe({
         next: () => {
           Swal.fire({

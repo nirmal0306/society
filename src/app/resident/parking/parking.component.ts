@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.component';
-
+import { API_URL } from '../../app.config';
 @Component({
   selector: 'app-parking',
   standalone: true,
@@ -15,9 +15,6 @@ import { ResidentNavComponent } from '../../nav/resident-nav/resident-nav.compon
   styleUrls: ['./parking.component.css']
 })
 export class ParkingComponent implements OnInit {
-
-  API_URL = "http://localhost:5000/api/parking";
-  PROFILE_API = "http://localhost:5000/api/residents/profile";
 
   resident: any = null;
   parkingData: any = null;
@@ -47,7 +44,7 @@ export class ParkingComponent implements OnInit {
   fetchResident() {
     const email = localStorage.getItem("email");
 
-    this.http.get<any>(`${this.PROFILE_API}/${email}`).subscribe({
+    this.http.get<any>(`${API_URL}/api/residents/profile/${email}`).subscribe({
       next: (res) => {
         this.resident = res;
         this.fetchParking();
@@ -60,25 +57,11 @@ export class ParkingComponent implements OnInit {
   }
 
   /* ================= FETCH PARKING DATA ================= */
-  fetchParking1() {
-    if (!this.resident?.email) return;
-
-    this.http.get(`${this.API_URL}/resident/${this.resident.email}`).subscribe({
-      next: (res: any) => {
-        this.parkingData = res;
-        this.loading = false;
-      },
-      error: () => {
-        this.parkingData = null;
-        this.loading = false;
-      }
-    });
-  }
 
   fetchParking() {
   if (!this.resident?.email) return;
 
-  this.http.get(`${this.API_URL}/resident/${this.resident.email}`).subscribe({
+  this.http.get(`${API_URL}/api/parking/resident/${this.resident.email}`).subscribe({
     next: (res: any) => {
       this.parkingData = Array.isArray(res) ? res : [res]; // 🔥 FIX
       this.loading = false;
@@ -108,7 +91,7 @@ export class ParkingComponent implements OnInit {
 
     Swal.fire({ title: "Sending request...", didOpen: () => Swal.showLoading(), allowOutsideClick: false });
 
-    this.http.post(this.API_URL, data).subscribe({
+    this.http.post(`${API_URL}/api/parking`, data).subscribe({
       next: (res: any) => {
         Swal.fire("Success", res.message || "Request sent", "success");
         this.fetchParking();

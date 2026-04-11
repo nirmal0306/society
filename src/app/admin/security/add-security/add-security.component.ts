@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as faceapi from 'face-api.js';
 import { AdminNavComponent } from '../../../nav/admin-nav/admin-nav.component';
+import { API_URL } from '../../../app.config';
 
 @Component({
   selector: 'app-add-security',
@@ -35,8 +36,6 @@ export class AddSecurityComponent implements OnInit {
   // ✅ REQUIRED FOR FACE LOGIN
   faceDescriptor: number[] = [];
   modelsLoaded = false;
-
-  API_URL = 'http://localhost:5000/api/security';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -169,7 +168,7 @@ export class AddSecurityComponent implements OnInit {
 
     Swal.fire({ title: 'Adding Security...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
-    this.http.post(this.API_URL, formData).subscribe({
+    this.http.post(`${API_URL}/api/security`, formData).subscribe({
       next: () => {
         Swal.fire({ icon: 'success', title: 'Security Added', timer: 1500, showConfirmButton: false })
           .then(() => this.router.navigate(['/list-securities']));
