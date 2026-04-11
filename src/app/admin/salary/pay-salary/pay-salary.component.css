@@ -1996,7 +1996,8 @@ select option {
 .paid-tag {
   color: #10b981;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 2px;
+  margin-right: -12px;
 }
 
 .amount-cell {
@@ -2148,7 +2149,7 @@ select option {
 }
 
 .month-label.paid::after {
-  content: "✓";
+  /* content: "✓"; */
   position: absolute;
   right: 4px;
   top: 50%;
@@ -2299,4 +2300,409 @@ select option {
   background: rgba(0, 0, 0, 0.2); /* optional dim */
 
   z-index: 999;
+}
+.hero {
+  position: relative;
+}
+
+.salary-notification {
+  position: absolute;
+  top: 110px;
+  right: 24px;
+  width: 430px;
+  max-width: calc(100vw - 32px);
+  border-radius: 22px;
+  overflow: hidden;
+  z-index: 40;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.92), rgba(108, 92, 231, 0.82));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 14px 35px rgba(52, 90, 160, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: salaryFloat 3.6s ease-in-out infinite;
+}
+
+.salary-notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.salary-notification-header:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.salary-notification-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.salary-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.salary-icon {
+  font-size: 25px;
+  animation: salaryIconPulse 2.4s ease-in-out infinite;
+}
+
+.salary-heading-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.salary-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.salary-subtitle {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.salary-notification-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.salary-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #4a90e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.salary-toggle-btn {
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.salary-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: translateY(-1px);
+}
+
+.salary-notification-body {
+  padding: 0 16px 16px;
+  animation: salaryFadeDown 0.28s ease;
+}
+
+.security-pending-card {
+  margin-top: 12px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.security-pending-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.security-pending-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+.security-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.security-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+}
+
+.security-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.security-name {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.security-email {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.security-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.security-count {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.security-arrow {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.security-month-list {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  animation: salaryFadeDown 0.24s ease;
+}
+
+.salary-month-chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+@keyframes salaryFloat {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 14px 35px rgba(52, 90, 160, 0.24);
+  }
+  50% {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(52, 90, 160, 0.32);
+  }
+}
+
+@keyframes salaryIconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes salaryFadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 991px) {
+  .salary-notification {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .salary-notification-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .salary-notification-right {
+    justify-content: space-between;
+  }
+
+  .security-pending-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .security-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+.disabled-month {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.disabled-month input {
+  cursor: not-allowed;
+}
+/* =========================================
+   GLOBAL RESPONSIVE FIX
+========================================= */
+* {
+  box-sizing: border-box;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================================
+   HERO CONTAINER
+========================================= */
+.hero {
+  padding: 90px 16px 40px;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* =========================================
+   SALARY NOTIFICATION (FIX OVERFLOW)
+========================================= */
+.salary-notification {
+  right: 16px;
+  width: 380px;
+  max-width: calc(100% - 32px);
+}
+
+@media (max-width: 768px) {
+  .salary-notification {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+/* =========================================
+   TABLE → MOBILE CARD VIEW
+========================================= */
+@media (max-width: 768px) {
+
+  .security-table table,
+  .security-table thead,
+  .security-table tbody,
+  .security-table th,
+  .security-table td,
+  .security-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .security-table thead {
+    display: none; /* hide header */
+  }
+
+  .security-table tr {
+    margin-bottom: 18px;
+    background: rgba(255,255,255,0.1);
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .security-table td {
+    padding: 10px;
+    text-align: left;
+    position: relative;
+  }
+
+  .security-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+    color: #ffb87a;
+    font-size: 0.8rem;
+  }
+}
+/* =========================================
+   FIX CENTER NARROW LAYOUT ISSUE
+========================================= */
+
+/* RESET HERO CONTENT FOR MOBILE */
+.hero-content {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  max-width: 1100px;
+  padding: 20px;
+}
+
+/* REMOVE SIDE GAP ON SMALL SCREENS */
+@media (max-width: 768px) {
+  .hero {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .hero-content {
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px !important;
+    border-radius: 16px;
+  }
 }

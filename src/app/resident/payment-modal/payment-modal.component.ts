@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import html2pdf from 'html2pdf.js';
 
 interface ResidentFlat {
   block: string;
@@ -30,7 +31,7 @@ export class PaymentModalComponent implements OnInit {
 
   @Output() closeModal = new EventEmitter<void>();
   @Output() onPaymentInitiate = new EventEmitter<any>();
-  @Output() paymentSuccess = new EventEmitter<void>();
+  @Output() paymentSuccess = new EventEmitter<any>();
 
   selectedType: 'UPI' | 'Card' = 'UPI';
 
@@ -221,10 +222,20 @@ getVisiblePin(): string {
     };
 
     this.http.post(`${this.API}/pay`, paymentData).subscribe({
-      next: () => {
+      next: (res) => {
         Swal.fire('Success', 'Payment Successful!', 'success');
-        this.paymentSuccess.emit();
+
+        this.paymentSuccess.emit({
+          residentId: this.residentId,
+          flats: flats,
+          months: months,
+          amount: this.amount,
+          totalAmount: this.amount * 1.18,
+          method: 'UPI',
+          selectedFlatMonths: this.selectedFlatMonths   // ✅ ADD THIS
+        });
         this.closeModal.emit();
+        // this.downloadReceipt();
       },
       error: (err) => {
         console.error(err);
@@ -298,9 +309,20 @@ getVisiblePin(): string {
     };
 
     this.http.post(`${this.API}/pay`, paymentData).subscribe({
-      next: () => {
+      next: (res) => {
         Swal.fire('Success', 'Card Payment Successful', 'success');
-        this.paymentSuccess.emit();
+
+        this.paymentSuccess.emit({
+          residentId: this.residentId,
+          flats: flats,
+          months: months,
+          amount: this.amount,
+          totalAmount: this.amount * 1.18,
+          method: 'CARD',
+          selectedFlatMonths: this.selectedFlatMonths   // ✅ ADD THIS
+        });
+
+        // this.downloadReceipt();
         this.closeModal.emit();
       },
       error: () => Swal.fire('Error', 'Payment failed', 'error'),
@@ -388,4 +410,39 @@ onPinPaste(event: any) {
   cancel() {
     this.closeModal.emit();
   }
+   // Add this new method to your PaymentModalComponent class
+    BASE_URL = "http://localhost:5000/api/residents";
+
+  name = "";
+  email = "";
+  mobile = "";
+  flats: any[] = [];
+  photo = "";
+
+    loadProfile() {
+  const email = localStorage.getItem("email");
+  this.http.get<any>(`${this.BASE_URL}/profile/${email}`)
+    .subscribe({
+      next: (res) => {
+        this.name = res.name;
+        this.email = res.email;
+        this.mobile = res.mobile;
+        this.flats = res.flats;
+        this.photo = res.photo;
+      },
+      error: () => {
+        Swal.fire("Error", "Failed to load profile", "error");
+      }
+    });
+}
+
+// ✅ ADD THIS NEW METHOD (fixes TS error)
+private loadProfileData(email: string): Promise<any> {
+  return new Promise((resolve, reject) => {
+    this.http.get<any>(`${this.BASE_URL}/profile/${email}`).subscribe({
+      next: (res) => resolve(res),
+      error: () => reject(new Error('Profile load failed'))
+    });
+  });
+}
 }

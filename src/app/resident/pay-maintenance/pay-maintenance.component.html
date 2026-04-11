@@ -1,5 +1,60 @@
 <section class="hero">
-<app-resident-nav></app-resident-nav>
+  <app-resident-nav></app-resident-nav>
+
+<!-- Pending notification -->
+<div class="pending-notification" *ngIf="pendingCount > 0">
+  <div class="notification-header" (click)="togglePendingDetails()">
+    <div class="notification-header-left">
+      <div class="notification-icon-wrap">
+        <span class="notification-bell">🔔</span>
+      </div>
+
+      <div class="notification-heading-text">
+        <span class="notification-title">Pending Maintenance</span>
+        <span class="notification-subtitle">
+          {{ pendingCount }} total pending month(s)
+        </span>
+      </div>
+    </div>
+
+    <div class="notification-header-right">
+      <span class="notification-badge">{{ pendingCount }}</span>
+      <button type="button" class="toggle-btn">
+        {{ showPendingDetails ? 'Hide' : 'Show' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="notification-body" *ngIf="showPendingDetails">
+    <div
+      class="flat-pending-card"
+      *ngFor="let item of flatPendingMonths | keyvalue"
+    >
+      <div class="flat-pending-row" (click)="toggleFlatDetails(item.key)">
+        <div class="flat-left">
+          <span class="flat-dot"></span>
+          <span class="flat-name">{{ item.key }}</span>
+        </div>
+
+        <div class="flat-right">
+          <span class="flat-count">{{ item.value }} month(s)</span>
+          <span class="flat-toggle-arrow">
+            {{ expandedFlat === item.key ? '▲' : '▼' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="flat-month-list" *ngIf="expandedFlat === item.key">
+        <span
+          class="month-chip"
+          *ngFor="let month of flatPendingMonthNames[item.key]"
+        >
+          {{ month }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="hero-content">
     <div class="form-card">
       <div class="hero-overline">Maintenance Management</div>

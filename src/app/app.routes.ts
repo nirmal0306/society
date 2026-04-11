@@ -56,6 +56,7 @@ import { LeaveApplicationComponent } from './security/leave-application/leave-ap
 import { ManageLeaveApplicationComponent } from './admin/manage-leave-application/manage-leave-application.component';
 import { PaySalaryComponent } from './admin/salary/pay-salary/pay-salary.component';
 import { ListPaidSalaryComponent } from './admin/salary/list-paid-salary/list-paid-salary.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
 
@@ -73,6 +74,7 @@ export const routes: Routes = [
   // ---- Admin Auth ----
   { path: 'admin-register', component: AdminRegisterComponent },
   { path: 'admin-login', component: AdminLoginComponent },
+  { path: 'reset-password', component: ResetPasswordComponent},
 
   // ---- Admin Pages ----
   { path: 'admin-home', component: AdminHomeComponent },

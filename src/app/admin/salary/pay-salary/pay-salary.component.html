@@ -1,10 +1,67 @@
-<!-- ================= HERO CONTENT ================= -->
+<!-- ================= HERO CONTENT =================
 <div class="hero">
   <app-admin-nav></app-admin-nav>
+<div class="salary-notification" *ngIf="pendingSalaryCount > 0">
+  <div class="salary-notification-header" (click)="toggleSalaryPendingDetails()">
+    <div class="salary-notification-left">
+      <div class="salary-icon-wrap">
+        <span class="salary-icon">💰</span>
+      </div>
+
+      <div class="salary-heading-text">
+        <span class="salary-title">Pending Salary</span>
+        <span class="salary-subtitle">
+          {{ pendingSalaryCount }} total pending month(s)
+        </span>
+      </div>
+    </div>
+
+    <div class="salary-notification-right">
+      <span class="salary-badge">{{ pendingSalaryCount }}</span>
+      <button type="button" class="salary-toggle-btn">
+        {{ showSalaryPendingDetails ? 'Hide' : 'Show' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="salary-notification-body" *ngIf="showSalaryPendingDetails">
+    <div
+      class="security-pending-card"
+      *ngFor="let s of securityList"
+      [hidden]="securityPendingMonths[s._id] === 0"
+    >
+      <div class="security-pending-row" (click)="toggleSecurityDetails(s._id)">
+        <div class="security-left">
+          <span class="security-dot"></span>
+          <div class="security-info">
+            <span class="security-name">{{ s.name }}</span>
+            <span class="security-email">{{ s.email }}</span>
+          </div>
+        </div>
+
+        <div class="security-right">
+          <span class="security-count">
+            {{ securityPendingMonths[s._id] }} month(s)
+          </span>
+          <span class="security-arrow">
+            {{ expandedSecurityId === s._id ? '▲' : '▼' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="security-month-list" *ngIf="expandedSecurityId === s._id">
+        <span
+          class="salary-month-chip"
+          *ngFor="let month of securityPendingMonthNames[s._id]"
+        >
+          {{ month }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="hero-content">
     <h1>Pay Salary</h1>
-
-    <!-- ================= SECURITY TABLE ================= -->
     <table class="security-table">
       <thead>
         <tr>
@@ -22,12 +79,14 @@
           <td>
             <div class="month-grid">
               <label *ngFor="let m of allMonths"
-                     class="month-label"
-                     [class.paid]="isMonthPaid(s._id, m)"
-                     [class.selected]="selectedMonths[s._id + '-' + m]">
+                    class="month-label"
+                    [class.paid]="isMonthPaid(s._id, m)"
+                    [class.selected]="selectedMonths[s._id + '-' + m]"
+                    [class.disabled-month]="isMonthDisabled(s._id, m)"
+                    [class.future-month]="isFutureMonth(m)">
                 <input
                   type="checkbox"
-                  [disabled]="isMonthPaid(s._id, m)"
+                  [disabled]="isMonthDisabled(s._id, m)"
                   [(ngModel)]="selectedMonths[s._id + '-' + m]"
                   (change)="calculateAmount()"
                 />
@@ -38,6 +97,131 @@
           </td>
           <td class="amount-cell">₹{{ getSecurityAmount(s._id) }}</td>
           <td>
+            <button class="pay-btn"
+                    [disabled]="getSecurityAmount(s._id) === 0"
+                    (click)="openPaymentModal(s)">
+              Pay Now
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="grand-total">Grand Total: ₹{{ amount }}</h3>
+
+    <app-admin-payment-modal
+      *ngIf="showPaymentModal && selectedSecurity"
+      [amount]="getSecurityAmount(selectedSecurity._id)"
+      [security]="selectedSecurity"
+      [selectedMonths]="getSelectedMonthsArray()"
+      (paymentSuccess)="handlePaymentSuccess($event)"
+      (closeModal)="handleCloseModal()">
+    </app-admin-payment-modal>
+  </div>
+</div>
+-->
+<!-- ================= HERO CONTENT ================= -->
+<div class="hero">
+  <app-admin-nav></app-admin-nav>
+  <!-- Salary pending notification -->
+<div class="salary-notification" *ngIf="pendingSalaryCount > 0">
+  <div class="salary-notification-header" (click)="toggleSalaryPendingDetails()">
+    <div class="salary-notification-left">
+      <div class="salary-icon-wrap">
+        <span class="salary-icon">💰</span>
+      </div>
+
+      <div class="salary-heading-text">
+        <span class="salary-title">Pending Salary</span>
+        <span class="salary-subtitle">
+          {{ pendingSalaryCount }} total pending month(s)
+        </span>
+      </div>
+    </div>
+
+    <div class="salary-notification-right">
+      <span class="salary-badge">{{ pendingSalaryCount }}</span>
+      <button type="button" class="salary-toggle-btn">
+        {{ showSalaryPendingDetails ? 'Hide' : 'Show' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="salary-notification-body" *ngIf="showSalaryPendingDetails">
+    <div
+      class="security-pending-card"
+      *ngFor="let s of securityList"
+      [hidden]="securityPendingMonths[s._id] === 0"
+    >
+      <div class="security-pending-row" (click)="toggleSecurityDetails(s._id)">
+        <div class="security-left">
+          <span class="security-dot"></span>
+          <div class="security-info">
+            <span class="security-name">{{ s.name }}</span>
+            <span class="security-email">{{ s.email }}</span>
+          </div>
+        </div>
+
+        <div class="security-right">
+          <span class="security-count">
+            {{ securityPendingMonths[s._id] }} month(s)
+          </span>
+          <span class="security-arrow">
+            {{ expandedSecurityId === s._id ? '▲' : '▼' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="security-month-list" *ngIf="expandedSecurityId === s._id">
+        <span
+          class="salary-month-chip"
+          *ngFor="let month of securityPendingMonthNames[s._id]"
+        >
+          {{ month }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="hero-content">
+    <h1>Pay Salary</h1>
+
+    <!-- ================= SECURITY TABLE ================= -->
+    <table class="security-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Select Months</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of securityList">
+          <td data-label="Name">{{ s.name }}</td>
+          <td data-label="Email">{{ s.email }}</td>
+          <td data-label="Months">
+            <div class="month-grid">
+              <label *ngFor="let m of allMonths"
+                    class="month-label"
+                    [class.paid]="isMonthPaid(s._id, m)"
+                    [class.selected]="selectedMonths[s._id + '-' + m]"
+                    [class.disabled-month]="isMonthDisabled(s._id, m)"
+                    [class.future-month]="isFutureMonth(m)">
+                <input
+                  type="checkbox"
+                  [disabled]="isMonthDisabled(s._id, m)"
+                  [(ngModel)]="selectedMonths[s._id + '-' + m]"
+                  (change)="calculateAmount()"
+                />
+                {{ m.slice(0, 3) }}
+                <span *ngIf="isMonthPaid(s._id, m)" class="paid-tag">✓</span>
+              </label>
+            </div>
+          </td>
+          <td data-label="Amount" class="amount-cell">₹{{ getSecurityAmount(s._id) }}</td>
+          <td data-label="Action">
             <button class="pay-btn"
                     [disabled]="getSecurityAmount(s._id) === 0"
                     (click)="openPaymentModal(s)">

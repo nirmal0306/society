@@ -41,7 +41,6 @@
             [class.invalid]="f['password'].touched && f['password'].invalid"
           />
 
-
           <span
             class="eye-icon"
             [class.open]="!showPassword"
@@ -55,10 +54,41 @@
         </div>
       </div>
 
+      <!-- FORGOT PASSWORD LINK -->
+      <div class="forgot-password">
+        <a href="javascript:void(0)" (click)="openForgotPassword()">
+          Forgot Password
+        </a>
+      </div>
+
+      <!-- LOGIN BUTTON -->
       <button class="btn-login" type="submit" [disabled]="loading">
         {{ loading ? 'Logging in...' : 'Login' }}
       </button>
 
     </form>
+  </div>
+</div>
+
+<!-- =========================
+     FORGOT PASSWORD MODAL
+========================= -->
+<div class="forgot-modal" *ngIf="showForgot">
+  <div class="forgot-box">
+
+    <h3>Reset Password</h3>
+
+    <input
+      type="email"
+      [(ngModel)]="forgotEmail"
+      style="width:95%"
+      placeholder="Enter your registered email"
+    />
+
+    <div class="btn-group">
+      <button (click)="sendResetLink()">Send Link</button>
+      <button class="cancel" (click)="closeForgotPassword()">Cancel</button>
+    </div>
+
   </div>
 </div>
