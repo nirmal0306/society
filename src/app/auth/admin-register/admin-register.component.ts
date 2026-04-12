@@ -59,7 +59,7 @@ export class AdminRegisterComponent {
     };
 
     // Call backend
-    this.http.post<any>(`${API_URL}/admin/login/register`, payload)
+    this.http.post<any>(`${API_URL}/admin/register`, payload)
       .subscribe(
         (res) => {
           // SUCCESS

@@ -98,7 +98,7 @@ export class EditResidentComponent implements OnInit {
     this.http.get<any>(`${API_URL}/api/residents/${id}`).subscribe({
       next: res => {
         this.resident = res;
-        this.imagePreview = res.photo ? `http://localhost:5000${res.photo}` : null;
+        this.imagePreview = res.photo ? `${API_URL}${res.photo}` : null;
       },
       error: () => Swal.fire('Error', 'Failed to load resident', 'error')
     });

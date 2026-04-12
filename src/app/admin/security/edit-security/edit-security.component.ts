@@ -79,7 +79,7 @@ export class EditSecurityComponent implements OnInit {
       next: res => {
         this.security = res;
         this.imagePreview = res.photo
-          ? `http://localhost:5000${res.photo}`
+          ? `${API_URL}${res.photo}`
           : null;
       },
       error: () => Swal.fire('Error', 'Failed to load security staff', 'error')
