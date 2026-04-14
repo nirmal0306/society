@@ -124,6 +124,33 @@ loadSecurityData() {
     Swal.fire({ icon:"success", title:"Photo Captured", timer:1200, showConfirmButton:false });
   }
 
+  sendEmailToResident(visitor: any) {
+  const approvalLink = 'https://society-wheat.vercel.app/manage-visitor';
+
+  const templateParams = {
+    resident_name: visitor.residentName,
+    visitor_name: visitor.name,
+    visitor_mobile: visitor.mobile,
+    purpose: visitor.purpose,
+    resident_email: visitor.residentEmail,
+    security_email: this.securityEmail,
+    approval_link: approvalLink
+  };
+
+  emailjs.send(
+    'service_cfrxlbz',
+    'template_f0gfmgf',
+    templateParams,
+    'OtcW9C_RrRcT4XiSn'
+  )
+  .then(() => {
+    console.log("Email sent successfully");
+  })
+  .catch((error) => {
+    console.error("Email failed:", error);
+  });
+}
+
   /* ================= ADD VISITOR ================= */
   addVisitor() {
     if (!this.imageBlob) {
@@ -151,6 +178,8 @@ loadSecurityData() {
 
     this.http.post(`${API_URL}/api/visitors`, formData).subscribe({
       next: (res:any) => {
+        // SEND EMAIL TO RESIDENT
+        this.sendEmailToResident(res.visitor);
         Swal.fire("Success", res.message || "Request sent to resident", "success");
         this.router.navigate(['/list-visitors-security']);
       },
