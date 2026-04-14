@@ -35,7 +35,7 @@
       <tbody>
         <tr *ngFor="let visitor of paginatedVisitors">
           <td>
-            <img *ngIf="visitor.photo" [src]="'http://localhost:5000' + visitor.photo" alt="Photo" class="resident-photo">
+            <img *ngIf="visitor.photo" [src]="visitor.photo" alt="Photo" class="resident-photo">
             <span *ngIf="!visitor.photo">No Photo</span>
           </td>
           <td>{{ visitor.name }}</td>
