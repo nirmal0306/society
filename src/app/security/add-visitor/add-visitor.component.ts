@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SecurityNavComponent } from '../../nav/security-nav/security-nav.component';
 import { API_URL } from '../../app.config';
+import emailjs from '@emailjs/browser';
+
 @Component({
   selector: 'app-add-visitor',
   standalone: true,
