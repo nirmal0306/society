@@ -13,7 +13,7 @@
   <!-- Horizontal Scroll Container -->
   <div class="visitor-scroll" *ngIf="!loading && visitors.length > 0">
     <div class="visitor-card" *ngFor="let v of pagedVisitors">
-      <img *ngIf="v.photo" [src]="'http://localhost:5000' + v.photo" class="visitor-photo">
+      <img *ngIf="v.photo" [src]="v.photo" class="visitor-photo">
       <h3>{{v.name}}</h3>
       <p><b>Mobile:</b> {{v.mobile}}</p>
       <p><b>Purpose:</b> {{v.purpose}}</p>
